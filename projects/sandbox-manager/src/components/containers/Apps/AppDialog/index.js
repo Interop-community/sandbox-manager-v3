@@ -12,15 +12,14 @@ class AppDialog extends Component {
         let clientJSON = props.app && props.app.clientJSON && JSON.parse(props.app.clientJSON);
         let redirectUris = clientJSON && clientJSON.redirectUris && clientJSON.redirectUris.join(',');
         let scope = clientJSON && clientJSON.scope && clientJSON.scope.join(' ');
-        let manifest = props.manifest;
 
         let app = {
-            clientName: props.app ? props.app.clientName : (manifest ? manifest.client_name : ''),
-            launchUri: props.app ? props.app.launchUri : (manifest ? manifest.launch_url : ''),
+            clientName: props.app ? props.app.clientName : '',
+            launchUri: props.app ? props.app.launchUri : '',
             samplePatients: props.app && props.app.samplePatients ? props.app.samplePatients : '',
-            redirectUris: redirectUris ? redirectUris : (manifest ? manifest.redirect_uris.join(',') : ''),
-            scope: scope ? scope : (manifest ? manifest.scope : ''),
-            logoUri: props.app ? props.app.logoUri : (manifest ? manifest.logo_uri : ''),
+            redirectUris: redirectUris ? redirectUris : '',
+            scope: scope ? scope : '',
+            logoUri: props.app && props.app.logoUri || '',
             briefDescription: props.app && props.app.briefDescription || '',
             tokenEndpointAuthMethod: clientJSON && clientJSON.tokenEndpointAuthMethod || 'NONE',
             clientJSON: props.app ? clientJSON : {},
@@ -29,7 +28,7 @@ class AppDialog extends Component {
             copyType: props.app ? props.app.copyType : 'MASTER',
         };
 
-        let isReplica = app.copyType === 'REPLICA' || !!manifest;
+        let isReplica = app.copyType === 'REPLICA';
 
         this.state = {
             value: 'PublicClient',
@@ -39,10 +38,6 @@ class AppDialog extends Component {
             originalApp: Object.assign({}, app),
             isReplica
         }
-    }
-
-    componentDidMount () {
-        this.props.manifest && this.state.app.logoUri && this.loadImageFromWeb();
     }
 
     componentWillReceiveProps (nextProps) {
@@ -104,8 +99,7 @@ class AppDialog extends Component {
                 <div className='paper-body'>
                     <form>
                         <TextField floatingLabelText='App Name*' fullWidth value={this.state.app.clientName} hintText='Human Readable Name for Your App e.g.: Growth Chart' disabled={this.state.isReplica}
-                                   onChange={(_e, newVal) => this.onChange('clientName', newVal)} underlineFocusStyle={underlineFocusStyle} floatingLabelFocusStyle={floatingLabelFocusStyle}/>
-                        <br/>
+                                   onChange={(_e, newVal) => this.onChange('clientName', newVal)} underlineFocusStyle={underlineFocusStyle} floatingLabelFocusStyle={floatingLabelFocusStyle}/><br/>
                         <div>
                             <div style={{ color: 'rgba(0, 0, 0, 0.3)', display: 'inline-block', transform: 'translate(0, -20%)' }}>Client Type</div>
                             <DropDownMenu value={this.state.app.tokenEndpointAuthMethod} onChange={(_e, _k, value) => this.onChange('tokenEndpointAuthMethod', value)}
@@ -189,7 +183,7 @@ class AppDialog extends Component {
             let url = protocol + '//' + host;
             app.redirectUris = url;
             this.setState({ app });
-        } else if (app.redirectUris.length === 0) {
+        } else if(app.redirectUris.length === 0) {
             let pathArray = this.state.app.launchUri.split('/');
             app.redirectUris = pathArray[0];
             this.setState({ app });
@@ -223,23 +217,8 @@ class AppDialog extends Component {
                 this.setState({ app, changes })
             };
 
-            console.log(input.files[0]);
-
             reader.readAsDataURL(input.files[0]);
         }
-    };
-
-    loadImageFromWeb = () => {
-        let request = new XMLHttpRequest();
-        request.responseType = "blob";
-        request.onload = () => {
-            let app = Object.assign({}, this.state.app);
-            app.logoFile = request.response;
-            this.setState({ app });
-        };
-
-        request.open("GET", this.state.app.logoUri);
-        request.send();
     };
 
     onChange = (prop, val) => {

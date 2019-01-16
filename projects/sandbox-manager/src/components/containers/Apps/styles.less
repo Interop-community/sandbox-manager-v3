@@ -6,23 +6,16 @@
     position: absolute;
     top: -46px;
     .dummy-expander {
-      width: 772px;
+      width: 842px;
       display: inline-block;
       @media (max-width: 1262px) {
-        width: 462px;
+        width: 532px;
       }
       @media (max-width: 927px) {
-        width: 230px;
+        width: 300px;
       }
     }
-    & > .actions > *:last-child {
-      margin-left: 1rem;
-    }
   }
-}
-
-.manifest-load {
-  padding: 0 25px;
 }
 
 .apps-screen-wrapper {
@@ -30,7 +23,7 @@
     max-width: 1570px;
   }
   &.modal {
-    max-height: 38vh;
+    max-height: 56vh;
     overflow: auto;
     width: 100%;
     padding-top: 0;
@@ -58,7 +51,7 @@
       &:hover, &.active {
         .card-title, .card-actions-wrapper {
           transition: all .5s;
-          bottom: 0 !important;
+          bottom: 0;
           .app-name {
             &:not(.long) {
               display: none;

@@ -789,20 +789,22 @@ export function fetchIntent (id) {
     }
 }
 
-export function fetchResource (id) {
+export function fetchResource (res) {
     return dispatch => {
         if (window.fhirClient) {
             dispatch(setFetchSingleResource(true));
-            window.fhirClient.api.read({ type: 'Resource', id })
-                .done(patient => {
-                    dispatch(setSingleResource(patient.data));
-                    dispatch(setFetchSingleResource(false))
+            let url = `${window.fhirClient.server.serviceUrl}/${res}`;
+
+            API.get(url, dispatch)
+                .then(res => {
+                    if (!res.issue) {
+                        dispatch(setSingleResource(res));
+                    } else {
+                        dispatch(setFetchingSingleResourceError(res));
+                    }
                 })
-                .fail(e => {
-                    console.log(e);
-                    dispatch(setFetchingSingleResourceError(e));
-                    dispatch(setFetchSingleResource(false))
-                });
+                .catch(e => dispatch(setFetchingSingleResourceError(e)))
+                .finally(() => dispatch(setFetchSingleResource(false)));
         }
     }
 }
