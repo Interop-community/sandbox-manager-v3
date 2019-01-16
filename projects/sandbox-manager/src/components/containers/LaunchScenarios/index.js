@@ -517,8 +517,6 @@ const mapStateToProps = state => {
         user: state.users.oauthUser,
         apps: state.apps.apps,
         fetchingSingleEncounter: state.sandbox.fetchingSingleEncounter,
-        fetchingSingleLocation: state.sandbox.fetchingSingleLocation,
-        fetchingSingleResource: state.sandbox.fetchingSingleResource,
         modifyingCustomContext: state.sandbox.modifyingCustomContext,
 
         singleEncounterLoadingError: state.sandbox.singleEncounterLoadingError,

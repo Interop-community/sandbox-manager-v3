@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { CircularProgress, Card, CardMedia, CardTitle, Dialog, CardActions, FlatButton, RaisedButton, IconButton, FloatingActionButton, RadioButton, Paper, Snackbar, TextField } from 'material-ui';
+import { CircularProgress, Card, CardMedia, CardTitle, Dialog, CardActions, FlatButton, RaisedButton, IconButton, FloatingActionButton, RadioButton, Paper, Snackbar } from 'material-ui';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import DownloadIcon from 'material-ui/svg-icons/file/cloud-download';
 import LaunchIcon from 'material-ui/svg-icons/action/launch';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import Page from 'sandbox-manager-lib/components/Page';
 import ConfirmModal from 'sandbox-manager-lib/components/ConfirmModal';
-import API from '../../../lib/api';
 import {
     lookupPersonasStart, app_setScreen, doLaunch, fetchPersonas, loadSandboxApps, createApp, updateApp, deleteApp, loadApp,
     getDefaultUserForSandbox, getPersonasPage, resetPersonas, copyToClipboard
@@ -22,10 +20,6 @@ import DohMessage from "sandbox-manager-lib/components/DohMessage";
 
 import './styles.less';
 import muiThemeable from "material-ui/styles/muiThemeable";
-import { isUrlValid } from '../../../lib/misc';
-
-const postfix = '/.well-known/smart/manifest.json';
-const neededProps = ['software_id', 'client_name', 'client_uri', 'logo_uri', 'launch_url', 'redirect_uris', 'scope', 'token_endpoint_auth_method', 'grant_types', 'fhir_versions'];
 
 class Apps extends Component {
 
@@ -35,14 +29,10 @@ class Apps extends Component {
         this.state = {
             selectedApp: undefined,
             appToLaunch: undefined,
-            manifest: undefined,
             registerDialogVisible: false,
-            loadingManifest: false,
-            loadDialogVisible: false,
             showConfirmModal: false,
             createApp: undefined,
             appIsLoading: false,
-            manifestURL: '',
             textSelected: undefined
         };
     }
@@ -63,18 +53,13 @@ class Apps extends Component {
         let appsList = this.props.apps ? this.props.apps.slice() : [];
         appsList.sort((a, b) => a.clientName.localeCompare(b.clientName));
 
-        let apps = appsList.map((app, index) => {
-            let titleStyle = { backgroundColor: 'rgba(0,87,120, 0.75)' };
-            if (!this.props.modal && !app.briefDescription) {
-                titleStyle.height = '39%';
-                titleStyle.bottom = '-18%';
-            }
-            return <Card title={app.clientName} className={`app-card ${this.props.modal ? 'small' : ''} ${this.state.toggledApp === app.id ? 'active' : ''}`} key={index}
-                         onTouchStart={() => this.appCardClick(app)} onClick={() => this.props.onCardClick && this.props.onCardClick(app)}>
+        let apps = appsList.map((app, index) => (
+            <Card title={app.clientName} className={`app-card ${this.props.modal ? 'small' : ''} ${this.state.toggledApp === app.id ? 'active' : ''}`} key={index}
+                  onTouchStart={() => this.appCardClick(app)} onClick={() => this.props.onCardClick && this.props.onCardClick(app)}>
                 <CardMedia className='media-wrapper'>
                     <img style={{ height: '100%' }} src={app.logoUri || 'https://content.hspconsortium.org/images/hspc/icon/HSPCSandboxNoIconApp-512.png'} alt='HSPC Logo'/>
                 </CardMedia>
-                <CardTitle className='card-title' style={titleStyle}>
+                <CardTitle className='card-title' style={{ backgroundColor: 'rgba(0,87,120, 0.75)' }}>
                     <h3 className='app-name'>{app.clientName}</h3>
                     <h3 className='app-name long'>{app.clientName.substring(0, 50)}</h3>
                     {this.props.modal && <RadioButton className='app-radio' value="selected" checked={this.props.selectedApp ? app.id === this.props.selectedApp.id : false}/>}
@@ -87,7 +72,7 @@ class Apps extends Component {
                                 icon={<SettingsIcon style={{ width: '24px', height: '24px' }}/>} label='Settings'/>
                 </CardActions>}
             </Card>
-        });
+        ));
 
         let props = {
             type: 'Patient', click: this.doLaunch, personaList: this.props.personas, modal: true, theme: this.props.muiTheme.palette, lookupPersonasStart: this.props.lookupPersonasStart,
@@ -98,7 +83,7 @@ class Apps extends Component {
         let createAppClientJSON = this.state.createdApp && this.state.createdApp.clientJSON ? JSON.parse(this.state.createdApp.clientJSON) : {};
 
         let dialog = (this.state.selectedApp && !this.state.appIsLoading) || this.state.registerDialogVisible
-            ? <AppDialog key={this.state.selectedApp && this.state.selectedApp.clientId || 1} onSubmit={this.appSubmit} onDelete={this.toggleConfirmation} manifest={this.state.manifest}
+            ? <AppDialog key={this.state.selectedApp && this.state.selectedApp.clientId || 1} onSubmit={this.appSubmit} onDelete={this.toggleConfirmation}
                          muiTheme={this.props.muiTheme} app={app} open={(!!this.state.selectedApp && !this.state.appIsLoading) || this.state.registerDialogVisible}
                          onClose={this.closeAll} doLaunch={this.doLaunch} copyToClipboard={this.props.copyToClipboard}/>
             : this.state.appToLaunch
@@ -131,29 +116,7 @@ class Apps extends Component {
                             </div>
                         </Paper>
                     </Dialog>
-                    : this.state.loadDialogVisible
-                        ? <Dialog modal={false} open={!!this.state.loadDialogVisible} onRequestClose={this.closeAll} bodyClassName='created-app-dialog' autoScrollBodyContent
-                                  actions={[
-                                      <RaisedButton primary label='Load' onClick={this.loadManifest} disabled={!isUrlValid(this.state.manifestURL) || this.state.loadingManifest}/>
-                                  ]}>
-                            <Paper className='paper-card'>
-                                <IconButton style={{ color: this.props.muiTheme.palette.primary5Color }} className="close-button" onClick={this.closeAll}>
-                                    <i className="material-icons">close</i>
-                                </IconButton>
-                                <h3>Load manifest</h3>
-                                <div className="manifest-load">
-                                    <div style={{ width: '70%', display: 'inline-block', verticalAlign: 'middle' }}>
-                                        <TextField multiLine floatingLabelText='Manifest URL' value={this.state.manifestURL} fullWidth onChange={(_, a) => this.setState({ manifestURL: a.trim() })}
-                                                   disabled={this.state.loadingManifest}/>
-                                    </div>
-                                    <div style={{ width: '30%', display: 'inline-block', verticalAlign: 'middle', textAlign: 'center' }}>
-                                        <RaisedButton label='Load from file' onClick={() => this.refs.file.click()} disabled={this.state.loadingManifest}/>
-                                        <input ref='file' type='file' style={{ 'display': 'none' }} onChange={this.onFileInput}/>
-                                    </div>
-                                </div>
-                            </Paper>
-                        </Dialog>
-                        : null;
+                    : null;
 
         return <Page noTitle={this.props.modal} title={this.props.title ? this.props.title : 'Registered Apps'}>
             <div className='apps-page-wrapper'>
@@ -162,9 +125,6 @@ class Apps extends Component {
                         <span className='dummy-expander'/>
                         <FloatingActionButton onClick={() => this.setState({ registerDialogVisible: true })}>
                             <ContentAdd/>
-                        </FloatingActionButton>
-                        <FloatingActionButton onClick={() => this.setState({ loadDialogVisible: true })}>
-                            <DownloadIcon/>
                         </FloatingActionButton>
                     </div>
                 </div>}
@@ -188,49 +148,6 @@ class Apps extends Component {
                       bodyStyle={{ margin: '0 auto', backgroundColor: palette.primary2Color, textAlign: 'center' }}/>
         </Page>
     }
-
-    loadManifest = () => {
-        //Prepare the url
-        let url = this.state.manifestURL;
-
-        // remove trailing slash if present
-        url[url.length - 1] === '/' && (url = url.substr(0, url.length - 1));
-
-        // add the final part of the path if not there
-        url.indexOf(postfix) === -1 && (url += postfix);
-
-        this.setState({ loadingManifest: true });
-        API.getNoAuth(url)
-            .then(manifest => {
-                let keys = Object.keys(manifest);
-                if (neededProps.every(p => keys.indexOf(p) !== -1)) {
-                    this.setState({ registerDialogVisible: true, loadDialogVisible: false, loadingManifest: false, manifest });
-                } else {
-                    this.setState({ loadingManifest: false });
-                }
-            })
-            .catch(_ => {
-                this.setState({ loadingManifest: false });
-            });
-    };
-
-    onFileInput = () => {
-        let input = this.refs.file;
-        if (input.files && input.files[0]) {
-            let reader = new FileReader();
-
-            reader.onload = (e) => {
-                try {
-                    let manifest = JSON.parse(atob(e.target.result.split(',')[1]));
-                    this.setState({ registerDialogVisible: true, loadDialogVisible: false, loadingManifest: false, manifest });
-                } catch (e) {
-                    console.log(e);
-                }
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    };
 
     search = (type, crit) => {
         this.state.appToLaunch && this.state.appToLaunch.samplePatients
@@ -267,11 +184,7 @@ class Apps extends Component {
     };
 
     closeAll = () => {
-        !this.state.loadingManifest &&
-        this.setState({
-            selectedApp: undefined, appToLaunch: undefined, registerDialogVisible: false, showConfirmModal: false, createdApp: undefined, loadDialogVisible: false,
-            loadingManifest: false
-        });
+        this.setState({ selectedApp: undefined, appToLaunch: undefined, registerDialogVisible: false, showConfirmModal: false, createdApp: undefined });
     };
 
     handleAppSelect = (event, app) => {

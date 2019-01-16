@@ -141,9 +141,13 @@ class Create extends Component {
                 let click = selectedPersona => {
                     selectedPersona && this.setState({ selectedPersona });
                 };
+                let close = () => {
+                    this.setState({ showPersonaSelector: false });
+                    setTimeout(() => this.setState({ personaType: undefined }), 400);
+                };
                 let props = {
                     type, click, personaList, modal: true, theme: palette, lookupPersonasStart: this.props.lookupPersonasStart, selected: this.state.selectedPersona,
-                    search: this.props.fetchPersonas, loading: this.props.personaLoading, pagination: this.props.patientsPagination,
+                    search: this.props.fetchPersonas, loading: this.props.personaLoading, close, pagination: this.props.patientsPagination,
                     next: () => this.props.getNextPersonasPage(type, this.props.patientsPagination), prev: () => this.props.getPrevPersonasPage(type, this.props.patientsPagination)
                 };
                 return <div>

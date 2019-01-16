@@ -25,14 +25,6 @@ export default {
         });
     },
 
-    getNoAuth (url, dispatch) {
-        return new Promise((resolve, reject) => {
-            fetch(url, get_config_no_auth("GET"))
-                .then(response => parseResponse(response, dispatch, resolve, reject))
-                .catch(e => parseError(e, dispatch, reject));
-        });
-    },
-
     delete (url, dispatch) {
         return new Promise((resolve, reject) => {
             fetch(url, get_config("DELETE"))
@@ -48,26 +40,6 @@ const get_config = (method, data, isFormData) => {
     let CONFIG = {
         headers: {
             Authorization: window.fhirClient && window.fhirClient.server && window.fhirClient.server.auth ? `BEARER ${window.fhirClient.server.auth.token}` : undefined,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method
-    };
-
-    if (data) {
-        CONFIG.body = JSON.stringify(data);
-        if (isFormData) {
-            delete CONFIG.headers['Content-Type'];
-            CONFIG.body = data;
-        }
-    }
-
-    return CONFIG;
-};
-
-const get_config_no_auth = (method, data, isFormData) => {
-    let CONFIG = {
-        headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
         },

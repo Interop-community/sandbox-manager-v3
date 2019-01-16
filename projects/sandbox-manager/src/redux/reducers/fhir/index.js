@@ -26,16 +26,8 @@ export default function (state = initialState, action) {
         case types.FHIR_SET_CUSTOM_SEARCH_EXECUTING:
             state.executing = action.payload.executing;
             break;
-        case types.FHIR_SET_CUSTOM_SEARCH_GETTING_NEXT_PAGE:
-            state.gettingNextPage = action.payload.executing;
-            break;
         case types.FHIR_SET_CUSTOM_SEARCH_RESULTS:
             state.customSearchResults = action.payload.results;
-            break;
-        case types.FHIR_SET_CUSTOM_SEARCH_RESULTS_NEXT:
-            let results = action.payload.results;
-            results.entry = state.customSearchResults.entry.concat(results.entry);
-            state.customSearchResults = results;
             break;
         case types.FHIR_SET_EXPORT_SEARCH_RESULTS:
             state.customExportResults = action.payload.exportResults;

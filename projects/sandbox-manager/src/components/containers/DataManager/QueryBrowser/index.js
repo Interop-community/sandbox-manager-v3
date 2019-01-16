@@ -25,30 +25,20 @@ export default class QueryBrowser extends Component {
             showDialog: false,
             selectedEntry: undefined,
             query: '',
-            activeTab: 'summary',
-            canFit: 2
+            activeTab: 'summary'
         };
     }
 
     componentDidMount () {
-        let canFit = this.calcCanFit();
-
-        this.setState({ canFit });
-
         this.refs.query.refs.searchTextField.input.addEventListener('keypress', this.submitMaybe);
-
-        let element = document.getElementsByClassName('stage')[0];
-        element.addEventListener('scroll', this.scroll);
     }
 
     componentWillUnmount () {
         this.refs.query.refs.searchTextField.input.removeEventListener('keypress', this.submitMaybe);
-        let element = document.getElementsByClassName('stage')[0];
-        element && element.removeEventListener('scroll', this.scroll);
     }
 
     componentWillReceiveProps (nextProps) {
-        nextProps.results && nextProps.results.issue && this.setState({ activeTab: 'json' });
+        nextProps.results && nextProps.results.issue && this.setState({activeTab: 'json'});
     }
 
     render () {
@@ -56,7 +46,7 @@ export default class QueryBrowser extends Component {
         let json = this.state.activeTab === 'json';
         let underlineFocusStyle = { borderColor: palette.primary2Color };
         let floatingLabelFocusStyle = { color: palette.primary2Color };
-
+        
         return <div className='query-browser-wrapper'>
             <Dialog paperClassName='query-result-dialog' open={this.state.showDialog} onRequestClose={this.toggle}>
                 <Paper className='paper-card'>
@@ -76,14 +66,14 @@ export default class QueryBrowser extends Component {
             <div className='fhir-query-wrapper'>
                 <div className='input-wrapper'>
                     <AutoComplete ref='query' id='query' searchText={this.state.query} fullWidth floatingLabelText='FHIR Query' onUpdateInput={query => this.setState({ query })}
-                                  dataSource={SUGGESTIONS} filter={AutoComplete.caseInsensitiveFilter} onNewRequest={this.search}
+                                  dataSource={SUGGESTIONS} filter={AutoComplete.caseInsensitiveFilter} onNewRequest={() => this.props.search(this.state.query)}
                                   underlineFocusStyle={underlineFocusStyle} floatingLabelFocusStyle={floatingLabelFocusStyle}/>
                 </div>
                 {this.state.query.length > 0 &&
                 <FloatingActionButton onClick={this.clearQuery} className='clear-query-button' mini secondary>
                     <CloseIcon/>
                 </FloatingActionButton>}
-                <FloatingActionButton onClick={this.search} mini>
+                <FloatingActionButton onClick={() => this.props.search(this.state.query)} mini>
                     <SearchIcon/>
                 </FloatingActionButton>
             </div>
@@ -100,19 +90,18 @@ export default class QueryBrowser extends Component {
                             <div className='loader-wrapper'><CircularProgress size={80} thickness={5}/></div>
                             : <List>
                                 {this.props.results && this.props.results.entry && this.props.results.entry.length > 0 ? this.props.results.entry.map((e, i) => {
-                                        let entry = parseEntry(e);
-                                        return <ListItem key={i} onClick={() => this.setState({ showDialog: true, selectedEntry: e })} className='result-list-item'>
-                                            {entry.props.map((item, index) => {
-                                                return <div className='result-item' key={index}>
-                                                    <span>{item.label}: </span>
-                                                    <span>{item.value}</span>
-                                                </div>
-                                            })}
-                                        </ListItem>
-                                    })
+                                    let entry = parseEntry(e);
+                                    return <ListItem key={i} onClick={() => this.setState({ showDialog: true, selectedEntry: e })} className='result-list-item'>
+                                        {entry.props.map((item, index) => {
+                                            return <div className='result-item' key={index}>
+                                                <span>{item.label}: </span>
+                                                <span>{item.value}</span>
+                                            </div>
+                                        })}
+                                    </ListItem>
+                                })
                                     : <div>{this.props.results != null && <span>No Results Found</span>}</div>}
                             </List>}
-                        {this.props.gettingNextPage && <div className='loader-wrapper-small'><CircularProgress size={80} thickness={5}/></div>}
                     </div>
                 </Tab>
                 <Tab label={<span><CodeIcon style={{ color: json ? palette.primary5Color : palette.primary3Color }}/> JSON</span>} className={'json tab' + (json ? ' active' : '')}
@@ -137,31 +126,10 @@ export default class QueryBrowser extends Component {
     };
 
     submitMaybe = (event) => {
-        [10, 13].indexOf(event.charCode) >= 0 && this.search();
+        [10, 13].indexOf(event.charCode) >= 0 && this.props.search(this.state.query);
     };
 
     setActiveTab = (tab) => {
         this.setState({ activeTab: tab });
-    };
-
-    search = () => {
-        let query = this.state.query;
-        query += `?_count=${this.state.canFit}`;
-        this.props.search(query);
-    };
-
-    calcCanFit = () => {
-        let containerHeight = document.getElementsByClassName('data-manager-wrapper')[0].clientHeight;
-        // we calculate how much patients we can show on the screen and get just that much plus two so that we have content below the fold
-        return Math.ceil((containerHeight - 210) / 100) + 2;
-    };
-
-    scroll = () => {
-        let stage = document.getElementsByClassName('stage')[0];
-        let dif = stage.scrollHeight - stage.scrollTop - stage.offsetHeight;
-
-        let next = this.props.results.link && this.props.results.link.find(i => i.relation === 'next');
-        let shouldFetch = dif <= 50 && next && !this.props.gettingNextPage;
-        shouldFetch && this.props.next(next);
     };
 }
