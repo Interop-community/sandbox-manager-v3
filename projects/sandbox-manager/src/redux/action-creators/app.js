@@ -6,6 +6,8 @@ export function resetState () {
 }
 
 export function app_setScreen (screen) {
+    ga && ga('set', 'page', screen);
+    ga && ga('send', 'pageview');
     return { type: types.SET_APP_SCREEN, payload: screen }
 }
 
