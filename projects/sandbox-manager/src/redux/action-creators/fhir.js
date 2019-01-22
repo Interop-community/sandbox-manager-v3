@@ -33,6 +33,27 @@ export function fhir_setCustomSearchExecuting (executing) {
     };
 }
 
+export function fhir_setLoadingMetadata (loading) {
+    return {
+        type: types.FHIR_SET_METADATA_LOADING,
+        payload: { loading }
+    };
+}
+
+export function fhir_setMetadata (data) {
+    return {
+        type: types.FHIR_SET_METADATA,
+        payload: { data }
+    };
+}
+
+export function fhir_setResourcesCount (data) {
+    return {
+        type: types.FHIR_SET_RESOURCES_COUNT,
+        payload: { data }
+    };
+}
+
 export function fhir_setCustomSearchGettingNextPage (executing) {
     return {
         type: types.FHIR_SET_CUSTOM_SEARCH_GETTING_NEXT_PAGE,
@@ -99,6 +120,41 @@ export function customSearch (query, endpoint) {
     }
 }
 
+export function getMetadata () {
+    return dispatch => {
+        dispatch(fhir_setLoadingMetadata(true));
+        API.get(`${window.fhirClient.server.serviceUrl}/metadata?_format=json&_pretty=true`, dispatch)
+            .then(data => {
+                dispatch(fhir_setMetadata(data));
+                dispatch(getResourcesCount(data));
+                dispatch(fhir_setLoadingMetadata(false));
+            })
+            .catch(() => {
+                dispatch(fhir_setLoadingMetadata(false));
+            });
+    }
+}
+
+export function getResourcesCount (data) {
+    return dispatch => {
+        let counts = {};
+        let promises = [];
+        data.rest[0].resource.map(res => {
+            promises.push(new Promise(resolve => {
+                API.get(`${window.fhirClient.server.serviceUrl}/${res.type}?_count=1`, dispatch)
+                    .then(d => {
+                        counts[res.type] = d.total;
+                        resolve();
+                    })
+            }))
+        });
+        Promise.all(promises)
+            .then(() => {
+                dispatch(fhir_setResourcesCount(counts));
+            })
+    };
+}
+
 export function customSearchNextPage (link) {
     return dispatch => {
         dispatch(fhir_setCustomSearchGettingNextPage(true));
@@ -114,7 +170,7 @@ export function customSearchNextPage (link) {
     }
 }
 
-export function clearSearchResults() {
+export function clearSearchResults () {
     return dispatch => {
         dispatch(fhir_setCustomSearchResults());
     }

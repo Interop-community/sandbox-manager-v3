@@ -23,6 +23,15 @@ export default function (state = initialState, action) {
         case types.APP_RESET_STATE:
             state = initialState;
             break;
+        case types.FHIR_SET_METADATA_LOADING:
+            state.metadataLoading = action.payload.loading;
+            break;
+        case types.FHIR_SET_METADATA:
+            state.metadata = action.payload.data;
+            break;
+        case types.FHIR_SET_RESOURCES_COUNT:
+            state.metadataCounts = action.payload.data;
+            break;
         case types.FHIR_SET_CUSTOM_SEARCH_EXECUTING:
             state.executing = action.payload.executing;
             break;

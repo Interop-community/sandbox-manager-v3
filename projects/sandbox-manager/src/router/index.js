@@ -12,6 +12,7 @@ import UserManagement from '../components/containers/UserManagement';
 import Dashboard from '../components/containers/Dashboard';
 import Start from '../components/containers/Start';
 import AfterAuth from '../components/containers/AfterAuth';
+import ResourceBrowser from '../components/containers/ResourceBrowser';
 import CreateSandbox from '../components/containers/CreateSandbox';
 import DataManager from '../components/containers/DataManager';
 
@@ -25,6 +26,7 @@ export default <Router>
             <Route path='/:sandboxId/practitioners' component={Persona} />
             <Route path='/:sandboxId/personas' component={Persona} />
             <Route path='/:sandboxId/data-manager' component={DataManager} />
+            <Route path='/:sandboxId/resource-browser' component={ResourceBrowser} />
             <Route path='/:sandboxId/user-management' component={UserManagement} />
             <Route path='/:sandboxId/integration' component={EHRIntegration} />
             <Route path='/:sandboxId/settings' component={Settings} />
