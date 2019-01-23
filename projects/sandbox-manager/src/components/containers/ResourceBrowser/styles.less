@@ -79,6 +79,46 @@
 
         & > div {
           height: 100%;
+
+          & > div {
+            height: 100%;
+          }
+        }
+
+        .resource-object-wrapper {
+          padding: 10px 0;
+          height: ~'calc(100% - 85px)';
+          overflow: auto;
+
+          .resource-item-wrapper {
+            display: inline-block;
+            width: 32%;
+            height: 50px;
+            border: 1px solid #f5f5f5;
+            box-sizing: border-box;
+            padding: 8px;
+            overflow: hidden;
+            margin: 8px 5px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            box-shadow: rgba(50, 50, 50, .5) 2px 2px 5px;
+            transition: all .4s;
+
+            &:hover {
+              cursor: pointer;
+              box-shadow: rgba(50, 50, 50, .6) 3px 3px 7px;
+              background-color: rgba(245, 245, 245, .3);
+              transition: all .4s;
+            }
+
+            .title > div, .id {
+              display: block;
+              width: 100%;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
         }
       }
     }

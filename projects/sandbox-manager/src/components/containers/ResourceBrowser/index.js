@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { List, Subheader, ListItem, Card, CardTitle, DatePicker, TextField } from 'material-ui';
 import { bindActionCreators } from 'redux';
-import { getMetadata, app_setScreen } from '../../../redux/action-creators';
+import { getMetadata, app_setScreen, fetchResources } from '../../../redux/action-creators';
 import { connect } from 'react-redux';
 import ReactJson from 'react-json-view';
 import withErrorHandler from 'sandbox-manager-lib/hoc/withErrorHandler';
@@ -52,6 +52,10 @@ class ResourceBrowser extends Component {
         this.props.getMetadata();
     }
 
+    componentWillUpdate (nextProps, nextState) {
+        nextState.selectedType !== this.state.selectedType && this.props.fetchResources(nextState.selectedType.type);
+    }
+
     render () {
         return <div className='resource-browser'>
             <div className='resources-wrapper card-with-border'>
@@ -96,7 +100,11 @@ class ResourceBrowser extends Component {
                                 Resource(s)
                             </CardTitle>
                             <div className='resource-object-wrapper'>
-
+                                {this.props.resources && this.props.resources.map(resource => {
+                                    return <div key={resource.resource.id} className='resource-item-wrapper'>
+                                        {this.getResourceView(resource)}
+                                    </div>
+                                })}
                             </div>
                         </Card>
                     </div>
@@ -104,14 +112,27 @@ class ResourceBrowser extends Component {
             </div>
         </div>;
     }
+
+    getResourceView = (resource) => {
+        if (resource.resource.text) {
+            return <Fragment>
+                <div className='title' dangerouslySetInnerHTML={{ __html: resource.resource.text.div }}/>
+                <div className='id subscript'>
+                    ID: {resource.resource.id}
+                </div>
+            </Fragment>
+        }
+    }
 }
 
 const mapStateToProps = state => {
+    let resources = state.fhir.resources && state.fhir.resources.entry;
     return {
         metadata: state.fhir.metadata,
-        metadataCounts: state.fhir.metadataCounts
+        metadataCounts: state.fhir.metadataCounts,
+        resources
     }
 };
-const mapDispatchToProps = dispatch => bindActionCreators({ getMetadata, app_setScreen }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getMetadata, app_setScreen, fetchResources }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ResourceBrowser));

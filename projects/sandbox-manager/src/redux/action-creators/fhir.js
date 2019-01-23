@@ -40,9 +40,23 @@ export function fhir_setLoadingMetadata (loading) {
     };
 }
 
+export function fhir_setLoadingResources (loading) {
+    return {
+        type: types.FHIR_SET_RESOURCES_LOADING,
+        payload: { loading }
+    };
+}
+
 export function fhir_setMetadata (data) {
     return {
         type: types.FHIR_SET_METADATA,
+        payload: { data }
+    };
+}
+
+export function fhir_setResources (data) {
+    return {
+        type: types.FHIR_SET_RESOURCES,
         payload: { data }
     };
 }
@@ -131,6 +145,20 @@ export function getMetadata () {
             })
             .catch(() => {
                 dispatch(fhir_setLoadingMetadata(false));
+            });
+    }
+}
+
+export function fetchResources (type) {
+    return dispatch => {
+        dispatch(fhir_setLoadingResources(true));
+        API.get(`${window.fhirClient.server.serviceUrl}/${type}?_count=40`, dispatch)
+            .then(data => {
+                dispatch(fhir_setResources(data));
+                dispatch(fhir_setLoadingResources(false));
+            })
+            .catch(() => {
+                dispatch(fhir_setLoadingResources(false));
             });
     }
 }

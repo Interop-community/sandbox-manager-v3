@@ -26,8 +26,17 @@ export default function (state = initialState, action) {
         case types.FHIR_SET_METADATA_LOADING:
             state.metadataLoading = action.payload.loading;
             break;
+        case types.FHIR_SET_RESOURCES_LOADING:
+            state.resourcesLoading = action.payload.loading;
+            if (action.payload.loading) {
+                state.resources = undefined;
+            }
+            break;
         case types.FHIR_SET_METADATA:
             state.metadata = action.payload.data;
+            break;
+        case types.FHIR_SET_RESOURCES:
+            state.resources = action.payload.data;
             break;
         case types.FHIR_SET_RESOURCES_COUNT:
             state.metadataCounts = action.payload.data;
@@ -54,6 +63,8 @@ export default function (state = initialState, action) {
             state.customSearchResults = null;
             state.customExportResults = null;
             state.executing = false;
+            state.resources = false;
+            state.resourcesLoading = false;
             break;
     }
 
