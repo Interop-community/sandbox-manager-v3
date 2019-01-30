@@ -160,6 +160,13 @@ export function modifyingCustomContext (modifying) {
     }
 }
 
+export function modifyingPatientBanner (modifying) {
+    return {
+        type: actionTypes.MODIFY_PATIENT_BANNER,
+        payload: { modifying }
+    }
+}
+
 export function setFetchingSingleLocationError (error) {
     return {
         type: actionTypes.SET_SINGLE_LOCATION_LOAD_ERROR,
@@ -527,7 +534,9 @@ export function updateNeedPatientBanner (scenario) {
         let configuration = state.config.xsettings.data.sandboxManager;
         let url = `${configuration.sandboxManagerApiUrl}/launchScenario/${scenario.id}`;
 
-        API.put(url, scenario, dispatch).finally(() => dispatch(modifyingCustomContext(false)));
+        dispatch(modifyingPatientBanner(true));
+
+        API.put(url, scenario, dispatch).finally(() => dispatch(modifyingPatientBanner(false)));
     }
 }
 

@@ -386,15 +386,16 @@ class LaunchScenarios extends Component {
                     </span>
                         <span className='section-value' style={lightColor}>
                             <FullScreenIcon style={iconStyleLight}/>
-                            <Toggle className='toggle' label='Needs Patient Banner' style={{ display: 'inline-block', bottom: '2px' }} labelStyle={needsBanner}
+                            {!this.props.modifyingPatientBanner && <Toggle className='toggle' label='Needs Patient Banner' style={{ display: 'inline-block', bottom: '2px' }} labelStyle={needsBanner}
                                     thumbStyle={{ backgroundColor: this.props.muiTheme.palette.primary5Color }}
                                     trackStyle={{ backgroundColor: this.props.muiTheme.palette.primary7Color }} toggled={selectedScenario.needPatientBanner === 'T'}
                                     thumbSwitchedStyle={{ backgroundColor: this.props.muiTheme.palette.primary2Color }}
                                     trackSwitchedStyle={{ backgroundColor: this.props.muiTheme.palette.primary2Color, opacity: '.5' }}
                                     onToggle={e => {
                                         this.toggleNeedsPatientBanner(e, selectedScenario)
-                                    }}/>
-                            {selectedScenario.needPatientBanner !== 'T' && <span className='sub'>App will open in the EHR Simulator.</span>}
+                                    }}/>}
+                            {!this.props.modifyingPatientBanner && selectedScenario.needPatientBanner !== 'T' && <span className='sub'>App will open in the EHR Simulator.</span>}
+                            {this.props.modifyingPatientBanner && <CircularProgress className='progress' size={20} thickness={2}/>}
                         </span>
                     </div>
                 </div>
@@ -520,6 +521,7 @@ const mapStateToProps = state => {
         fetchingSingleLocation: state.sandbox.fetchingSingleLocation,
         fetchingSingleResource: state.sandbox.fetchingSingleResource,
         modifyingCustomContext: state.sandbox.modifyingCustomContext,
+        modifyingPatientBanner: state.sandbox.modifyingPatientBanner,
 
         singleEncounterLoadingError: state.sandbox.singleEncounterLoadingError,
         singleLocationLoadingError: state.sandbox.singleLocationLoadingError,
