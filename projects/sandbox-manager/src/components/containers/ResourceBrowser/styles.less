@@ -1,0 +1,142 @@
+.resource-browser {
+  padding: 10px;
+
+  .resources-wrapper {
+    width: 330px;
+    height: ~'calc(100% - 21px)';
+    display: inline-block;
+    vertical-align: top;
+    overflow: hidden;
+    margin-right: 10px;
+    margin-top: 5px;
+
+    & > div {
+      height: 100%;
+
+      & > div {
+        height: 100%;
+      }
+    }
+  }
+
+  .content-wrapper {
+    height: ~'calc(100% - 16px)';
+    width: ~'calc(100% - 340px)';
+    display: inline-block;
+    vertical-align: top;
+    overflow: hidden;
+
+    .resource-search-wrapper {
+      height: 200px;
+      padding: 5px;
+
+      .search-crit-wrapper {
+        height: 150px;
+        padding: 0 10px;
+        overflow: auto;
+
+        .search-crit-field {
+          & > div:first-of-type {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: inline-block;
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .resource-results-wrapper {
+      height: ~'calc(100% - 200px)';
+      overflow: hidden;
+      padding: 5px;
+
+      .definition-wrapper {
+        height: 100%;
+        overflow: hidden;
+        width: 400px;
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 10px;
+
+        & > div {
+          height: 100%;
+
+          .react-json-view {
+            height: ~'calc(100% - 65px)';
+            overflow-x: hidden;
+            overflow-y: auto;
+          }
+        }
+      }
+
+      .resource-wrapper {
+        display: inline-block;
+        vertical-align: top;
+        width: ~'calc(100% - 410px)';
+        height: 100%;
+
+        & > div {
+          height: 100%;
+
+          & > div {
+            height: 100%;
+          }
+        }
+
+        .resource-object-wrapper {
+          padding: 10px 0;
+          height: ~'calc(100% - 85px)';
+          overflow: auto;
+
+          .resource-item-wrapper {
+            display: inline-block;
+            width: 32%;
+            height: 50px;
+            border: 1px solid #f5f5f5;
+            box-sizing: border-box;
+            padding: 8px;
+            overflow: hidden;
+            margin: 8px 5px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            box-shadow: rgba(50, 50, 50, .5) 2px 2px 5px;
+            transition: all .4s;
+
+            &:hover {
+              cursor: pointer;
+              box-shadow: rgba(50, 50, 50, .6) 3px 3px 7px;
+              background-color: rgba(245, 245, 245, .3);
+              transition: all .4s;
+            }
+
+            .title > div, .id {
+              display: block;
+              width: 100%;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  .scrollable {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .card-with-border {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px !important;
+    border-radius: 2px !important;
+
+    .card-title {
+      background-color: #f5f5f5;
+    }
+  }
+}

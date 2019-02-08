@@ -12,6 +12,12 @@ export default function (state = initialState, action) {
         case types.PATIENT_DETAILS_FETCH_SUCCESS:
             state.fetching = false;
             break;
+        case types.SET_LOADING_PATIENT_RESOURCES:
+            state.loadingResources = action.payload.loading;
+            break;
+        case types.SET_RESOURCES_FOR_PATIENT:
+            state.resources = action.payload.resources;
+            break;
         case types.PATIENT_DETAILS_FETCH_ERROR:
             state.fetching = false;
             state.fetchingError = action.payload.error;

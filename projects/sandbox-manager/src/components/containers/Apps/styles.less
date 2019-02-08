@@ -2,18 +2,55 @@
   position: relative;
   width: 102%;
   padding-top: 1px;
+
   .filter-wrapper {
     position: absolute;
     top: -46px;
+
     .dummy-expander {
-      width: 842px;
+      width: 772px;
       display: inline-block;
       @media (max-width: 1262px) {
-        width: 532px;
+        width: 462px;
       }
       @media (max-width: 927px) {
-        width: 300px;
+        width: 230px;
       }
+    }
+
+    & > .actions > *:last-child {
+      margin-left: 1rem;
+    }
+  }
+}
+
+.manifest-load {
+  height: 13rem;
+  padding: 0 25px;
+
+  & > div:first-of-type > div:first-of-type {
+    width: ~"calc(100% - 88px - 1rem)" !important;
+    margin-right: 1rem;
+  }
+
+  .sub {
+    font-size: .7rem;
+    display: block;
+    position: relative;
+    height: 11px;
+  }
+
+  .separator {
+    text-align: center;
+    margin: 10px 0;
+    span {
+      padding: 5px 10px;
+      border: 1px solid whitesmoke;
+      margin: 10px 0;
+      display: inline-block;
+      border-radius: 10px;
+      color: rgb(100, 100, 100);
+      font-weight: bold;
     }
   }
 }
@@ -22,40 +59,48 @@
   .screen-content {
     max-width: 1570px;
   }
+
   &.modal {
-    max-height: 56vh;
+    max-height: 38vh;
     overflow: auto;
     width: 100%;
     padding-top: 0;
+
     .app-radio {
       width: auto !important;
       position: absolute !important;
       right: 0;
       top: 11px;
+
       svg {
         fill: white !important;
         color: white !important;
       }
     }
+
     .page-title-wrapper {
       display: none;
     }
+
     .app-card {
       .card-title {
         bottom: -35%;
       }
     }
   }
+
   &:not(.modal) {
     .app-card {
       &:hover, &.active {
         .card-title, .card-actions-wrapper {
           transition: all .5s;
-          bottom: 0;
+          bottom: 0 !important;
+
           .app-name {
             &:not(.long) {
               display: none;
             }
+
             &.long {
               display: inline-block;
             }
@@ -64,6 +109,7 @@
       }
     }
   }
+
   .app-card {
     width: 278px;
     height: 235px;
@@ -71,32 +117,41 @@
     position: relative;
     overflow: hidden;
     margin: 24px 32px 0 0;
+
     .explore-app-button-wrapper {
       padding: 9px 0 !important;
     }
+
     & > div {
       margin: 0 !important;
       padding: 0 !important;
       width: 100%;
       height: 100%;
     }
+
     .media-wrapper {
       height: 100%;
       overflow: hidden;
+
       & > div {
         height: 187px;
       }
+
       &.register {
         border-bottom: 2px solid whitesmoke;
+
         & > div {
           height: 100%;
           width: 100%;
+
           & > div {
             height: 100%;
             width: 100%;
+
             & > button {
               height: 100% !important;
               width: 100%;
+
               & > div {
                 & > svg {
                   margin: 0 !important;
@@ -107,6 +162,7 @@
         }
       }
     }
+
     .card-title {
       position: absolute !important;
       padding-top: 5px !important;
@@ -116,6 +172,7 @@
       bottom: -40%;
       box-sizing: border-box;
       transition: all .5s;
+
       .app-name {
         font-weight: 400;
         margin-top: 5px;
@@ -123,17 +180,20 @@
         font-size: 20px;
         text-align: left;
         min-height: 3rem;
+
         &:not(.long) {
           max-width: 90%;
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
         }
+
         &.long {
           display: none;
           word-break: break-word;
         }
       }
+
       .app-description {
         font-size: 12px;
         white-space: nowrap;
@@ -141,6 +201,7 @@
         overflow: hidden;
       }
     }
+
     .card-actions-wrapper {
       padding: 8px;
       position: absolute !important;
@@ -151,17 +212,21 @@
       display: flex;
       justify-content: flex-start;
       transition: all .5s;
+
       & > * {
         margin-right: 0 !important;
       }
+
       button {
         color: whitesmoke !important;
       }
     }
+
     &.small {
       width: 235px;
       height: 148px;
       min-height: 188px;
+
       &:hover {
         cursor: pointer;
         box-shadow: rgba(0, 0, 0, 0.28) 0 1px 16px, rgba(0, 0, 0, 0.28) 0 8px 16px !important;
@@ -181,10 +246,12 @@
   .paper-body {
     padding: 16px 24px;
   }
+
   .client-id {
     display: inline-block;
     font-size: 14px;
   }
+
   .client-details {
     padding: 3px 20px;
   }
@@ -195,26 +262,32 @@
     width: 100%;
     overflow: auto;
     box-sizing: border-box;
+
     &.auto {
       height: auto;
     }
   }
+
   .paper-card {
     height: 100%;
   }
+
   .app-dialog-actions-wrapper {
     & > * {
       margin-left: 1rem;
     }
   }
+
   .toggle-wrapper {
     margin-top: 1.5rem;
     max-width: 50%;
   }
+
   &:not(.auto) > div:first-child {
     border-bottom: 1px solid whitesmoke !important;
     height: 65vh;
   }
+
   & > div:nth-child(1) {
     padding: 0 !important;
   }
@@ -231,18 +304,21 @@
     top: 17px;
     right: 70px;
   }
+
   & > div > div > div > div {
     padding: 0 !important;
     overflow: hidden !important;
+
     .page-content-wrapper {
       max-height: 74vh !important;
       overflow-y: auto !important;
     }
   }
+
   .close-button {
-    height: 68px!important;
-    width: 68px!important;
-    position: absolute!important;
+    height: 68px !important;
+    width: 68px !important;
+    position: absolute !important;
     right: 0;
   }
 }

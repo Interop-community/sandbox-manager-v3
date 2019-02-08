@@ -33,6 +33,7 @@ class AppDialog extends Component {
         this.state = {
             value: 'PublicClient',
             modalOpen: false,
+            clone: false,
             changes: [],
             app,
             originalApp: Object.assign({}, app),
@@ -59,7 +60,7 @@ class AppDialog extends Component {
         let theme = this.props.muiTheme.palette;
         let iconStyle = { color: theme.primary3Color, fill: theme.primary3Color, width: '24px', height: '24px' };
 
-        if (this.props.app) {
+        if (this.props.app && !this.state.clone) {
             clientId = <div className='label-value'>
                 <span>Client Id: </span>
                 <span>{this.props.app.clientId}</span>
@@ -76,14 +77,15 @@ class AppDialog extends Component {
         }
         let sApp = this.state.app;
 
-        let saveEnabled = this.props.app
+        let saveEnabled = (this.props.app && !this.state.clone)
             ? this.state.changes.length > 0
             : sApp.clientName.length > 2 && sApp.launchUri.length > 2 && sApp.redirectUris.length > 2;
         let actions = [
             <RaisedButton primary label='Save' onClick={this.save} disabled={!saveEnabled}/>
         ];
 
-        this.props.app && actions.push(<RaisedButton backgroundColor={theme.primary4Color} label='Delete' onClick={this.delete} labelColor={theme.primary5Color}/>);
+        this.props.app && !this.state.clone && actions.push(<RaisedButton backgroundColor={theme.primary4Color} label='Delete' onClick={this.delete} labelColor={theme.primary5Color}/>);
+        this.props.app && !this.state.clone && actions.unshift(<RaisedButton secondary label='Clone' onClick={this.clone}/>,);
 
         let paperClasses = 'app-dialog' + (this.props.app ? ' small' : '');
         let underlineFocusStyle = { borderColor: theme.primary2Color };
@@ -110,7 +112,7 @@ class AppDialog extends Component {
                         </div>
                         {clientId}
                         {clientSecret}
-                        <TextField multiLine floatingLabelText='Description' value={this.state.app.briefDescription} fullWidth disabled={this.state.isReplica}
+                        <TextField multiLine floatingLabelText='Description' value={this.state.app.briefDescription} fullWidth disabled={this.state.isReplica && !this.props.manifest}
                                    onChange={(_e, newVal) => this.onChange('briefDescription', newVal)} underlineFocusStyle={underlineFocusStyle} floatingLabelFocusStyle={floatingLabelFocusStyle}/>
                         <TextField floatingLabelText='App Launch URI*' value={this.state.app.launchUri} fullWidth onChange={(_e, newVal) => this.onChange('launchUri', newVal)}
                                    hintText='e.g.: https://mydomain.com/growth-chart/launch.html' underlineFocusStyle={underlineFocusStyle} floatingLabelFocusStyle={floatingLabelFocusStyle}
@@ -134,7 +136,7 @@ class AppDialog extends Component {
                             </a>
                         </div>
                         <TextField fullWidth floatingLabelText='Sample Patients' hintText='e.g.: Patient?_id=SMART-1032702,SMART-621799' underlineFocusStyle={underlineFocusStyle}
-                                   floatingLabelFocusStyle={floatingLabelFocusStyle} disabled={this.state.isReplica}
+                                   floatingLabelFocusStyle={floatingLabelFocusStyle} disabled={this.state.isReplica && !this.props.manifest}
                                    value={this.state.app.samplePatients} onChange={(_e, newVal) => this.onChange('samplePatients', newVal)}/>
                         {this.props.app &&
                         <span className='subscript'>This is a FHIR query to limit the Patient Picker on launch.</span>}
@@ -173,6 +175,13 @@ class AppDialog extends Component {
             </Paper>
         </Dialog>
     }
+
+    clone = () => {
+        let app = Object.assign({}, this.state.app);
+        app.clientName = '';
+        this.setState({ clone: true, isReplica: false, app });
+        this.loadImageFromWeb();
+    };
 
     launchBlur = () => {
         let app = Object.assign({}, this.state.app);
@@ -241,7 +250,7 @@ class AppDialog extends Component {
     };
 
     save = () => {
-        this.props.onSubmit && this.props.onSubmit(this.state.app, this.state.changes);
+        this.props.onSubmit && this.props.onSubmit(this.state.app, this.state.changes, this.state.clone);
     };
 }
 

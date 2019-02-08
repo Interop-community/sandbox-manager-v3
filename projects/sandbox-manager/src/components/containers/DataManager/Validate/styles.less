@@ -1,0 +1,107 @@
+.validate-wrapper {
+  padding: 3.5rem 2rem 2rem;
+
+  .fhir-query-wrapper {
+    .input-wrapper {
+      width: 40%;
+    }
+
+    & > * {
+      display: inline-block;
+    }
+  }
+
+  .validate-tabs {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .24);
+
+    & > div {
+      box-sizing: border-box;
+
+      &:first-of-type {
+        height: 55px;
+        width: 100% !important;
+        z-index: 1000;
+
+        &:after {
+          content: " ";
+          display: block;
+          border-bottom: 1px solid #f5f5f5;
+          position: absolute;
+          top: 53px;
+          left: 0;
+          width: 100%;
+        }
+
+        & > button {
+          max-width: 125px;
+          z-index: 1000;
+
+          svg {
+            vertical-align: middle;
+            position: relative;
+            top: -2px;
+          }
+        }
+
+        & > div:nth-child(2) {
+          max-width: 125px;
+        }
+      }
+
+      &:nth-child(2) {
+        max-width: 625px;
+        position: relative;
+        top: -56px;
+
+        & > div {
+          height: 56px !important;
+          top: 0 !important;
+          position: absolute !important;
+          max-width: 125px;
+          z-index: 10;
+        }
+      }
+    }
+
+    .tab.active {
+      color: white !important;
+      transition: all 2s;
+    }
+
+    .validate-tabs-container > div {
+      .card-title {
+        text-align: center;
+      }
+
+      .card-content {
+        text-align: center;
+        height: 4rem;
+        &.big {
+          height: 45vh;
+          min-height: 400px;
+        }
+      }
+
+      & > div:not(:last-of-type) {
+        margin: 1%;
+        padding: 10px;
+        background-color: #f5f5f5 !important;
+        border-top-left-radius: 10px !important;
+        border-top-right-radius: 10px !important;
+      }
+
+      & > div:last-of-type:not(.react-json-view) {
+        margin: 1%;
+        text-align: center;
+        button {
+          padding: 20px 40px;
+        }
+      }
+      .react-json-view {
+        padding: 10px;
+      }
+    }
+  }
+}

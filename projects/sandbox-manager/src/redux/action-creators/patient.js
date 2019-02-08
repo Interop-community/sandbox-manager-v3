@@ -1,4 +1,5 @@
 import * as actionTypes from "./types";
+import API from '../../lib/api';
 
 const DETAILS = {
     1: [
@@ -109,6 +110,42 @@ export function setPatientDetails (details) {
         type: actionTypes.SET_PATIENT_DETAILS,
         payload: { details }
     }
+}
+
+export function setResourcesForPatient (resources) {
+    return {
+        type: actionTypes.SET_RESOURCES_FOR_PATIENT,
+        payload: { resources }
+    }
+}
+
+export function setLoadingPatientResources (loading) {
+    return {
+        type: actionTypes.SET_LOADING_PATIENT_RESOURCES,
+        payload: { loading }
+    }
+}
+
+export function getResourcesForPatient (data, patientId) {
+    return dispatch => {
+        let counts = {};
+        let promises = [];
+        dispatch(setLoadingPatientResources(true));
+        data.map(res => {
+            promises.push(new Promise(resolve => {
+                API.get(`${window.fhirClient.server.serviceUrl}/${res.type}?_count=50&patient=${patientId}`, dispatch)
+                    .then(d => {
+                        counts[res.type] = d;
+                        resolve();
+                    })
+            }))
+        });
+        Promise.all(promises)
+            .then(() => {
+                dispatch(setResourcesForPatient(counts));
+                dispatch(setLoadingPatientResources(false));
+            })
+    };
 }
 
 export function fetchPatientDetails (patient) {

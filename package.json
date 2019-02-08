@@ -1,6 +1,6 @@
 {
   "name": "sandbox-manager-v3",
-  "version": "3.0.8",
+  "version": "3.0.10",
   "description": "HSPC Sandbox Manager V3",
   "author": "Interopion",
   "license": "ISC",
@@ -160,6 +160,7 @@
     "redux-mock-store": "1.4.0",
     "redux-persist": "5.9.1",
     "redux-thunk": "2.2.0",
+    "sandbox-manager-lib": "git+ssh://git@bitbucket.org/hspconsortium/sandbox-manager-lib.git",
     "sinon": "4.1.5",
     "style-loader": "0.19.0",
     "svg-loader": "0.0.2",
