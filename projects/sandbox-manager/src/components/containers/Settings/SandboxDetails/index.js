@@ -80,10 +80,6 @@ class SandboxDetails extends Component {
                         <span>{this.props.sandboxId}</span>
                     </div>
                     <div className='label-value'>
-                        <span>Sandbox URL: </span>
-                        <span>{`${window.location.origin}/${this.props.sandboxId}`}</span>
-                    </div>
-                    <div className='label-value'>
                         <span>Secured FHIR Server URL: </span>
                         <span>{window.fhirClient ? window.fhirClient.server.serviceUrl : ''}</span>
                     </div>
