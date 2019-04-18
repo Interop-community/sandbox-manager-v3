@@ -364,14 +364,199 @@ export const importData = (data) => {
         dispatch(setDataImporting(true));
         let promises;
         try {
-            let dataObject = JSON.parse(data);
-            if (dataObject.resourceType === 'Bundle') {
-                promises = [window.fhirClient.api.transaction({ data })];
-            } else if (dataObject.id !== undefined) {
-                promises = [window.fhirClient.api.update({ type: dataObject.resourceType, id: dataObject.id, data: data })];
-            } else {
-                promises = [window.fhirClient.api.create({ type: dataObject.resourceType, data: data })];
-            }
+            // let dataObject = JSON.parse(data);
+            // if (dataObject.resourceType === 'Bundle') {
+                promises = [window.fhirClient.api.transaction({ data: '<?xml version="1.0" encoding="UTF-8"?>\n' +
+                        '<Bundle xmlns="http://hl7.org/fhir">\n' +
+                        '  <id value="bundle-transaction"/> \n' +
+                        '  <meta> \n' +
+                        '    <lastUpdated value="2014-08-18T01:43:30Z"/> \n' +
+                        '  </meta> \n' +
+                        '  <type value="transaction"/> \n' +
+                        '  <entry> \n' +
+                        '    <fullUrl value="urn:uuid:61ebe359-bfdc-4613-8bf2-c5e300945f0a"/> \n' +
+                        '    <resource> \n' +
+                        '      <Patient> \n' +
+                        '        <text> \n' +
+                        '          <status value="generated"/> \n' +
+                        '          <div xmlns="http://www.w3.org/1999/xhtml">Some narrative</div> \n' +
+                        '        </text> \n' +
+                        '        <active value="true"/> \n' +
+                        '        <name> \n' +
+                        '          <use value="official"/> \n' +
+                        '          <family value="Chalmers"/> \n' +
+                        '          <given value="Peter"/> \n' +
+                        '          <given value="James"/> \n' +
+                        '        </name> \n' +
+                        '        <gender value="male"/> \n' +
+                        '        <birthDate value="1974-12-25"/> \n' +
+                        '      </Patient> \n' +
+                        '    </resource> \n' +
+                        '    <request> \n' +
+                        '      <method value="POST"/> \n' +
+                        '      <url value="Patient"/> \n' +
+                        '    </request> \n' +
+                        '  </entry> \n' +
+                        '  <entry> \n' +
+                        '    <fullUrl value="urn:uuid:88f151c0-a954-468a-88bd-5ae15c08e059"/> \n' +
+                        '    <resource> \n' +
+                        '      <Patient> \n' +
+                        '        <text> \n' +
+                        '          <status value="generated"/> \n' +
+                        '          <div xmlns="http://www.w3.org/1999/xhtml">Some narrative</div> \n' +
+                        '        </text> \n' +
+                        '        <identifier> \n' +
+                        '          <system value="http:/example.org/fhir/ids"/> \n' +
+                        '          <value value="234234"/> \n' +
+                        '        </identifier> \n' +
+                        '        <active value="true"/> \n' +
+                        '        <name> \n' +
+                        '          <use value="official"/> \n' +
+                        '          <family value="Chalmers"/> \n' +
+                        '          <given value="Peter"/> \n' +
+                        '          <given value="James"/> \n' +
+                        '        </name> \n' +
+                        '        <gender value="male"/> \n' +
+                        '        <birthDate value="1974-12-25"/> \n' +
+                        '      </Patient> \n' +
+                        '    </resource> \n' +
+                        '    <request> \n' +
+                        '      <method value="POST"/> \n' +
+                        '      <url value="Patient"/> \n' +
+                        '      there isn\'t already one for this patient. If there is one,\n' +
+                        '      the content of this resource will be ignored    -->\n' +
+                        '      <ifNoneExist value="identifier=http:/example.org/fhir/ids|234234"/> \n' +
+                        '    </request> \n' +
+                        '  </entry> \n' +
+                        '  <entry> \n' +
+                        '    <fullUrl value="http://example.org/fhir/Patient/123"/> \n' +
+                        '    <resource> \n' +
+                        '      <Patient> \n' +
+                        '        <id value="123"/> \n' +
+                        '        <text> \n' +
+                        '          <status value="generated"/> \n' +
+                        '          <div xmlns="http://www.w3.org/1999/xhtml">Some narrative</div> \n' +
+                        '        </text> \n' +
+                        '        <active value="true"/> \n' +
+                        '        <name> \n' +
+                        '          <use value="official"/> \n' +
+                        '          <family value="Chalmers"/> \n' +
+                        '          <given value="Peter"/> \n' +
+                        '          <given value="James"/> \n' +
+                        '        </name> \n' +
+                        '        <gender value="male"/> \n' +
+                        '        <birthDate value="1974-12-25"/> \n' +
+                        '      </Patient> \n' +
+                        '    </resource> \n' +
+                        '    <request> \n' +
+                        '      <method value="PUT"/> \n' +
+                        '      <url value="Patient/123"/> \n' +
+                        '    </request> \n' +
+                        '  </entry> \n' +
+                        '  <entry> \n' +
+                        '    <fullUrl value="urn:uuid:74891afc-ed52-42a2-bcd7-f13d9b60f096"/> \n' +
+                        '    <resource> \n' +
+                        '      <Patient> \n' +
+                        '        <text> \n' +
+                        '          <status value="generated"/> \n' +
+                        '          <div xmlns="http://www.w3.org/1999/xhtml">Some narrative</div> \n' +
+                        '        </text> \n' +
+                        '        <identifier> \n' +
+                        '          <system value="http:/example.org/fhir/ids"/> \n' +
+                        '          <value value="456456"/> \n' +
+                        '        </identifier> \n' +
+                        '        <active value="true"/> \n' +
+                        '        <name> \n' +
+                        '          <use value="official"/> \n' +
+                        '          <family value="Chalmers"/> \n' +
+                        '          <given value="Peter"/> \n' +
+                        '          <given value="James"/> \n' +
+                        '        </name> \n' +
+                        '        <gender value="male"/> \n' +
+                        '        <birthDate value="1974-12-25"/> \n' +
+                        '      </Patient> \n' +
+                        '    </resource> \n' +
+                        '    <request> \n' +
+                        '      <method value="PUT"/> \n' +
+                        '      <url value="Patient?identifier=http:/example.org/fhir/ids|456456"/> \n' +
+                        '    </request> \n' +
+                        '  </entry> \n' +
+                        '  <entry> \n' +
+                        '    <fullUrl value="http://example.org/fhir/Patient/123a"/> \n' +
+                        '    <resource> \n' +
+                        '      <Patient> \n' +
+                        '        <id value="123a"/> \n' +
+                        '        <text> \n' +
+                        '          <status value="generated"/> \n' +
+                        '          <div xmlns="http://www.w3.org/1999/xhtml">Some narrative</div> \n' +
+                        '        </text> \n' +
+                        '        <active value="true"/> \n' +
+                        '        <name> \n' +
+                        '          <use value="official"/> \n' +
+                        '          <family value="Chalmers"/> \n' +
+                        '          <given value="Peter"/> \n' +
+                        '          <given value="James"/> \n' +
+                        '        </name> \n' +
+                        '        <gender value="male"/> \n' +
+                        '        <birthDate value="1974-12-25"/> \n' +
+                        '      </Patient> \n' +
+                        '    </resource> \n' +
+                        '    <request> \n' +
+                        '      <method value="PUT"/> \n' +
+                        '      <url value="Patient/123a"/> \n' +
+                        '      <ifMatch value="W/&quot;2&quot;"/> \n' +
+                        '    </request> \n' +
+                        '  </entry> \n' +
+                        '  <entry> \n' +
+                        '    <request> \n' +
+                        '      <method value="DELETE"/> \n' +
+                        '      <url value="Patient/234"/> \n' +
+                        '    </request> \n' +
+                        '  </entry> \n' +
+                        '  <entry>\n' +
+                        '    <request> \n' +
+                        '      <method value="DELETE"/> \n' +
+                        '      <url value="Patient?identifier=123456"/> \n' +
+                        '    </request> \n' +
+                        '  </entry> \n' +
+                        '  <entry> \n' +
+                        '    <fullUrl value="urn:uuid:79378cb8-8f58-48e8-a5e8-60ac2755b674"/> \n' +
+                        '    <resource> \n' +
+                        '      <Parameters> \n' +
+                        '        <parameter> \n' +
+                        '          <name value="coding"/> \n' +
+                        '          <valueCoding> \n' +
+                        '            <system value="http://loinc.org"/> \n' +
+                        '            <code value="1963-8"/> \n' +
+                        '          </valueCoding> \n' +
+                        '        </parameter> \n' +
+                        '      </Parameters> \n' +
+                        '    </resource> \n' +
+                        '    <request>\n' +
+                        '      <method value="POST"/> \n' +
+                        '      <url value="ValueSet/$lookup"/> \n' +
+                        '    </request> \n' +
+                        '  </entry> \n' +
+                        '  <entry> \n' +
+                        '    <request> \n' +
+                        '      <method value="GET"/> \n' +
+                        '      <url value="Patient?name=peter"/> \n' +
+                        '    </request> \n' +
+                        '  </entry> \n' +
+                        '  <entry> \n' +
+                        '    <request> \n' +
+                        '      <method value="GET"/> \n' +
+                        '      <url value="Patient/12334"/> \n' +
+                        '      <ifNoneMatch value="W/&quot;4&quot;"/> \n' +
+                        '      <ifModifiedSince value="2015-08-31T08:14:33+10:00"/> \n' +
+                        '    </request> \n' +
+                        '  </entry> \n' +
+                        '</Bundle> ' })];
+            // } else if (dataObject.id !== undefined) {
+            //     promises = [window.fhirClient.api.update({ type: dataObject.resourceType, id: dataObject.id, data: data })];
+            // } else {
+            //     promises = [window.fhirClient.api.create({ type: dataObject.resourceType, data: data })];
+            // }
         } catch (err) {
             // This will take care of informing the user that the JSON was not formatted correctly
             promises = [window.fhirClient.api.transaction({ data })];

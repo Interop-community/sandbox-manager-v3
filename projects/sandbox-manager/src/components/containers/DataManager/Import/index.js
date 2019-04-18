@@ -39,7 +39,7 @@ export default class Import extends Component {
                     <div>Place a FHIR resource (Patient, Bundle, etc.) in the form above or upload a file containing a resource.</div>
                     <div className='import-button'>
                         <input type='file' id='file' ref='file' style={{ display: 'none' }} onChange={this.readFile}/>
-                        <RaisedButton label='Load JSON from file' primary onClick={() => this.refs.file.click()}/>
+                        <RaisedButton label='Load from file' primary onClick={() => this.refs.file.click()}/>
                         <RaisedButton label='Import' disabled={this.state.input.length === 0 || this.props.dataImporting} primary onClick={this.import}/>
                     </div>
                 </Tab>
@@ -56,9 +56,9 @@ export default class Import extends Component {
         let fr = new FileReader();
 
         fr.onload = (e) => {
-            let result = JSON.parse(e.target.result);
-            let formatted = JSON.stringify(result, null, 2);
-            this.setState({ input: formatted }, () => {
+            // let result = JSON.parse(e.target.result);
+            // let formatted = JSON.stringify(result, null, 2);
+            this.setState({ input: e.target.result }, () => {
                 this.props.importData && this.props.importData(this.state.input);
                 this.refs.results.handleClick();
             });
