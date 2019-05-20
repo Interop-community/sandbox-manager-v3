@@ -1,0 +1,34 @@
+.add-button {
+  position: absolute;
+  right: 35px;
+  top: 0;
+}
+
+.profiles-list {
+  height: ~'calc(100% - 65px)';
+
+  .profile-list-item {
+    margin-bottom: 10px;
+    border-radius: 5px !important;
+    cursor: pointer;
+
+    &:hover {
+      background-color: whitesmoke !important;
+    }
+
+    & > span {
+      display: inline-block;
+      width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-left: 10px;
+      vertical-align: middle;
+      box-sizing: border-box;
+      font-size: 1.2rem;
+    }
+
+    & > button {
+      vertical-align: middle;
+    }
+  }
+}
