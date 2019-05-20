@@ -42,15 +42,6 @@ class Profiles extends Component {
 
     render () {
         let palette = this.props.muiTheme.palette;
-        let tab = this.state.activeTab;
-
-
-        let typeButton = <Toggle className='view-toggle' label='Show as table' labelPosition='right' toggled={this.state.resultsView} thumbStyle={{ backgroundColor: palette.primary5Color }}
-                                 trackStyle={{ backgroundColor: palette.primary7Color }} thumbSwitchedStyle={{ backgroundColor: palette.primary2Color }}
-                                 trackSwitchedStyle={{ backgroundColor: palette.primary2Color }} onToggle={() => this.setState({ resultsView: !this.state.resultsView })}/>;
-
-        let profile = this.state.selectedProfile && this.props.profiles.find(i => i.profileId === this.state.selectedProfile) || {};
-
         let managerProps = {
             palette,
             profiles: this.props.profiles,
@@ -85,10 +76,6 @@ class Profiles extends Component {
     toggleTree = (query) => {
         query = this.state.query !== query ? query : '';
         this.setState({ query, manualJson: '', file: '', fileJson: '' });
-    };
-
-    selectPatient = (selectedPersona) => {
-        this.setState({ selectedPersona });
     };
 
     readFile = () => {
