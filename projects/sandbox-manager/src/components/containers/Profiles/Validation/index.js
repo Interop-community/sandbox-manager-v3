@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Tabs, Tab, TextField, RaisedButton } from 'material-ui';
 import ListIcon from 'material-ui/svg-icons/action/list';
 import TreeBrowser from '../TreeBrowser';
+import Modal from './Modal';
 
 import './styles.less';
 
@@ -66,9 +67,14 @@ class Validation extends Component {
                     </div>
                 </Tab>
             </Tabs>
-            <RaisedButton className='validate-button' label='Validate' primary onClick={this.validate} disabled={validateDisabled}/>
+            {this.state.validationModalVisible && <Modal {...this.props} close={this.toggleValidationModal}/>}
+            <RaisedButton className='validate-button' label='Validate' primary onClick={this.toggleValidationModal} disabled={validateDisabled}/>
         </div>
     }
+
+    toggleValidationModal = () => {
+        this.setState({ validationModalVisible: !this.state.validationModalVisible });
+    };
 
     setActiveTab = (tab) => {
         this.props.cleanValidationResults();
@@ -78,6 +84,90 @@ class Validation extends Component {
     selectPatient = (selectedPersona) => {
         this.setState({ selectedPersona });
     };
+
+    toggleTree = (query) => {
+        query = this.state.query !== query ? query : '';
+        this.setState({ query, manualJson: '', file: '', fileJson: '' });
+    };
+
+    readFile = () => {
+        let fr = new FileReader();
+        let file = this.refs.file.files.item(0);
+
+        fr.onload = (e) => {
+            let fileJson = e.target.result;
+            this.setState({ query: '', manualJson: '', fileJson, file: file.name });
+        };
+
+        fr.readAsText(file);
+    };
+
+    validate = () => {
+        let manualJSON = this.state.fileJson || this.state.manualJson;
+        manualJSON && (manualJSON = this.prepareJSON(JSON.parse(manualJSON)));
+        manualJSON && this.props.validate(manualJSON);
+        !manualJSON && this.state.query && this.props.validateExisting(this.state.query, this.state.selectedProfile);
+        this.state.activeTab === 'browse' && this.setState({ query: '' });
+    };
+
+    prepareJSON = (json) => {
+        if (!json.resourceType) {
+            this.props.setGlobalError('No "resourceType" found in the provided object!');
+            return;
+        }
+
+        if (this.state.selectedProfile) {
+            let type = json.resourceType;
+            let SD = this.props.sds.find(i => i.profileType === type);
+
+            if (!SD) {
+                this.props.setGlobalError(`Unable to validate resource "${type}" against this profile.`);
+                return;
+            }
+
+            !json.meta && (json.meta = {});
+            json.meta.profile = [SD.fullUrl];
+        }
+        return json;
+    };
+
+    import = () => {
+        this.props.importData && this.props.importData(this.state.input);
+        this.refs.results.handleClick();
+    };
 }
 
 export default Validation;
+
+{
+    /*<Page title={<span>Profiles</span>}>
+        <div className='profiles-wrapper'>
+            <Card className='card profile-list-wrapper'>
+                <CardTitle className='card-title'>
+                    <span>Profiles</span>
+                </CardTitle>
+            </Card>
+            <Card className='card validate-card'>
+                <CardTitle className='card-title'>
+                    <span>Validation target</span>
+                </CardTitle>
+            </Card>
+            <Card className='card result-card'>
+                <CardTitle className='card-title'>
+                    <span>Validation result {this.props.validationResults && typeButton}</span>
+                    <span className='validate-by-title'>
+                                {this.props.validationResults && <span>Validated <strong>{this.props.validationResults.validatedObject}</strong> </span>}
+                        {this.props.validationResults && this.props.validationResults.validatedProfile
+                            ? <span>against <strong>{profile.profileName}</strong></span>
+                            : ''}
+                            </span>
+                </CardTitle>
+                <div className='validate-result-wrapper'>
+                    {!this.state.resultsView && this.props.validationResults && <ReactJson src={this.props.validationResults} name={false}/>}
+                    {this.state.resultsView && this.props.validationResults && <ResultsTable results={this.props.validationResults}/>}
+                    {this.props.validationExecuting && <div className='loader-wrapper'><CircularProgress size={60} thickness={5}/></div>}
+                </div>
+            </Card>
+        </div>
+    </Page>*/
+}

@@ -1,6 +1,7 @@
 import * as types from "./types";
 import API from '../../lib/api';
 import { setGlobalError } from './app';
+import { setFetchingSingleResourceError, setFetchSingleResource, setSingleResource } from './sandbox';
 
 export function fhir_Reset () {
     return { type: types.FHIR_RESET };
@@ -145,6 +146,27 @@ export function fhir_setProfileSDs (sds) {
     };
 }
 
+export function fhir_setProfileResources (resources) {
+    return {
+        type: types.FHIR_SET_PROFDILE_RESOURCES,
+        payload: { resources }
+    };
+}
+
+export function fhir_setFetchingResource (fetching) {
+    return {
+        type: types.FHIR_SET_FETCHING_RESOURCE,
+        payload: { fetching }
+    };
+}
+
+export function fhir_setResource (resource) {
+    return {
+        type: types.FHIR_SET_RESOURCE,
+        payload: { resource }
+    };
+}
+
 export function fhir_SetSampleData () {
     return { type: types.FHIR_SET_SAMPLE_DATA };
 }
@@ -238,6 +260,43 @@ export function loadProfileSDs (id) {
                 })
                 .catch(() => {
                     dispatch(fhir_setProfileSDsLoading(false));
+                });
+        }
+    }
+}
+
+export function loadProfileResources (id) {
+    return (dispatch, getState) => {
+        dispatch(fhir_setProfileSDsLoading(true));
+
+        if (window.fhirClient) {
+            let state = getState();
+            let configuration = state.config.xsettings.data.sandboxManager;
+            API.get(`${configuration.sandboxManagerApiUrl}/profile/getProfileResources?fhirProfileId=${id}`, dispatch)
+                .then(data => {
+                    dispatch(fhir_setProfileResources(data));
+                    dispatch(fhir_setProfileSDsLoading(false));
+                })
+                .catch(() => {
+                    dispatch(fhir_setProfileSDsLoading(false));
+                });
+        }
+    }
+}
+
+export function loadResource (resource) {
+    return dispatch => {
+        if (window.fhirClient) {
+            dispatch(fhir_setFetchingResource(true));
+            let props = resource.relativeUrl.split('/');
+            window.fhirClient.api.read({ type: props[0], id: props[1] })
+                .done(resource => {
+                    dispatch(fhir_setResource(resource.data));
+                    dispatch(fhir_setFetchingResource(false))
+                })
+                .fail(e => {
+                    console.log(e);
+                    dispatch(fhir_setFetchingResource(false))
                 });
         }
     }
