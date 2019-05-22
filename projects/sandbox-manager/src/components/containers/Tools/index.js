@@ -13,25 +13,25 @@ import './styles.less';
 const TOOLS = [
     {
         title: 'clinFHIR',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non ligula dui. Sed et vestibulum risus.',
+        description: 'Tool to create or search for FHIR-based resources and link them to tell a clinical story.',
         image: '/img/icon-fhir.png',
         link: 'http://clinfhir.com'
     },
     {
         title: 'INFERNO',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non ligula dui. Sed et vestibulum risus.',
+        description: 'Testing suite for FHIR to help developers implement the FHIR standard.',
         image: '/img/inferno_logo.png',
         link: 'https://inferno.healthit.gov/inferno/'
     },
     {
         title: 'Crucible',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non ligula dui. Sed et vestibulum risus.',
+        description: 'Testing suit to test for conformance to the FHIR standard.',
         image: '/img/crucible_logo.png',
         link: 'https://projectcrucible.org/'
     },
     {
         title: 'CDS HOOKS',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non ligula dui. Sed et vestibulum risus.',
+        description: 'SMART on FHIR technology that allows third-party CDS systems to register with an EHR using a "hook" pattern.',
         image: '/img/cds_hooks_logo.png',
         link: 'https://sandbox.cds-hooks.org/'
     }

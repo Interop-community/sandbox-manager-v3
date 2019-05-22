@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Checkbox, RaisedButton, Paper, TextField, DropDownMenu, MenuItem, IconButton, Dialog } from 'material-ui';
+import { Checkbox, RaisedButton, Paper, TextField, SelectField, MenuItem, IconButton, Dialog } from 'material-ui';
 import * as  actions from '../../../redux/action-creators';
 import withErrorHandler from 'sandbox-manager-lib/hoc/withErrorHandler';
 import muiThemeable from "material-ui/styles/muiThemeable";
@@ -20,7 +20,7 @@ class Index extends Component {
             applyDefaultApps: true,
             description: '',
             createDisabled: true,
-            apiEndpointIndex: '9'
+            apiEndpointIndex: undefined
         };
     }
 
@@ -28,7 +28,7 @@ class Index extends Component {
         let duplicate = this.props.sandboxes.find(i => i.sandboxId.toLowerCase() === this.state.sandboxId.toLowerCase());
 
         let actions = [
-            <RaisedButton key={1} label='Create' disabled={this.state.createDisabled || !!duplicate} className='button' primary onClick={this.handleCreateSandbox}/>
+            <RaisedButton key={1} label='Create' disabled={this.state.createDisabled || !!duplicate || !this.state.apiEndpointIndex} className='button' primary onClick={this.handleCreateSandbox}/>
         ];
 
         let underlineFocusStyle = { borderColor: this.props.muiTheme.palette.primary2Color };
@@ -52,12 +52,12 @@ class Index extends Component {
                                        errorText={duplicate ? 'ID already in use' : undefined} underlineFocusStyle={underlineFocusStyle} floatingLabelFocusStyle={floatingLabelFocusStyle}/><br/>
                             <div className='subscript'>Letters and numbers only. Must be fewer than 20 characters.</div>
                             <div className='subscript'>Your sandbox will be available at {window.location.origin}/{this.state.sandboxId}</div>
-                            <DropDownMenu value={this.state.apiEndpointIndex} onChange={(_e, _k, value) => this.sandboxFhirVersionChangedHandler('apiEndpointIndex', value)}
-                                          className='fhirVersion'>
+                            <SelectField value={this.state.apiEndpointIndex} onChange={(_e, _k, value) => this.sandboxFhirVersionChangedHandler('apiEndpointIndex', value)}
+                                          className='fhirVersion' floatingLabelText='FHIR version'>
                                 <MenuItem value='8' primaryText='FHIR DSTU2 (v1.0.2)'/>
                                 <MenuItem value='9' primaryText='FHIR STU3 (v3.0.1)'/>
                                 <MenuItem value='10' primaryText='FHIR R4 (v4.0.0)'/>
-                            </DropDownMenu>
+                            </SelectField>
                             <div className='subscript'>Choose a version of the FHIR Standard</div>
                             <br/>
                             <div className='checkboxes'>
