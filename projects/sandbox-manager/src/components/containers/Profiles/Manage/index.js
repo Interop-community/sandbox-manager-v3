@@ -109,6 +109,7 @@ class Manage extends Component {
         if (selectedProfile) {
             let profile = this.props.profiles.find(i => i.profileId === id);
             profile && this.props.loadProfileResources(profile.id);
+            this.props.onProfileSelected && this.props.onProfileSelected(profile);
         }
     };
 

@@ -504,7 +504,6 @@ export function validateExisting (url, selectedProfile) {
                         if (!SD) {
                             dispatch(setGlobalError(`Unable to validate resource "${data.resourceType}" against this profile.`));
                             dispatch(fhir_setValidationExecuting(false));
-                            a
                         } else {
                             !data.meta && (data.meta = {});
                             data.meta.profile = [SD.fullUrl];

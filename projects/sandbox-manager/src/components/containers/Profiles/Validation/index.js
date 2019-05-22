@@ -67,7 +67,7 @@ class Validation extends Component {
                     </div>
                 </Tab>
             </Tabs>
-            {this.state.validationModalVisible && <Modal {...this.props} close={this.toggleValidationModal}/>}
+            {this.state.validationModalVisible && <Modal {...this.props} close={this.toggleValidationModal} onValidate={this.validate}/>}
             <RaisedButton className='validate-button' label='Validate' primary onClick={this.toggleValidationModal} disabled={validateDisabled}/>
         </div>
     }
@@ -102,11 +102,11 @@ class Validation extends Component {
         fr.readAsText(file);
     };
 
-    validate = () => {
+    validate = (profile) => {
         let manualJSON = this.state.fileJson || this.state.manualJson;
         manualJSON && (manualJSON = this.prepareJSON(JSON.parse(manualJSON)));
         manualJSON && this.props.validate(manualJSON);
-        !manualJSON && this.state.query && this.props.validateExisting(this.state.query, this.state.selectedProfile);
+        !manualJSON && this.state.query && this.props.validateExisting(this.state.query, profile);
         this.state.activeTab === 'browse' && this.setState({ query: '' });
     };
 
@@ -154,7 +154,7 @@ export default Validation;
             </Card>
             <Card className='card result-card'>
                 <CardTitle className='card-title'>
-                    <span>Validation result {this.props.validationResults && typeButton}</span>
+
                     <span className='validate-by-title'>
                                 {this.props.validationResults && <span>Validated <strong>{this.props.validationResults.validatedObject}</strong> </span>}
                         {this.props.validationResults && this.props.validationResults.validatedProfile
@@ -162,11 +162,6 @@ export default Validation;
                             : ''}
                             </span>
                 </CardTitle>
-                <div className='validate-result-wrapper'>
-                    {!this.state.resultsView && this.props.validationResults && <ReactJson src={this.props.validationResults} name={false}/>}
-                    {this.state.resultsView && this.props.validationResults && <ResultsTable results={this.props.validationResults}/>}
-                    {this.props.validationExecuting && <div className='loader-wrapper'><CircularProgress size={60} thickness={5}/></div>}
-                </div>
             </Card>
         </div>
     </Page>*/
