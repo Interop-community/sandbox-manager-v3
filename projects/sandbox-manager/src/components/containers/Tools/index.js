@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, FlatButton, RadioButton } from 'material-ui';
+import { Card, CardMedia, CardTitle } from 'material-ui';
 import Page from 'sandbox-manager-lib/components/Page';
 import HelpButton from '../../UI/HelpButton';
 import { app_setScreen } from '../../../redux/action-creators';
@@ -18,7 +18,7 @@ const TOOLS = [
         link: 'http://clinfhir.com'
     },
     {
-        title: 'INFERNO',
+        title: 'Inferno',
         description: 'Testing suite for FHIR to help developers implement the FHIR standard.',
         image: '/img/inferno_logo.png',
         link: 'https://inferno.healthit.gov/inferno/'
@@ -30,8 +30,8 @@ const TOOLS = [
         link: 'https://projectcrucible.org/'
     },
     {
-        title: 'CDS HOOKS',
-        description: 'SMART on FHIR technology that allows third-party CDS systems to register with an EHR using a "hook" pattern.',
+        title: 'CDS Hooks Sandbox',
+        description: 'Test harness for CDS Hook-based services',
         image: '/img/cds_hooks_logo.png',
         link: 'https://sandbox.cds-hooks.org/'
     }
@@ -45,7 +45,7 @@ class Tools extends Component {
     render () {
         let titleStyle = { backgroundColor: 'rgba(0,87,120, 0.75)' };
 
-        return <Page title='3d Party Tools' helpIcon={<HelpButton style={{ marginLeft: '10px' }}/>}>
+        return <Page title='Third Party Tools' helpIcon={<HelpButton style={{ marginLeft: '10px' }}/>}>
             <a ref='openLink' target='_blank'/>
             <div className='tools'>
                 {TOOLS.map(t =>

@@ -1,0 +1,76 @@
+.file-load-wrapper {
+  position: absolute;
+  right: 0;
+  top: 18px;
+}
+
+.resources-modal {
+  & > div > div:first-of-type {
+    padding: 0 !important;
+    border-bottom: 2px solid whitesmoke !important;
+  }
+
+  .profiles-modal {
+    height: 66vh;
+
+    .resources, .resource {
+      display: inline-block;
+      vertical-align: top;
+      height: ~'calc(100% - 68px)';
+      position: relative;
+      top: 68px;
+      margin-bottom: 68px;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .resources {
+      padding: 18px;
+      width: 450px;
+
+      & > * {
+        cursor: pointer;
+        line-height: 40px;
+        margin-bottom: 10px;
+        padding-left: 10px;
+
+        &.active {
+          background-color: whitesmoke !important;
+        }
+      }
+    }
+
+    .resource {
+      border-right: 2px solid whitesmoke;
+      width: 0;
+      transition: all .5s;
+      overflow: hidden;
+      box-sizing: border-box;
+
+      &.active {
+        transition: all .5s;
+        width: ~'calc(100% - 450px)';
+        box-sizing: border-box;
+
+        .resource-tabs {
+          height: 100%;
+
+          .resource-tabs-container {
+            height: ~'calc(100% - 48px)';
+            overflow: auto;
+
+            .resource-info {
+              padding: 10px;
+
+              .label-value {
+                display: inline-block;
+                min-width: 25%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
