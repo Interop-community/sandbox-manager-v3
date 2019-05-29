@@ -29,7 +29,7 @@ class Validation extends Component {
         let iconStyle = { color: palette.primary3Color, position: 'relative', top: '7px' };
 
         return <div className='validation-wrapper'>
-            <Tabs className='validation-tabs' contentContainerClassName={`validation-tabs-container ${this.state.activeTab === 'browse' ? 'no-padding' : ''}`}
+            <Tabs className={`validation-tabs ${this.props.modal ? 'modal' : ''}`} contentContainerClassName={`validation-tabs-container ${this.state.activeTab === 'browse' ? 'no-padding' : ''}`}
                   inkBarStyle={{ backgroundColor: palette.primary2Color }} style={{ backgroundColor: palette.canvasColor }} value={this.state.activeTab}>
                 <Tab label={<span><ListIcon style={iconStyle}/> Browse</span>}
                      className={'manual-input tab' + (tab === 'browse' ? ' active' : '')} onActive={() => this.setActiveTab('browse')} value='browse'>
@@ -68,7 +68,7 @@ class Validation extends Component {
                 </Tab>
             </Tabs>
             {this.state.validationModalVisible && <Modal {...this.props} close={this.toggleValidationModal} onValidate={this.validate}/>}
-            <RaisedButton className='validate-button' label='Validate' primary onClick={this.toggleValidationModal} disabled={validateDisabled}/>
+            <RaisedButton className={`validate-button ${this.props.modal ? 'modal' : ''}`} label='Validate' primary onClick={this.toggleValidationModal} disabled={validateDisabled}/>
         </div>
     }
 

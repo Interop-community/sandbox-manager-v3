@@ -22,6 +22,7 @@ export default function (state = initialState, action) {
             break;
         case types.FHIR_CLEAN_VALIDATION_RESULTS:
             state.validationResults = undefined;
+            state.resource = undefined;
             break;
         case types.FHIR_SET_PROFDILES_LOADING:
             state.profilesLoading = action.payload.loading;

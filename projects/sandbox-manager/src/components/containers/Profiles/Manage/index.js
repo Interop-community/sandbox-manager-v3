@@ -41,7 +41,7 @@ class Manage extends Component {
         );
 
         return <div className='profiles-list'>
-            <Modal {...this.props} {...this.state} selectResource={this.selectResource} toggleProfileToBrowse={this.toggleProfileToBrowse}/>
+            {!this.props.modal && <Modal {...this.props} {...this.state} selectResource={this.selectResource} toggleProfileToBrowse={this.toggleProfileToBrowse}/>}
             <Filters {...this.props} onFilter={this.onFilter}/>
             {(this.props.fetchingFile || this.props.profilesUploading) && <div className='loader-wrapper' style={{ height: '110px', paddingTop: '20px', margin: 0 }}>
                 <CircularProgress size={40} thickness={5}/>
@@ -67,9 +67,9 @@ class Manage extends Component {
                     {/*{!this.props.modal && <IconButton tooltip='DELETE' onClick={() => this.props.deleteDefinition(profile.id)}>*/}
                     {/*    <DeleteIcon color={palette.primary4Color}/>*/}
                     {/*</IconButton>}*/}
-                    <IconButton className='expanded-toggle'>
+                    {!this.props.modal && <IconButton className='expanded-toggle'>
                         <DownIcon color={this.props.muiTheme.palette.primary3Color} style={{ width: '24px', height: '24px' }}/>
-                    </IconButton>
+                    </IconButton>}
                     <div className={'top-border' + (active ? ' active' : '')}/>
                     {preActive && <div className='profile-content' onClick={e => this.selectResource(e)}>
                         {this.props.profileSDsLoading && <CircularProgress className='loader' size={40} thickness={5}/>}
@@ -129,6 +129,7 @@ class Manage extends Component {
 
     toggleProfileToBrowse = (id) => {
         let profileToBrowse = this.state.profileToBrowse === id ? undefined : id;
+        this.props.cleanValidationResults();
 
         this.setState({ profileToBrowse });
     };

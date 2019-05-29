@@ -6,6 +6,7 @@ import ReactJson from 'react-json-view';
 import moment from 'moment';
 
 import './styles.less';
+import Validation from '../../Validation';
 
 const PROFILES = [
     {
@@ -57,6 +58,12 @@ class ProfilesModal extends Component {
         let inputActions = [
             <div className='warning-modal-action'>
                 <RaisedButton label='OK' primary onClick={this.saveProfile}/>
+            </div>
+        ];
+        let browseActions = [
+            <div className='warning-modal-action'>
+                <RaisedButton label='OK' primary onClick={this.toggleProfileToBrowse}/>
+                {this.state.toggledRes && <RaisedButton label='Validate against' style={{marginLeft: '10px'}} secondary onClick={this.showValidation}/>}
             </div>
         ];
         let inputModalActions = [
@@ -116,11 +123,11 @@ class ProfilesModal extends Component {
         </Dialog>);
 
         this.props.profileToBrowse &&
-        modals.push(<Dialog open={!!this.props.profileToBrowse} modal={false} onRequestClose={this.props.toggleProfileToBrowse} actions={inputActions} contentStyle={{ width: '90%', maxWidth: '90%' }} key={5}
+        modals.push(<Dialog open={!!this.props.profileToBrowse} modal={false} onRequestClose={this.toggleProfileToBrowse} actions={browseActions} contentStyle={{ width: '90%', maxWidth: '90%' }} key={5}
                             contentClassName='resources-modal'>
             <div className='profiles-modal'>
                 <div className='screen-title' style={titleStyle}>
-                    <IconButton className="close-button" onClick={this.props.toggleProfileToBrowse}>
+                    <IconButton className="close-button" onClick={this.toggleProfileToBrowse}>
                         <i className="material-icons">close</i>
                     </IconButton>
                     <h1 style={titleStyle}>{this.props.profileToBrowse.profileName}</h1>
@@ -135,75 +142,77 @@ class ProfilesModal extends Component {
                     }
                 </div>
                 <div className={`resource ${!!this.state.toggledRes ? 'active' : ''}`}>
-                    <Tabs className='resource-tabs' contentContainerClassName='resource-tabs-container' inkBarStyle={{ backgroundColor: palette.primary2Color }}>
-                        <Tab label="Info" className={'info tab' + (this.state.activeTab === 'info' ? ' active' : '')} onActive={() => this.setActiveTab('info')}>
-                            {this.props.fetchingProfileResource && <div className='loader-wrapper-small'>
-                                <CircularProgress size={40} thickness={5}/>
-                            </div>}
-                            {this.props.profileResource && <div className='resource-info'>
-                                <div className="label-value">
-                                    <span>Resource type: </span>
-                                    <span>{this.props.profileResource.resourceType}</span>
-                                </div>
-                                {this.props.profileResource.type && <div className="label-value">
-                                    <span>Type: </span>
-                                    <span>{this.props.profileResource.type}</span>
+                    {!this.state.showValidation
+                        ? <Tabs className='resource-tabs' contentContainerClassName='resource-tabs-container' inkBarStyle={{ backgroundColor: palette.primary2Color }}>
+                            <Tab label="Info" className={'info tab' + (this.state.activeTab === 'info' ? ' active' : '')} onActive={() => this.setActiveTab('info')}>
+                                {this.props.fetchingProfileResource && <div className='loader-wrapper-small'>
+                                    <CircularProgress size={40} thickness={5}/>
                                 </div>}
-                                <div className="label-value">
-                                    <span>Id: </span>
-                                    <span>{this.props.profileResource.id}</span>
-                                </div>
-                                <div className="label-value">
-                                    <span>Version: </span>
-                                    <span>{this.props.profileResource.version}</span>
-                                </div>
-                                <div className="label-value">
-                                    <span>Name: </span>
-                                    <span>{this.props.profileResource.name}</span>
-                                </div>
-                                <div className="label-value">
-                                    <span>Status: </span>
-                                    <span>{this.props.profileResource.status}</span>
-                                </div>
-                                <div className="label-value">
-                                    <span>Date: </span>
-                                    <span>{new moment(this.props.profileResource.date).format('DD.MM.YYYY')}</span>
-                                </div>
+                                {this.props.profileResource && <div className='resource-info'>
+                                    <div className="label-value">
+                                        <span>Resource type: </span>
+                                        <span>{this.props.profileResource.resourceType}</span>
+                                    </div>
+                                    {this.props.profileResource.type && <div className="label-value">
+                                        <span>Type: </span>
+                                        <span>{this.props.profileResource.type}</span>
+                                    </div>}
+                                    <div className="label-value">
+                                        <span>Id: </span>
+                                        <span>{this.props.profileResource.id}</span>
+                                    </div>
+                                    <div className="label-value">
+                                        <span>Version: </span>
+                                        <span>{this.props.profileResource.version}</span>
+                                    </div>
+                                    <div className="label-value">
+                                        <span>Name: </span>
+                                        <span>{this.props.profileResource.name}</span>
+                                    </div>
+                                    <div className="label-value">
+                                        <span>Status: </span>
+                                        <span>{this.props.profileResource.status}</span>
+                                    </div>
+                                    <div className="label-value">
+                                        <span>Date: </span>
+                                        <span>{new moment(this.props.profileResource.date).format('DD.MM.YYYY')}</span>
+                                    </div>
 
-                                <div className="label-value">
-                                    <span>fhirVersion: </span>
-                                    <span>{this.props.profileResource.fhirVersion}</span>
-                                </div>
-                                <div className="label-value">
-                                    <span>Publisher: </span>
-                                    <span>{this.props.profileResource.publisher}</span>
-                                </div>
-                                <div className="label-value">
-                                    <span>Description: </span>
-                                    <span>{this.props.profileResource.description}</span>
-                                </div>
-                                <div className="label-value">
-                                    <span>Url: </span>
-                                    <span>{this.props.profileResource.url}</span>
-                                </div>
-                                <div className="label-value big">
-                                    <span>Text: </span>
-                                    <span dangerouslySetInnerHTML={{ __html: this.props.profileResource.text.div }}/>
-                                </div>
-                            </div>}
-                        </Tab>
-                        <Tab label="Tree" className={'tree tab' + (this.state.activeTab === 'tree' ? ' active' : '')} onActive={() => this.setActiveTab('tree')}>
-                            {this.props.fetchingProfileResource && <div className='loader-wrapper-small'>
-                                <CircularProgress size={40} thickness={5}/>
-                            </div>}
-                        </Tab>
-                        <Tab label="JSON" className={'json tab' + (this.state.activeTab === 'json' ? ' active' : '')} onActive={() => this.setActiveTab('json')}>
-                            {this.props.fetchingProfileResource && <div className='loader-wrapper-small'>
-                                <CircularProgress size={40} thickness={5}/>
-                            </div>}
-                            {this.props.profileResource && <ReactJson src={this.props.profileResource} name={false}/>}
-                        </Tab>
-                    </Tabs>
+                                    <div className="label-value">
+                                        <span>fhirVersion: </span>
+                                        <span>{this.props.profileResource.fhirVersion}</span>
+                                    </div>
+                                    <div className="label-value">
+                                        <span>Publisher: </span>
+                                        <span>{this.props.profileResource.publisher}</span>
+                                    </div>
+                                    <div className="label-value">
+                                        <span>Description: </span>
+                                        <span>{this.props.profileResource.description}</span>
+                                    </div>
+                                    <div className="label-value">
+                                        <span>Url: </span>
+                                        <span>{this.props.profileResource.url}</span>
+                                    </div>
+                                    <div className="label-value big">
+                                        <span>Text: </span>
+                                        <span dangerouslySetInnerHTML={{ __html: this.props.profileResource.text.div }}/>
+                                    </div>
+                                </div>}
+                            </Tab>
+                            <Tab label="Tree" className={'tree tab' + (this.state.activeTab === 'tree' ? ' active' : '')} onActive={() => this.setActiveTab('tree')}>
+                                {this.props.fetchingProfileResource && <div className='loader-wrapper-small'>
+                                    <CircularProgress size={40} thickness={5}/>
+                                </div>}
+                            </Tab>
+                            <Tab label="JSON" className={'json tab' + (this.state.activeTab === 'json' ? ' active' : '')} onActive={() => this.setActiveTab('json')}>
+                                {this.props.fetchingProfileResource && <div className='loader-wrapper-small'>
+                                    <CircularProgress size={40} thickness={5}/>
+                                </div>}
+                                {this.props.profileResource && <ReactJson src={this.props.profileResource} name={false}/>}
+                            </Tab>
+                        </Tabs>
+                        : <Validation {...this.props} modal/>}
                 </div>
             </div>
         </Dialog>);
@@ -235,11 +244,20 @@ class ProfilesModal extends Component {
         </Fragment>;
     }
 
+    toggleProfileToBrowse = () => {
+        this.props.toggleProfileToBrowse();
+        this.setState({toggledRes: undefined, showValidation: false});
+    };
+
+    showValidation = () => {
+        this.setState({ showValidation: true });
+    };
+
     toggleResource = (res) => {
         let toggledRes = this.state.toggledRes && this.state.toggledRes.id === res.id ? undefined : res;
         this.state.toggledRes && toggledRes && this.props.loadResource(toggledRes);
         !this.state.toggledRes && toggledRes && setTimeout(() => this.props.loadResource(toggledRes), 500);
-        this.setState({ toggledRes });
+        this.setState({ toggledRes, showValidation: false });
     };
 
     setActiveTab = (tab) => {
