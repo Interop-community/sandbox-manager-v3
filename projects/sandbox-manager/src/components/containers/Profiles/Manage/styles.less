@@ -1,222 +1,88 @@
 .loaded-profiles-wrapper {
-  text-align: center;
+  height: 100%;
 
   .profiles-list {
-    width: 100%;
-    //min-width: 40vw;
-    max-width: 1100px;
-    display: inline-block;
-    text-align: left;
-    position: relative;
+    background-color: #fff;
+    margin-top: 16px;
+    box-shadow: rgba(180, 180, 180, 0.28) 0 1px 16px, rgba(180, 180, 180, 0.28) 0 5px 24px !important;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
 
-    .profile-list-item {
-      height: 70px;
-      margin-bottom: 10px;
-      border-radius: 1px !important;
-      transition: all 550ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-      overflow: hidden;
-      line-height: 70px;
-      position: relative;
-      width: 100%;
-      left: 0;
-      text-align: center;
+    .wrapper {
+      border-bottom: 1px solid whitesmoke;
 
-      &:before {
-        bottom: 0;
-        box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .24);
-        content: "";
-        display: block;
-        left: 0;
-        pointer-events: none;
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
-
-      &.active:not(.modal) {
-        height: 180px;
-        transition: all 550ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-        width: 103%;
-        left: -1.5%;
-
-        .expanded-toggle {
-          transition: all .3s;
-          transform: scaleY(-1);
-        }
-      }
-
-      &:hover {
-        cursor: pointer;
-      }
-
-      & > span {
+      & > * {
         display: inline-block;
-        width: ~'calc(100% - 70px)';
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding-left: 18px;
-        vertical-align: middle;
-        box-sizing: border-box;
-        font-size: 1.2rem;
-        line-height: 48px;
-        text-align: left;
-
-        svg {
-          width: 32px;
-          height: 32px;
-          margin-right: 18px;
-          vertical-align: middle;
-          background: whitesmoke;
-          padding: 10px;
-          border-radius: 30px;
-          fill: rgb(157, 0, 114) !important;
-        }
-      }
-
-      & > button {
-        vertical-align: middle;
-      }
-
-      .top-border {
-        display: inline-block;
-        width: 0;
-        height: 1px;
-        overflow: hidden;
-        position: absolute;
-        left: 50%;
-        top: 70px;
-        background-color: whitesmoke;
-        transition: all .7s;
-        transition-delay: .3s;
-
-        &.active {
-          left: 0;
-          transition: all .7s;
-          width: 100%;
-        }
-      }
-
-      .profile-content {
-        width: 100%;
-        height: 110px;
-        position: relative;
-        box-sizing: border-box;
-        overflow: auto;
-
-        & > div:not(.browse-button) {
-          &:nth-of-type(2) {
-            margin-top: 20px;
-          }
-
-          line-height: 35px;
-          text-align: left;
-          padding-left: 18px;
-        }
-
-        .browse-button {
-          line-height: 0;
-          position: absolute;
-          right: 20px;
-          top: 10px;
-        }
-
-        .label-value {
-          display: inline-block;
-          text-align: left;
-          width: 25%;
-          margin: 0;
-          padding: 0;
-
-          & > span:first-of-type {
-            position: relative;
-            line-height: 20px;
-          }
-        }
-
-        &:hover {
-          cursor: initial;
-        }
-
-        .loader {
-          position: absolute;
-          top: 100px;
-          left: 48%;
-        }
-
-        .profile-res-list-item {
-          height: 30px;
-          margin-bottom: 5px;
-          border-radius: 5px !important;
-          overflow: hidden;
-          font-size: .8rem;
-          padding-left: 5px;
-
-          &:hover {
-            cursor: pointer;
-          }
-
-          span {
-            line-height: 30px;
-          }
-        }
-      }
-
-      .expanded-toggle {
-        transition: all .3s;
       }
     }
-  }
 
-  .profiles-modal {
-    padding-bottom: 0 !important;
+    .profiles {
+      height: ~'calc(100% - 64px)';
+      overflow-x: hidden;
+      overflow-y: auto;
+      box-sizing: border-box;
+      padding: 0 !important;
 
-    & > div {
-      width: 100%;
-      padding-top: 44px;
-      display: inline-block;
+      .profiles-filters {
+        margin-left: 20px;
+      }
 
-      .resource-info {
-        width: ~'calc(100% + 48px)';
-        min-height: 160px;
-        height: 50vh;
-        position: relative;
-        left: -24px;
-        overflow: hidden;
+      .avatar {
+        background-color: whitesmoke;
+        padding: 5px;
+        border-radius: 20px;
+        top: 10px !important;
+      }
+    }
 
-        .resource-tabs {
-          height: 101%;
+    .nav {
+      height: 64px;
+      line-height: 64px;
+      box-sizing: border-box;
 
-          .resource-tabs-container {
-            height: 100%;
+      & > * {
+        display: inline-block;
 
-            & > div {
-              width: 100%;
-              max-height: ~'calc(100% - 49px)';
-              overflow-x: hidden;
-              overflow-y: auto;
-              box-sizing: border-box;
-              padding: 0 18px;
+        &:first-child {
+          margin-right: 8px;
+        }
+      }
+    }
 
-              .resource {
-                .label-value:not(.big) {
-                  display: inline-block;
-                  width: 33%;
-                  vertical-align: top;
-                }
-              }
+    .resource-tabs {
+      height: ~'calc(100% - 64px)';
+
+      .resource-tabs-container {
+        height: ~'calc(100% - 48px)';
+        overflow: auto;
+
+        .resource-info {
+          padding: 10px;
+
+          .label-value {
+            display: inline-block;
+            min-width: 25%;
+
+            &.big {
+              min-width: 100%;
             }
           }
         }
-      }
 
-      .loader-wrapper-small {
-        padding-top: 40px;
+        .rc-tree-node-selected {
+          background-color: inherit;
+          border: none;
+          opacity: 1;
+        }
+
+        .rc-tree-node-content-wrapper.rc-tree-node-content-wrapper-normal {
+          overflow: hidden;
+          width: calc(100% - 20px);
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
       }
     }
   }
-
-  .page-content-wrapper {
-    background-color: transparent !important;
-  }
-
 }

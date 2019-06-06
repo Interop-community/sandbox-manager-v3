@@ -141,6 +141,10 @@ const config = {
                     to: DIST_DIR + "/css/font-awesome/css/"
                 },
                 {
+                    from: SRC_DIR + "/../../../node_modules/rc-tree/assets",
+                    to: DIST_DIR + "/css/rc-tree/css/"
+                },
+                {
                     from: SRC_DIR + "/../../../node_modules/font-awesome/fonts",
                     to: DIST_DIR + "/css/font-awesome/fonts/"
                 },

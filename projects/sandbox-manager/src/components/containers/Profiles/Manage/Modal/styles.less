@@ -1,7 +1,7 @@
 .file-load-wrapper {
   position: absolute;
-  right: 0;
-  top: 18px;
+  right: 32px;
+  top: 24px;
 }
 
 .resources-modal {
@@ -52,24 +52,39 @@
         transition: all .5s;
         width: ~'calc(100% - 450px)';
         box-sizing: border-box;
+      }
+    }
+  }
+}
 
-        .resource-tabs {
-          height: 100%;
+.project-input-modal {
+  padding: 0 !important;
 
-          .resource-tabs-container {
-            height: ~'calc(100% - 48px)';
-            overflow: auto;
+  .client-details {
+    padding: 0 10px;
+    text-align: center;
 
-            .resource-info {
-              padding: 10px;
+    .project-name {
+      display: block;
+    }
 
-              .label-value {
-                display: inline-block;
-                min-width: 25%;
-              }
-            }
-          }
-        }
+    .chip {
+      display: inline-block !important;
+      margin-right: 15px !important;
+    }
+
+    a {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .buttons-wrapper {
+      padding: 10px 0;
+      text-align: center;
+
+      & > * {
+        margin: 0 .5rem;
+        width: 180px;
       }
     }
   }

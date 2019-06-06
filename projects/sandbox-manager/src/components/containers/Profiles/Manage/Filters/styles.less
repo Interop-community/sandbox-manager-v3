@@ -1,35 +1,43 @@
 .profiles-filters {
-  margin: 18px 0;
+  height: 64px;
+
   & > div {
     display: inline-block;
     margin-right: 16px;
   }
+
   .chip {
     min-width: 140px;
+
     &.active {
       & > svg {
         fill: #BCDBF0 !important;
       }
     }
+
     & > svg {
       position: absolute;
       right: 0;
     }
+
     & > span {
       display: inline-block;
       width: 100%;
       position: relative;
+
       .icon-wrapper {
         vertical-align: middle;
         float: right;
         position: absolute;
         right: 5px;
         top: 0;
+
         svg {
           vertical-align: middle;
         }
       }
     }
+
     .title {
       overflow: hidden;
       text-overflow: ellipsis;

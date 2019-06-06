@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Tabs, Tab, Toggle } from 'material-ui';
 import withErrorHandler from 'sandbox-manager-lib/hoc/withErrorHandler';
 import {
     importData, app_setScreen, customSearch, fhir_setCustomSearchResults, clearResults, loadExportResources, getDefaultUserForSandbox, cancelDownload, customSearchNextPage, validate, validateExisting,
@@ -9,7 +8,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import muiThemeable from "material-ui/styles/muiThemeable";
 import Manage from './Manage';
-import Validation from './Validation';
+import Page from 'sandbox-manager-lib/components/Page';
+import HelpButton from '../../UI/HelpButton';
 
 import './styles.less';
 
@@ -30,23 +30,14 @@ class Profiles extends Component {
 
     render () {
         let palette = this.props.muiTheme.palette;
+        let helpIcon = <HelpButton style={{ marginLeft: '10px' }} url='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/79364100/Sandbox+Persona'/>;
 
         return <div className='profiles-wrapper page-content-wrapper'>
-            <Tabs className='profiles-tabs' contentContainerClassName='profiles-tabs-container' inkBarStyle={{ backgroundColor: this.props.muiTheme.palette.primary2Color }}>
-                <Tab label="Profiles" className={'profiles tab' + (this.state.activeTab === 'profiles' ? ' active' : '')} onActive={() => this.setActiveTab('profiles')}>
-                    <Manage palette={palette} {...this.props} />
-                </Tab>
-                <Tab label="Validation" className={'validation tab' + (this.state.activeTab === 'validation' ? ' active' : '')} onActive={() => this.setActiveTab('validation')}>
-                    <Validation palette={palette} {...this.props} />
-                </Tab>
-            </Tabs>
+            <Page title='Profiles' helpIcon={helpIcon}>
+                <Manage palette={palette} {...this.props} />
+            </Page>
         </div>
     }
-
-    setActiveTab = (tab) => {
-        this.props.cleanValidationResults();
-        this.setState({ activeTab: tab });
-    };
 }
 
 const mapStateToProps = state => {
