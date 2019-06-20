@@ -12,7 +12,7 @@ import ConfirmModal from 'sandbox-manager-lib/components/ConfirmModal';
 import API from '../../../lib/api';
 import {
     lookupPersonasStart, app_setScreen, doLaunch, fetchPersonas, loadSandboxApps, createApp, updateApp, deleteApp, loadApp, getDefaultUserForSandbox, getPersonasPage, resetPersonas, copyToClipboard, launchHook,
-    createService, loadServices, updateHook, updateService, deleteService
+    createService, loadServices, updateHook, updateService, deleteService, loadServiceWithoutUnsupported
 } from '../../../redux/action-creators';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -115,7 +115,8 @@ class Apps extends Component {
                     Are you sure you want to delete this service? Deleting this service will result in the deletion of all the launch scenarios connected to it.
                 </p>}
                 {!this.state.serviceToDelete && <p>
-                    Are you sure you want to delete app "{this.state.selectedApp ? this.state.selectedApp.clientName : ''}"? Deleting this app will result in the deletion of all the launch scenarios connected to it.
+                    Are you sure you want to delete app "{this.state.selectedApp ? this.state.selectedApp.clientName : ''}"? Deleting this app will result in the deletion of all the launch scenarios connected
+                    to it.
                 </p>}
             </ConfirmModal>}
             <Snackbar open={!!this.props.copying} message='Text Copied to Clipboard' autoHideDuration={30000} bodyStyle={{ margin: '0 auto', backgroundColor: palette.primary2Color, textAlign: 'center' }}/>
@@ -183,6 +184,7 @@ class Apps extends Component {
             case 'patient-view':
                 return <PatientIcon/>;
             case 'medication-prescribe':
+            case 'order-select':
                 return <PillIcon className='additional-rotation'/>;
         }
         return null;
@@ -266,8 +268,9 @@ class Apps extends Component {
                                 </div>
                             </Paper>
                         </Dialog>
-                        : !!this.state.selectedHook
-                            ? <HookDialog muiTheme={this.props.muiTheme} open={!!this.state.selectedHook} onClose={this.closeAll} hook={this.state.selectedHook} service={this.state.service}
+                        : !!this.state.selectedHook || !!this.props.tmpServiceState
+                            ? <HookDialog muiTheme={this.props.muiTheme} open={!!this.state.selectedHook || !!this.props.tmpServiceState} onClose={this.closeAll} hook={this.state.selectedHook}
+                                          service={this.state.service} tmpServiceState={this.props.tmpServiceState}
                                           onSubmit={(hookId, file) => {
                                               this.props.updateHook(hookId, file);
                                               this.closeAll();
@@ -434,6 +437,7 @@ class Apps extends Component {
             selectedApp: undefined, appToLaunch: undefined, registerDialogVisible: false, showConfirmModal: false, createdApp: undefined, loadDialogVisible: false, loadingManifest: false,
             hookToLaunch: undefined, selectedHook: undefined, selectCreationType: false
         });
+        this.props.tmpServiceState && this.props.loadServiceWithoutUnsupported();
     };
 
     handleAppSelect = (event, app) => {
@@ -483,14 +487,15 @@ const mapStateToProps = state => {
         pagination: state.persona.patientsPagination,
         copying: state.sandbox.copying,
         hooksList: state.hooks.services,
-        servicesLoading: state.hooks.servicesLoading
+        servicesLoading: state.hooks.servicesLoading,
+        tmpServiceState: state.hooks.tmpServiceState
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         fetchPersonas, doLaunch, app_setScreen, loadSandboxApps, createApp, updateApp, deleteApp, loadApp, getDefaultUserForSandbox, lookupPersonasStart, resetPersonas, copyToClipboard, launchHook,
-        createService, loadServices, updateHook, updateService, deleteService,
+        createService, loadServices, updateHook, updateService, deleteService, loadServiceWithoutUnsupported,
         getNextPersonasPage: (type, pagination) => getPersonasPage(type, pagination, 'next'),
         getPrevPersonasPage: (type, pagination) => getPersonasPage(type, pagination, 'previous')
     }, dispatch);

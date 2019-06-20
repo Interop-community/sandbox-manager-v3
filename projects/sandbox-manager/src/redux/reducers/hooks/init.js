@@ -2,7 +2,7 @@ export default {
     services: [],
     cards: [],
     hookContexts: {
-        'patient-view': {
+        'patient-view2': {
             userId: {
                 required: true,
                 title: 'User id'

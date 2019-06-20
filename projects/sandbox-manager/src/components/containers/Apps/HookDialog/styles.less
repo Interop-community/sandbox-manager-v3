@@ -31,8 +31,10 @@
 }
 
 .hook-dialog {
-  & > div:first-of-type {
-    padding: 0 !important;
+  .app-dialog-actions-wrapper {
+    & > * {
+      margin-right: 16px;
+    }
   }
 
   .remove-image-button {
@@ -47,6 +49,41 @@
     box-sizing: border-box;
     position: relative;
     padding: 0 !important;
+
+    .custom-hooks-body {
+      padding: 24px;
+
+      .context-table-wrapper {
+        position: relative;
+
+        .context-table-header {
+          height: 25px !important;
+
+          th {
+            height: 25px !important;
+          }
+
+          .table-title {
+            text-align: center !important;
+            color: gray !important;
+            font-size: 1.3rem !important;
+          }
+        }
+
+        tbody {
+          tr, td {
+            height: 30px !important;
+          }
+        }
+
+        .context-action-button {
+          position: absolute;
+          right: 0;
+          top: -12px;
+          z-index: 1000;
+        }
+      }
+    }
 
     .info-tabs {
       height: 100%;
@@ -94,7 +131,11 @@
     color: rgba(0, 0, 0, 0.3);
   }
 
-  & > div:first-child {
+  & > div:first-of-type {
+    padding: 0 !important;
+  }
+
+  &:not(.custom) > div:first-child {
     border-bottom: 1px solid #f5f5f5 !important;
     height: 65vh;
 

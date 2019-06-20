@@ -44,6 +44,13 @@ export function setServicesLoading (loading) {
     }
 }
 
+export function setTmpServiceState (state) {
+    return {
+        type: types.HOOKS_SET_TMP_SERVICE_STATE,
+        payload: { state }
+    }
+}
+
 export function updateService (service) {
     return (dispatch, getState) => {
         let url = service.url;
@@ -95,6 +102,27 @@ export function updateService (service) {
     }
 }
 
+export function loadServiceWithoutUnsupported (newService) {
+    return (dispatch, getState) => {
+        let state = getState();
+
+        newService = newService ? newService : state.hooks.tmpServiceState;
+        if (newService) {
+            dispatch(setServicesLoading(true));
+            let configuration = state.config.xsettings.data.sandboxManager;
+            newService.cdsHooks = newService.cdsHooks.filter(hook => hook.isSupported);
+            API.post(`${configuration.sandboxManagerApiUrl}/cds-services`, newService, dispatch)
+                .then(() => {
+                    dispatch(loadServices());
+                })
+                .catch(e => {
+                    dispatch(setGlobalError(e));
+                    dispatch(setServicesLoading(false));
+                });
+        }
+    }
+}
+
 export function deleteService (service) {
     return (dispatch, getState) => {
         let state = getState();
@@ -121,34 +149,43 @@ export function createService (url, serviceName) {
         dispatch(setServicesLoading(true));
         API.get(url)
             .then(result => {
-                let state = getState();
-                let services = state.hooks.services ? state.hooks.services.slice() : [];
-                let newService = {
-                    title: serviceName || url,
-                    url,
-                    cdsHooks: [],
-                    description: '',
-                    sandbox: state.sandbox.sandboxes.find(i => i.sandboxId === sessionStorage.sandboxId),
-                    createdBy: state.users.oauthUser
-                };
-                if (result && result.services) {
-                    result.services.map((service, i) => {
-                        let obj = Object.assign({}, service);
-                        obj.hookId = obj.id;
-                        !obj.title && (obj.title = obj.name ? obj.name : '');
-                        delete obj.id;
-                        newService.cdsHooks.push(obj);
-                    });
-                }
-                let configuration = state.config.xsettings.data.sandboxManager;
+                    let hasUnsupported = false;
+                    let state = getState();
+                    let hookContexts = state.hooks.hookContexts;
+                    let newService = {
+                        title: serviceName || url,
+                        url,
+                        cdsHooks: [],
+                        description: '',
+                        sandbox: state.sandbox.sandboxes.find(i => i.sandboxId === sessionStorage.sandboxId),
+                        createdBy: state.users.oauthUser
+                    };
 
-                API.post(`${configuration.sandboxManagerApiUrl}/cds-services`, newService, dispatch)
-                    .then(() => {
-                        dispatch(loadServices());
-                    });
-                services.push(newService);
+                    if (result && result.services) {
+                        result.services.map((service, i) => {
+                                let isSupported = !!hookContexts[service.hook];
+                                !isSupported && (hasUnsupported = true);
+                                let obj = Object.assign({}, service);
+                                obj.hookId = obj.id;
+                                obj.isSupported = isSupported;
+                                !obj.title && (obj.title = obj.name ? obj.name : '');
+                                delete obj.id;
+                                newService.cdsHooks.push(obj);
+                            }
+                        );
+                    }
+
+                    if (!hasUnsupported) {
+                        dispatch(loadServiceWithoutUnsupported(newService));
+                    } else {
+                        dispatch(setTmpServiceState(newService));
+                    }
+                }
+            )
+            .catch(e => {
+                dispatch(setGlobalError(e));
             })
-            .catch(_ => {
+            .finally(_ => {
                 dispatch(setServicesLoading(false));
             });
     }
