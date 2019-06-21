@@ -122,7 +122,7 @@ class AppDialog extends Component {
                     <div>
                         <List>
                             {this.props.tmpServiceState.cdsHooks.map(hook => !hook.isSupported &&
-                                <ListItem key={hook.hookId} leftCheckbox={<Checkbox onCheck={() => this.toggleCustom(hook)}/>} primaryText={`${hook.title} (${hook.hookId})`} secondaryText={hook.description}/>)}
+                                <ListItem key={hook.hookId} leftCheckbox={<Checkbox onCheck={() => this.toggleCustom(hook)}/>} primaryText={`${hook.title} (${hook.hook})`} secondaryText={hook.description}/>)}
                         </List>
                     </div>
                     <p>
