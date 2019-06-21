@@ -8,6 +8,53 @@
     padding: 0;
     height: 100%;
     overflow: hidden;
+    position: relative;
+
+    .stepper {
+      height: ~'calc(100% - 64px)';
+
+      & > *:first-child {
+        padding: 0 16px;
+        background-color: whitesmoke;
+        place-content: start !important;
+
+        * {
+          max-height: 30px !important;
+        }
+      }
+
+      & > *:nth-child(2) {
+        height: ~'calc(100% - 30px)';
+      }
+
+      .stepper-connector {
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        border-right: 5px solid darkgray;
+        border-top: 5px solid darkgray;
+        transform: rotate(45deg);
+        position: relative;
+        margin: 0 20px;
+
+        span {
+          display: inline-block;
+          height: 10px;
+          width: 10px;
+          border-right: 2px solid darkgray;
+          border-top: 2px solid darkgray;
+          position: relative;
+          right: -2px;
+          top: -2px;
+
+        }
+      }
+    }
+
+    .loader-wrapper {
+      position: absolute;
+      top: 0;
+    }
 
     .wrapper {
       border-bottom: 1px solid whitesmoke;
@@ -18,11 +65,15 @@
     }
 
     .profiles {
-      height: ~'calc(100% - 64px)';
+      height: 100%;
       overflow-x: hidden;
       overflow-y: auto;
       box-sizing: border-box;
       padding: 0 !important;
+
+      & > div > span {
+        padding: 0 16px !important;
+      }
 
       .profiles-filters {
         margin-left: 20px;
@@ -51,11 +102,20 @@
     }
 
     .resource-tabs {
-      height: ~'calc(100% - 64px)';
+      height: ~'calc(100% - 50px)';
+
+      & > *:nth-child(2) {
+        border-bottom: 2px solid whitesmoke;
+      }
 
       .resource-tabs-container {
-        height: ~'calc(100% - 48px)';
+        //height: ~'calc(100% - 48px)';
+        height: 100%;
         overflow: auto;
+
+        & > div {
+          height: 100%;
+        }
 
         .resource-info {
           padding: 10px;

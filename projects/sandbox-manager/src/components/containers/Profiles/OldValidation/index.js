@@ -77,7 +77,7 @@ class Validation extends Component {
     };
 
     setActiveTab = (tab) => {
-        // this.props.cleanValidationResults();
+        this.props.cleanValidationResults();
         this.setState({ activeTab: tab, query: '', manualJson: '', fileJson: '', file: '', selectedPersona: undefined });
     };
 

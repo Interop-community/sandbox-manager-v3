@@ -1,0 +1,64 @@
+.validation-wrapper {
+  position: relative;
+  height: 100%;
+
+  .validate-button {
+    position: absolute;
+    right: 20px;
+    top: -65px;
+    &.modal {
+      top: initial;
+      bottom: 18px;
+    }
+  }
+
+  .validation-tabs {
+    width: 60%;
+    position: relative;
+    left: 20%;
+    margin-top: 20px;
+    min-height: 400px;
+    &.modal {
+      width: 100%;
+      left: 0;
+      margin: 0;
+    }
+  }
+
+  .tab-title {
+    text-align: center;
+  }
+
+  .tree-input-wrapper {
+    text-align: center;
+  }
+
+  //.validation-tabs > div:first-of-type {
+  //  height: 55px;
+  //  border-bottom: 2px solid whitesmoke;
+  //  width: 100% !important;
+  //  padding: 0 4px;
+  //
+  //  & > button {
+  //    max-width: 125px;
+  //  }
+  //
+  //  & > div:nth-child(2) {
+  //    max-width: 125px;
+  //  }
+  //}
+  //
+  //.validation-tabs > div:nth-child(2) {
+  //  max-width: 500px;
+  //  padding: 0 4px;
+  //
+  //  & > div {
+  //    max-width: 125px;
+  //  }
+  //}
+  //
+  .validation-tabs-container {
+    max-height: ~'calc(100vh - 220px)';
+    overflow: auto;
+  }
+}
