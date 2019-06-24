@@ -40,19 +40,19 @@ class Manage extends Component {
         return <div className='profiles-list'>
             <div className='wrapper'>
                 <Filters {...this.props} onFilter={this.onFilter}/>
-                {(this.state.selectedResource || this.state.selectedProfile) &&
-                <div className='nav'>
-                    <div>
-                        <Chip onRequestDelete={() => this.toggleProfile()}>
-                            {this.state.selectedProfile}
-                        </Chip>
-                    </div>
-                    <div>
-                        {this.state.selectedResource && <Chip onRequestDelete={() => this.selectResource()}>
-                            {this.state.selectedResource.relativeUrl}
-                        </Chip>}
-                    </div>
-                </div>}
+                {/*{(this.state.selectedResource || this.state.selectedProfile) &&*/}
+                {/*<div className='nav'>*/}
+                {/*    <div>*/}
+                {/*        <Chip onRequestDelete={() => this.toggleProfile()}>*/}
+                {/*            {this.state.selectedProfile}*/}
+                {/*        </Chip>*/}
+                {/*    </div>*/}
+                {/*    <div>*/}
+                {/*        {this.state.selectedResource && <Chip onRequestDelete={() => this.selectResource()}>*/}
+                {/*            {this.state.selectedResource.relativeUrl}*/}
+                {/*        </Chip>}*/}
+                {/*    </div>*/}
+                {/*</div>}*/}
             </div>
             {!this.props.profilesLoading && ((!this.state.selectedResource && !this.state.selectedProfile)
                 ? <List className='profiles'>
