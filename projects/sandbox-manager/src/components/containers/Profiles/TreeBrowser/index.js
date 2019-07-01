@@ -72,7 +72,7 @@ class TreeBrowser extends Component {
 
     toggleModal = () => {
         this.setState({ patientSelectVisible: !this.state.patientSelectVisible });
-        this.props.cleanResults && this.props.cleanResults();
+        // this.props.cleanResults && this.props.cleanResults();
     };
 
     getTree = () => {
@@ -105,7 +105,7 @@ class TreeBrowser extends Component {
 
     toggle = (selectedResource) => {
         this.props.onToggle && this.props.onToggle(selectedResource);
-        this.props.cleanResults && this.props.cleanResults();
+        // this.props.cleanResults && this.props.cleanResults();
     };
 
     getReferences = () => {
@@ -134,7 +134,7 @@ class TreeBrowser extends Component {
             toggledItems[item] = true
         }
         this.setState({ toggledItems });
-        this.props.cleanResults && this.props.cleanResults();
+        // this.props.cleanResults && this.props.cleanResults();
     };
 
     getNested = (object, parentId, isRootLevel) => {

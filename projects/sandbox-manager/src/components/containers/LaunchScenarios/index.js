@@ -210,14 +210,14 @@ class LaunchScenarios extends Component {
                     let contentStyles = isSelected ? { borderTop: '1px solid ' + this.props.muiTheme.palette.primary7Color } : {};
                     let isPatient = sc.userPersona.resource !== 'Practitioner';
                     let iconStyle = {
-                            backgroundColor: this.props.muiTheme.palette.primary5Color,
-                            color: this.props.muiTheme.palette.accent1Color
-                        };
+                        backgroundColor: this.props.muiTheme.palette.primary5Color,
+                        color: this.props.muiTheme.palette.accent1Color
+                    };
 
                     let details = <div key={1} className='expanded-content'>
                         {this.getDetailsContent(sc)}
                     </div>;
-                    let filter = (!this.state.appIdFilter || this.state.appIdFilter === sc.app.clientId) &&
+                    let filter = (!this.state.appIdFilter || (sc.app && this.state.appIdFilter === sc.app.clientId)) &&
                         (!this.state.typeFilter || (this.state.typeFilter === sc.userPersona.resource || (this.state.typeFilter === 'Hook' && !!sc.cdsHook)));
                     let showMenuForItem = this.state.showMenuForItem === index;
                     if (filter) {
@@ -227,7 +227,7 @@ class LaunchScenarios extends Component {
                                     {!sc.app
                                         ? <i><HooksIcon/></i>
                                         : isPatient
-                                            ? <i><Patient /></i>
+                                            ? <i><Patient/></i>
                                             : <i className='fa fa-user-md fa-lg'/>}
                                 </span>
                             </div>
@@ -382,13 +382,13 @@ class LaunchScenarios extends Component {
                         </span>
                     </div>}
                     {selectedScenario.cdsHook && selectedScenario.contextParams.map(param => {
-                            let patient = selectedScenario.contextParams.find(i => i.name === 'patientId').value;
-                            let isPatient = param.name === 'patientId';
-                            // let click = param.name !== 'patientId' ? () => this.props.history.push(`data-manager?q=${param.value}&p=${patient}`) : e => this.openInDM(e, patient);
-                            let click = isPatient ? () => this.props.history.push(`data-manager?q=${param.value}&p=${patient}`) : e => this.openInDM(e, patient);
-                            return <span className='section-value' style={lightColor}>
+                        let patient = selectedScenario.contextParams.find(i => i.name === 'patientId').value;
+                        let isPatient = param.name === 'patientId';
+                        // let click = param.name !== 'patientId' ? () => this.props.history.push(`data-manager?q=${param.value}&p=${patient}`) : e => this.openInDM(e, patient);
+                        let click = isPatient ? () => this.props.history.push(`data-manager?q=${param.value}&p=${patient}`) : e => this.openInDM(e, patient);
+                        return <span className='section-value' style={lightColor}>
                                 {/*{this.getContextIcon(param.name, iconStyleLight)} <span className={`context-value ${!!patient ? 'context-link' : ''}`} onClick={click}>{param.value}</span>*/}
-                                {param.name}: <span className={`context-value ${isPatient ? 'context-link' : ''}`} onClick={isPatient ? e => this.openInDM(e, patient) : null}>{param.value}</span>
+                            {param.name}: <span className={`context-value ${isPatient ? 'context-link' : ''}`} onClick={isPatient ? e => this.openInDM(e, patient) : null}>{param.value}</span>
                             </span>;
 
                     })}

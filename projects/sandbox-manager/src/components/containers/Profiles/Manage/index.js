@@ -66,10 +66,13 @@ class Manage extends Component {
                             <StepButton onClick={() => this.toggleProfile()} icon={<span/>}>All profiles</StepButton>
                         </Step>
                         <Step>
-                            <StepButton onClick={() => this.selectResource()} icon={<span/>}>{this.state.selectedProfile}</StepButton>
+                            <StepButton onClick={() => this.selectResource()} icon={<span/>}>{this.state.selectedProfile.profileId}</StepButton>
                         </Step>
-                        {this.state.selectedResource && <Step>
-                            <StepLabel icon={<span/>}>{this.state.selectedResource.relativeUrl}</StepLabel>
+                        {this.state.selectedResource && <Step  onClick={() => this.setState({deselectValidation: true})}>
+                            <StepButton icon={<span/>}>{this.state.selectedResource.relativeUrl}</StepButton>
+                        </Step>}
+                        {this.state.selectedValidationScreen && <Step>
+                            <StepLabel icon={<span/>}>VALIDATE -> {this.state.selectedValidationScreen.toUpperCase()}</StepLabel>
                         </Step>}
                     </Stepper>
                     <div>
@@ -148,7 +151,8 @@ class Manage extends Component {
                                     {this.props.profileResource && <ReactJson src={this.props.profileResource} name={false}/>}
                                 </Tab>
                                 {this.props.profileResource && this.props.profileResource.resourceType === 'StructureDefinition' && <Tab label="VALIDATION" className='validation tab'>
-                                    <Validation {...this.props} />
+                                    <Validation {...this.props} profile={this.state.selectedProfile} onScreenSelect={a => this.setState({selectedValidationScreen: a, deselectValidation: false})}
+                                                deselectValidation={this.state.deselectValidation}/>
                                 </Tab>}
                             </Tabs>
                             : <List className='profiles'>
@@ -207,13 +211,15 @@ class Manage extends Component {
 
     toggleProfile = (id) => {
         let selectedProfile = this.state.selectedProfile === id ? undefined : id;
-        this.setState({ selectedProfile, selectedResource: undefined });
 
+        let profile = undefined;
         if (selectedProfile) {
-            let profile = this.props.profiles.find(i => i.profileId === id);
+            profile = this.props.profiles.find(i => i.profileId === id);
             profile && this.props.loadProfileResources(profile.id);
             this.props.onProfileSelected && this.props.onProfileSelected(profile);
         }
+
+        this.setState({ selectedProfile: profile, selectedResource: undefined });
     };
 
     toggleProfileToBrowse = (id) => {
