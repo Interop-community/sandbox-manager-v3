@@ -1,8 +1,8 @@
 import API from '../../lib/api';
 import * as types from './types';
-import { random } from './sandbox';
-import { setGlobalError } from './app';
-import { appCreating } from './apps';
+import {random} from './sandbox';
+import {setGlobalError} from './app';
+import {appCreating} from './apps';
 
 const POSTFIX_SERVICE = '/cds-services';
 
@@ -13,45 +13,45 @@ const GETTERS = {
 export const hookExecuting = executing => {
     return {
         type: types.HOOKS_EXECUTING,
-        payload: { executing }
+        payload: {executing}
     }
 };
 
 export const setResultCards = cards => {
     return {
         type: types.HOOKS_SET_CARDS,
-        payload: { cards }
+        payload: {cards}
     }
 };
 
-export function removeResultCards () {
+export function removeResultCards() {
     return {
         type: types.HOOKS_REMOVE_CARDS
     }
 }
 
-export function setServices (services) {
+export function setServices(services) {
     return {
         type: types.HOOKS_SET_SERVICES,
-        payload: { services }
+        payload: {services}
     }
 }
 
-export function setServicesLoading (loading) {
+export function setServicesLoading(loading) {
     return {
         type: types.HOOKS_SERVICE_LOADING,
-        payload: { loading }
+        payload: {loading}
     }
 }
 
-export function setTmpServiceState (state) {
+export function setTmpServiceState(state) {
     return {
         type: types.HOOKS_SET_TMP_SERVICE_STATE,
-        payload: { state }
+        payload: {state}
     }
 }
 
-export function updateService (service) {
+export function updateService(service) {
     return (dispatch, getState) => {
         let url = service.url;
         let serviceName = service.title;
@@ -102,7 +102,7 @@ export function updateService (service) {
     }
 }
 
-export function loadServiceWithoutUnsupported (newService) {
+export function loadServiceWithoutUnsupported(newService) {
     return (dispatch, getState) => {
         let state = getState();
 
@@ -123,7 +123,7 @@ export function loadServiceWithoutUnsupported (newService) {
     }
 }
 
-export function deleteService (service) {
+export function deleteService(service) {
     return (dispatch, getState) => {
         let state = getState();
         let configuration = state.config.xsettings.data.sandboxManager;
@@ -138,7 +138,7 @@ export function deleteService (service) {
     }
 }
 
-export function createService (url, serviceName) {
+export function createService(url, serviceName, selectedForManualDefinition) {
     return (dispatch, getState) => {
         // remove trailing slash if present
         url[url.length - 1] === '/' && (url = url.substr(0, url.length - 1));
@@ -177,6 +177,13 @@ export function createService (url, serviceName) {
 
                     if (!hasUnsupported) {
                         dispatch(loadServiceWithoutUnsupported(newService));
+                    } else if (hasUnsupported && !!selectedForManualDefinition) {
+                        Object.keys(selectedForManualDefinition).map(hookId => {
+                            let hook = selectedForManualDefinition[hookId];
+                            hook.isSupported = true;
+                            newService.cdsHooks.push(hook);
+                        });
+                        dispatch(loadServiceWithoutUnsupported(newService));
                     } else {
                         dispatch(setTmpServiceState(newService));
                     }
@@ -191,7 +198,7 @@ export function createService (url, serviceName) {
     }
 }
 
-export function updateHook (hookId, newImage) {
+export function updateHook(hookId, newImage) {
     return (dispatch, getState) => {
         let state = getState();
 
@@ -219,7 +226,7 @@ export function updateHook (hookId, newImage) {
     };
 }
 
-export function loadServices () {
+export function loadServices() {
     return (dispatch, getState) => {
         if (window.fhirClient) {
             let state = getState();
@@ -243,7 +250,7 @@ export const launchHook = (hook, launchContext) => {
         let state = getState();
         let context = buildContext(hook.hook, launchContext, state, dispatch);
         // Authorize the hook
-        let userData = { username: state.sandbox.defaultUser.personaUserId, password: state.sandbox.defaultUser.password };
+        let userData = {username: state.sandbox.defaultUser.personaUserId, password: state.sandbox.defaultUser.password};
         let configuration = state.config.xsettings.data.sandboxManager;
 
         context && API.post(configuration.sandboxManagerApiUrl + "/userPersona/authenticate", userData, dispatch)
@@ -286,7 +293,7 @@ export const launchHook = (hook, launchContext) => {
                             API.post(`${encodeURI(hook.hookUrl)}`, data)
                                 .then(cards => {
                                     if (cards) {
-                                        cards.cards = cards.cards || [{ noCardsReturned: true }];
+                                        cards.cards = cards.cards || [{noCardsReturned: true}];
                                         cards.cards.map(card => {
                                             card.requestData = data;
                                         });
@@ -315,19 +322,19 @@ export const executeAction = (action) => {
         let promise = undefined;
         switch (action.type) {
             case 'create':
-                promise = window.fhirClient.api.create({ type: action.resource.resourceType, data: action.resource });
+                promise = window.fhirClient.api.create({type: action.resource.resourceType, data: action.resource});
                 break;
             case 'delete':
                 action.resource && API.delete(window.fhirClient.server.serviceUrl + '/' + action.resource, dispatch);
                 break;
             case 'update':
-                promise = window.fhirClient.api.update({ type: action.resource.resourceType, id: action.resource.id, data: action.resource });
+                promise = window.fhirClient.api.update({type: action.resource.resourceType, id: action.resource.id, data: action.resource});
                 break;
         }
     }
 };
 
-function buildContext (hook, launchContext, state, dispatch) {
+function buildContext(hook, launchContext, state, dispatch) {
     let params = state.hooks.hookContexts[hook];
     let context = {};
     let hasMissingContext = false;
@@ -354,6 +361,6 @@ function buildContext (hook, launchContext, state, dispatch) {
     return !hasMissingContext ? context : undefined;
 }
 
-function getUserId (state) {
+function getUserId(state) {
     return state.sandbox.defaultUser.resourceUrl;
 }

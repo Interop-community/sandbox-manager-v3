@@ -76,6 +76,8 @@ const get_config = (method, data, isFormData, contentType = "application/json") 
             contentType === "application/json" && delete CONFIG.headers['Content-Type'];
             CONFIG.body = data;
         }
+
+        console.log(CONFIG);
     }
 
     return CONFIG;

@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { RaisedButton, Paper, Dialog, IconButton, FloatingActionButton, TextField, List, Tab, Tabs, ListItem, Checkbox, Table, TableRow, TableHeader, TableHeaderColumn, TableBody, TableRowColumn, Toggle }
+import React, {Component, Fragment} from 'react';
+import {RaisedButton, Paper, Dialog, IconButton, FloatingActionButton, TextField, List, Tab, Tabs, ListItem, Checkbox, Table, TableRow, TableHeader, TableHeaderColumn, TableBody, TableRowColumn, Toggle}
     from 'material-ui';
 import DeleteIcon from "material-ui/svg-icons/action/delete";
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -10,7 +10,7 @@ import ReactJson from 'react-json-view';
 import './styles.less';
 
 class AppDialog extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         let logoURI = props.hook ? props.hook.logoUri : '';
@@ -26,14 +26,14 @@ class AppDialog extends Component {
         }
     }
 
-    render () {
+    render() {
         let paperClasses = 'hook-dialog' + (this.props.hook ? '' : ' custom');
         let hasNext = this.state.currentDefinitionIndex + 1 < Object.keys(this.state.selectedForManualDefinition).length;
         let hasBack = this.state.currentDefinitionIndex - 1 >= 0;
-        let nextCallback = hasNext ? () => this.setState({ currentDefinitionIndex: this.state.currentDefinitionIndex + 1 }) : this.load;
+        let nextCallback = hasNext ? () => this.setState({currentDefinitionIndex: this.state.currentDefinitionIndex + 1}) : this.load;
         let backCallback = hasBack
-            ? () => this.setState({ currentDefinitionIndex: this.state.currentDefinitionIndex - 1 })
-            : () => this.setState({ showDefinitions: false, selectedForManualDefinition: {} });
+            ? () => this.setState({currentDefinitionIndex: this.state.currentDefinitionIndex - 1})
+            : () => this.setState({showDefinitions: false, selectedForManualDefinition: {}});
 
         let actions = this.props.hook
             ? undefined
@@ -50,7 +50,7 @@ class AppDialog extends Component {
         return <Dialog paperClassName={paperClasses} modal={true} open={!!this.props.open} onRequestClose={this.props.onClose} actionsContainerClassName='app-dialog-actions-wrapper'
                        actions={actions}>
             <Paper className='paper-card'>
-                <IconButton style={{ color: this.props.muiTheme.palette.primary5Color }} className="close-button" onClick={this.handleClose}>
+                <IconButton style={{color: this.props.muiTheme.palette.primary5Color}} className="close-button" onClick={this.handleClose}>
                     <i className="material-icons">close</i>
                 </IconButton>
                 <h3>{!!this.props.hook ? 'CDS Service Info' : 'Unsupported hooks'}</h3>
@@ -71,9 +71,9 @@ class AppDialog extends Component {
         delete hook.logoUri;
 
         return this.props.hook
-            ? <Tabs className='info-tabs' contentContainerClassName='info-tabs-container' inkBarStyle={{ backgroundColor: palette.primary2Color }} style={{ backgroundColor: palette.canvasColor }}
+            ? <Tabs className='info-tabs' contentContainerClassName='info-tabs-container' inkBarStyle={{backgroundColor: palette.primary2Color}} style={{backgroundColor: palette.canvasColor}}
                     value={this.state.activeTab}>
-                <Tab label='Rendering' className={'parsed tab' + (this.state.activeTab === 'parsed' ? ' active' : '')} onActive={() => this.setState({ activeTab: 'parsed' })} value='parsed'>
+                <Tab label='Rendering' className={'parsed tab' + (this.state.activeTab === 'parsed' ? ' active' : '')} onActive={() => this.setState({activeTab: 'parsed'})} value='parsed'>
                     <Fragment>
                         <div className='hook-info-wrapper'>
                             <TextField fullWidth value={this.props.hook.hook} disabled={true} floatingLabelText='Hook'/>
@@ -96,9 +96,9 @@ class AppDialog extends Component {
                                 </div>
                             </div>
                             <div className='image-wrapper'>
-                                <input ref='image' type='file' style={{ 'display': 'none' }} onChange={this.onFileInput}/>
+                                <input ref='image' type='file' style={{'display': 'none'}} onChange={this.onFileInput}/>
                                 {!this.state.logoURI && <HooksIcon className='default-hook-icon'/>}
-                                {this.state.logoURI && <img style={{ height: '100%' }} src={this.state.logoURI}/>}
+                                {this.state.logoURI && <img style={{height: '100%'}} src={this.state.logoURI}/>}
                             </div>
                             {this.state.logoURI &&
                             <FloatingActionButton onClick={this.removeImage} mini className='remove-image-button' backgroundColor={this.props.muiTheme.palette.primary4Color}>
@@ -110,7 +110,7 @@ class AppDialog extends Component {
                         </div>
                     </Fragment>
                 </Tab>
-                <Tab label='JSON' className={'json tab' + (this.state.activeTab === 'json' ? ' active' : '')} onActive={() => this.setState({ activeTab: 'json' })} value='json'>
+                <Tab label='JSON' className={'json tab' + (this.state.activeTab === 'json' ? ' active' : '')} onActive={() => this.setState({activeTab: 'json'})} value='json'>
                     <ReactJson src={hook} name={false}/>
                 </Tab>
             </Tabs>
@@ -179,7 +179,7 @@ class AppDialog extends Component {
     updateNewContext = (prop, value) => {
         let contexts = this.state.hooksToDefine.slice();
         contexts[this.state.currentDefinitionIndex].context[''][prop] = value;
-        this.setState({ hooksToDefine: contexts });
+        this.setState({hooksToDefine: contexts});
     };
 
     toggleDefinitions = () => {
@@ -203,7 +203,7 @@ class AppDialog extends Component {
                 hooksToDefine.push(hook);
             }
         });
-        this.setState({ showDefinitions: true, hooksToDefine, currentDefinitionIndex: 0 });
+        this.setState({showDefinitions: true, hooksToDefine, currentDefinitionIndex: 0});
     };
 
     getActionButton = () => {
@@ -227,13 +227,13 @@ class AppDialog extends Component {
         delete newContext.id;
         contexts[this.state.currentDefinitionIndex].context[id] = newContext;
         delete contexts[this.state.currentDefinitionIndex].context[''];
-        this.setState({ addingContext: false, hooksToDefine: contexts });
+        this.setState({addingContext: false, hooksToDefine: contexts});
     };
 
     addNewContext = () => {
         let contexts = this.state.hooksToDefine.slice();
         contexts[this.state.currentDefinitionIndex].context[''] = {};
-        this.setState({ addingContext: true, hooksToDefine: contexts });
+        this.setState({addingContext: true, hooksToDefine: contexts});
     };
 
     toggleCustom = (hook) => {
@@ -242,17 +242,17 @@ class AppDialog extends Component {
             ? delete selectedForManualDefinition[hook.hookId]
             : (selectedForManualDefinition[hook.hookId] = hook);
 
-        this.setState({ selectedForManualDefinition });
+        this.setState({selectedForManualDefinition});
     };
 
     removeImage = () => {
         let input = this.refs.image;
         input.value = '';
-        this.setState({ logoURI: undefined, hasChanged: true });
+        this.setState({logoURI: undefined, hasChanged: true});
     };
 
     handleClose = () => {
-        this.setState({ modalOpen: false });
+        this.setState({modalOpen: false});
         this.props.onClose();
     };
 
@@ -262,7 +262,7 @@ class AppDialog extends Component {
             let reader = new FileReader();
 
             reader.onload = (e) => {
-                this.setState({ logoURI: e.target.result, hasChanged: true })
+                this.setState({logoURI: e.target.result, hasChanged: true})
             };
 
             reader.readAsDataURL(input.files[0]);
@@ -272,6 +272,12 @@ class AppDialog extends Component {
     save = () => {
         let input = this.refs.image;
         this.props.onSubmit && this.props.onSubmit(this.props.hook.id, input.files[0]);
+    };
+
+    load = () => {
+        console.log(this.state);
+        console.log(this.props.createService);
+        this.props.createService(this.props.manifestURL, this.props.serviceName, this.state.selectedForManualDefinition);
     };
 }
 
