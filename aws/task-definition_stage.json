@@ -1,8 +1,8 @@
 {
-  "family": "sandbox-manager-prototype-test",
+  "family": "sandbox-manager-prototype-stage",
   "containerDefinitions": [
     {
-      "name": "sandbox-manager-prototype-test",
+      "name": "sandbox-manager-prototype-stage",
       "image": "hspconsortium/sandbox-manager-prototype:{{PROJECT_VERSION}}",
       "cpu": 0,
       "portMappings": [
@@ -16,7 +16,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/sandbox-manager-prototype-test",
+          "awslogs-group": "/ecs/sandbox-manager-prototype-stage",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
@@ -33,7 +33,7 @@
         },
         {
           "name": "TARGET_ENV",
-          "value": "test"
+          "value": "prod"
         }
       ]
     }
