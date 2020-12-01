@@ -13,19 +13,19 @@
     }
   },
   "sandboxManager": {
-    "defaultServiceUrl": "http://localhost:8079/hspc9/data",
+    "defaultServiceUrl": "http://stu3:8079/hspc9/data",
     "baseServiceUrl_5": "http://localhost:8075",
     "baseServiceUrl_6": "http://localhost:8076",
     "baseServiceUrl_7": "http://localhost:8077",
-    "baseServiceUrl_8": "http://localhost:8078",
-    "baseServiceUrl_9": "http://localhost:8079",
-    "baseServiceUrl_10": "http://localhost:8070",
+    "baseServiceUrl_8": "http://dstu2:8078",
+    "baseServiceUrl_9": "http://stu3:8079",
+    "baseServiceUrl_10": "http://r4:8070",
     "ehrSimulator": "http://localhost:3000",
     "patientDataManager": "http://localhost:8096",
-    "oauthLogoutUrl": "http://localhost:8060/logout",
-    "oauthUserInfoUrl": "http://localhost:8060/userinfo",
+    "oauthLogoutUrl": "http://reference-auth:8060/logout",
+    "oauthUserInfoUrl": "http://reference-auth:8060/userinfo",
     "sbmUrlHasContextPath": "false",
-    "userManagementUrl": "https://id-test.logicahealth.org/auth/realms/Development/account/",
+    "userManagementUrl": "http://keycloak:8080/auth/realms/Development/account/",
     "reservedEndpoints": [
       "this",
       "hspc",
@@ -72,6 +72,6 @@
     "personaCookieTimeout": 180000,
     "personaCookieDomain": "localhost",
     "sandboxManagerUrl": "https://sandbox.logicahealth.org",
-    "sandboxManagerApiUrl": "http://localhost:12000"
+    "sandboxManagerApiUrl": "http://sandbox-manager-api:12000"
   }
 }
