@@ -22,8 +22,8 @@
     "baseServiceUrl_10": "http://r4:8070",
     "ehrSimulator": "http://localhost:3000",
     "patientDataManager": "http://localhost:8096",
-    "oauthLogoutUrl": "http://reference-auth:8060/logout",
-    "oauthUserInfoUrl": "http://reference-auth:8060/userinfo",
+    "oauthLogoutUrl": "http://localhost:8060/logout",
+    "oauthUserInfoUrl": "http://localhost:8060/userinfo",
     "sbmUrlHasContextPath": "false",
     "userManagementUrl": "http://keycloak:8080/auth/realms/Development/account/",
     "reservedEndpoints": [
