@@ -21,6 +21,7 @@ import ContextIcon from 'svg-react-loader?name=Patient!../../../../assets/icons/
 import HooksIcon from 'svg-react-loader?name=Patient!../../../../assets/icons/hooks-logo-mono.svg';
 import {getPatientName, getAge} from '../../../../lib/utils/fhir';
 import PersonaList from '../../Persona/List';
+import ContextPicker from "./ContextPicker";
 import Apps from '../../Apps';
 
 import './styles.less';
@@ -42,6 +43,8 @@ class Create extends Component {
             titleIsClean: true,
             intent: props.intent || '',
             showPersonaSelector: false,
+            showContextSelector: false,
+            showContextSelectorWrapper: false,
             patientId: props.patient || '',
             locationId: props.locationId || '',
             personaType: (props.userPersona && props.userPersona.resource) || null,
@@ -232,6 +235,13 @@ class Create extends Component {
                     search: this.props.fetchPersonas, loading: this.props.personaLoading, close: this.closePatientSearch, pagination: this.props.patientsPagination,
                     next: () => this.props.getNextPersonasPage(type, this.props.patientsPagination), prev: () => this.props.getPrevPersonasPage(type, this.props.patientsPagination)
                 };
+                let contextProps = this.state.showContextSelector
+                    ? {
+                        close: () => this.toggleContextPicker(), theme, resourceList: this.props.resourceList, resourceListFetching: this.props.resourceListFetching,
+                        resourceListLoadError: this.props.resourceListLoadError, type: this.state[`${this.state.contextKey}-context`].type, onSave: this.selectContext,
+                        value: this.state[`${this.state.contextKey}-context`] ? this.state[`${this.state.contextKey}-context`].selected : {}
+                    }
+                    : {};
                 return <div>
                     <span className='modal-screen-title' style={titleStyle}>
                         <ContextIcon style={iconStyle}/>
@@ -248,6 +258,9 @@ class Create extends Component {
                         </div>
                         <div className={'persona-list-wrapper' + (this.state.showPatientSelectorWrapper ? ' active' : '')}>
                             {this.state.showPatientSelector && <PersonaList {...props} titleLeft scrollContent autoScrollBodyContent={true}/>}
+                        </div>
+                        <div className={'persona-list-wrapper' + (this.state.showContextSelectorWrapper ? ' active' : '')}>
+                            {this.state.showContextSelector && <ContextPicker {...contextProps} />}
                         </div>
                     </div>
                 </div>;
@@ -307,8 +320,10 @@ class Create extends Component {
         let hasAllRequiredHookContext = this.state.scenarioType === 'hook' && Object.keys(this.props.resourceListLoadError).length === 0;
 
         hasAllRequiredHookContext && this.state.requiredHookContext.map(item => {
-            let resType = this.props.hookContexts[this.state.selectedApp.hook][item].resourceType;
-            if (!this.state[item] || this.state[item].length === 0 || (typeof (resType) === 'string' && !this.props.resourceList[resType])) {
+            let resType = this.props.hookContexts[this.state.selectedApp.hook][item].type;
+            if (resType !== 'object' && (!this.state[item] || this.state[item].length === 0)) {
+                hasAllRequiredHookContext = false;
+            } else if (resType === 'object' && (!this.state[`${item}-context`] || !this.state[`${item}-context`].selected || Object.keys(this.state[`${item}-context`].selected).length === 0)) {
                 hasAllRequiredHookContext = false;
             }
         });
@@ -320,7 +335,8 @@ class Create extends Component {
                 : this.state.currentStep === 1
                     ? !!this.state.selectedPersona
                     : this.state.currentStep === 2
-                        ? (this.state.scenarioType === 'app' && !this.props.singleEncounterLoadingError && !this.props.singleLocationLoadingError && !this.props.singleIntentLoadingError && !this.props.singleResourceLoadingError && !this.props.fetchingSinglePatientError) || hasAllRequiredHookContext
+                        ? (this.state.scenarioType === 'app' && !this.props.singleEncounterLoadingError && !this.props.singleLocationLoadingError && !this.props.singleIntentLoadingError &&
+                        !this.props.singleResourceLoadingError && !this.props.fetchingSinglePatientError) || hasAllRequiredHookContext
                         : this.state.title.length > 2;
     };
 
@@ -335,8 +351,6 @@ class Create extends Component {
         Object.keys(hookContext).map(key => {
             if (key === 'userId') {
                 state[key] = selectedPersona.resource + '/' + selectedPersona.fhirId;
-            } else if (typeof (hookContext[key].resourceType) !== 'string') {
-                state[key] = hookContext[key].resourceType[props.sandboxApiEndpointIndex].query
             }
             if (hookContext[key].required) {
                 state.requiredHookContext.push(key);
@@ -394,12 +408,15 @@ class Create extends Component {
         } else {
             return Object.keys(this.props.hookContexts[this.state.selectedApp.hook]).map((key, index) => {
                 let context = this.props.hookContexts[this.state.selectedApp.hook][key];
-                let value = this.state[key] || '';
+                let isComplex = context.type === 'object';
+                let value = isComplex && this.state[`${key}-context`] && this.state[`${key}-context`].selected
+                    ? Object.values(this.state[`${key}-context`].selected).join(',')
+                    : this.state[key] || '';
                 return <div className='summary-item' key={index}>
                     <div className='summary-item-icon-left'>
                         <ContextIcon style={iconStyle}/> {context.required && <span className='required-tag'>*</span>}
                     </div>
-                    <span className='summary-item-text'><span>{context.title}</span>: {value ? value : '-'}</span>
+                    <span className='summary-item-text'><span>{context.title}</span>: <span>{value ? value : '-'}</span></span>
                 </div>
 
             })
@@ -436,7 +453,8 @@ class Create extends Component {
                 <div className='column-item-wrapper'>
                     <FullScreenIcon className='column-item-icon no-vertical-align' style={iconStyle}/>
                     <div style={{position: 'relative', top: '-7px'}}>
-                        <FormControlLabel control={<Switch className='toggle' checked={this.state.patientBanner} onChange={(_e, v) => this.onChange('patientBanner', v)}/>} label='Needs Patient Banner'/>
+                        <FormControlLabel control={<Switch className='toggle' checked={this.state.patientBanner} onChange={(_e, v) => this.onChange('patientBanner', v)}/>}
+                                          label='Needs Patient Banner'/>
                         <span className='sub'>{!this.state.patientBanner && 'App will open in the EHR Simulator.'}</span>
                     </div>
                 </div>
@@ -458,7 +476,8 @@ class Create extends Component {
                 <div className='column-item-wrapper'>
                     <PatientIcon className='column-item-icon' style={iconStyle}/>
                     <FormControl error={!!this.props.fetchingSinglePatientError} fullWidth>
-                        <TextField fullWidth id='patient-id' label='Patient ID' onBlur={() => this.blur('patientId')} onChange={e => this.onChange('patientId', e.target.value)} value={this.state.patientId}/>
+                        <TextField fullWidth id='patient-id' label='Patient ID' onBlur={() => this.blur('patientId')} onChange={e => this.onChange('patientId', e.target.value)}
+                                   value={this.state.patientId}/>
                         {!!this.props.fetchingSinglePatientError && <FormHelperText>Could not fetch a patient with that ID</FormHelperText>}
                         <div className={'right-control' + (this.props.fetchingSinglePatient ? ' loader' : '')}>
                             <IconButton style={iconStyle} onClick={() => this.togglePatientSearch()}>
@@ -540,13 +559,24 @@ class Create extends Component {
         return Object.keys(this.props.hookContexts[this.state.selectedApp.hook]).map((key, index) => {
             let context = this.props.hookContexts[this.state.selectedApp.hook][key];
             let value = this.state[key] || '';
-            let disabled = key === 'userId' || typeof (context.resourceType) !== 'string' || this.props.resourceListFetching[context.resourceType];
+            if (this.state[`${key}-context`] && this.state[`${key}-context`].selected) {
+                value = Object.values(this.state[`${key}-context`].selected).join(',');
+            }
+            let isComplex = context.type === 'object';
+            let disabled = key === 'userId' || isComplex || this.props.resourceListFetching[context.resourceType];
+            // isComplex && context.resourceType && this.state[context.resourceType[this.props.sandboxApiEndpointIndex].type] &&
+            // (value = Object.keys(this.state[context.resourceType[this.props.sandboxApiEndpointIndex].type]).join(','));
 
             return index % 2 === comp && key !== 'userId' && <div className='column-item-wrapper' key={index}>
                 <ContextIcon style={iconStyle}/> {context.required && <span className='required-tag'>*</span>}
                 <FormControl error={!!this.props.singleResourceLoadingError}>
-                    <TextField fullWidth id={key} label={context.title} onBlur={() => this.blurHookContext(key, context, this.state)} onChange={e => this.onChange(key, e.target.value)} disabled={disabled}
-                               value={value}/>
+                    <TextField fullWidth id={key} label={context.title} onBlur={() => this.blurHookContext(key, context, this.state)} onChange={e => this.onChange(key, e.target.value)}
+                               disabled={disabled} value={value} classes={{root: isComplex ? 'custom-context-button' : ''}}/>
+                    {isComplex && <div className={'right-control'}>
+                        <IconButton style={iconStyle} onClick={() => this.fetchContext(context, key)}>
+                            <SearchIcon style={iconStyle}/>
+                        </IconButton>
+                    </div>}
                     {!!this.props.singleResourceLoadingError && <FormHelperText>Could not fetch the specified resource</FormHelperText>}
                 </FormControl>
                 {key === 'patientId' && <div className={'right-control' + (this.props.fetchingSinglePatient ? ' loader' : '')}>
@@ -554,13 +584,13 @@ class Create extends Component {
                         <SearchIcon style={iconStyle}/>
                     </IconButton>
                 </div>}
-                {typeof (context.resourceType) === 'string' && <div className='subscript'>
+                <div className='subscript'>
                     {this.props.resourceListFetching[context.resourceType]
                         ? 'Loading resource data...'
                         : this.props.resourceList[context.resourceType] && !!value
                             ? <span>FHIR Resource Located</span>
                             : null}
-                </div>}
+                </div>
                 <div className='subscript right'>
                     {this.props.resourceListFetching[context.resourceType] && <CircularProgress style={iconStyle} size={18}/>}
                     {this.props.resourceList[context.resourceType] && !!value && <CheckIcon style={rightIconGreenStyle}/>}
@@ -570,9 +600,46 @@ class Create extends Component {
         })
     };
 
+    fetchContext = (context, key) => {
+        if (this.state.patientId) {
+            let resources = context.resourceType[this.props.sandboxApiEndpointIndex];
+            resources.forEach(res => {
+                let crit = {}; //Object.assign({}, context.resourceType[this.props.sandboxApiEndpointIndex].crit);
+                crit.patient = this.state.patientId;
+                this.props.searchAnyResource(res.type, crit);
+            });
+            this.toggleContextPicker(resources, key);
+        } else {
+            alert('Please select a patient first');
+        }
+    }
+
+    toggleContextPicker = (type, key) => {
+        let state = {
+            contextKey: key,
+            showContextSelector: !this.state.showContextSelector,
+            showContextSelectorWrapper: !this.state.showContextSelectorWrapper
+        };
+        state[`${key}-context`] = {
+            ...this.state[`${key}-context`],
+            type
+        };
+
+        this.setState(state);
+    }
+
+    selectContext = values => {
+        let state = {};
+        let context = Object.assign({}, this.state[`${this.state.contextKey}-context`]);
+        context.selected = values;
+        state[`${this.state.contextKey}-context`] = context;
+        this.setState(state)
+        this.toggleContextPicker();
+    }
+
     blurHookContext = (key, context, state) => {
         let crit = state[key];
-        crit && typeof (context.resourceType) === 'string' && this.props.fetchAnyResource && this.props.fetchAnyResource(context.resourceType, crit);
+        crit && context.type === 'object' && this.props.fetchAnyResource && this.props.fetchAnyResource(context.resourceType, crit);
         !crit && this.props.clearResourceFetch && this.props.clearResourceFetch(context.resourceType);
     };
 
@@ -678,7 +745,11 @@ class Create extends Component {
             data.cdsServiceEndpoint = this.state.service;
             data.contextParams = [];
             Object.keys(this.props.hookContexts[this.state.selectedApp.hook]).map(key => {
-                this.state[key] && this.state[key].length > 0 && data.contextParams.push({name: key, value: this.state[key]});
+                if (this.state[`${key}-context`] && this.state[`${key}-context`].selected) {
+                    data.contextParams.push({name: key, value: Object.values(this.state[`${key}-context`].selected).join(',')});
+                } else if (this.state[key] && this.state[key].length > 0) {
+                    data.contextParams.push({name: key, value: this.state[key]});
+                }
             })
         }
 

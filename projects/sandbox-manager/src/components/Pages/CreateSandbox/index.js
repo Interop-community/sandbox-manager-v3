@@ -71,10 +71,13 @@ class Index extends Component {
                                         FHIR DSTU2 (v1.0.2)
                                     </MenuItem>
                                     <MenuItem value='9' data-qa='fhir-stu3'>
-                                        FHIR STU3 (v3.0.1)
+                                        FHIR STU3 (v3.0.2)
                                     </MenuItem>
                                     <MenuItem value='10' data-qa='fhir-r4'>
                                         FHIR R4 (v4.0.1)
+                                    </MenuItem>
+                                    <MenuItem value='11' data-qa='fhir-r5'>
+                                        FHIR R5 (v4.5.0)
                                     </MenuItem>
                                 </Select>
                             </FormControl>
@@ -84,14 +87,16 @@ class Index extends Component {
                                 <div>
                                     <FormControlLabel control={<Checkbox onChange={this.allowOpenChangeHandler} value='open' color='primary'/>} label='Allow Open FHIR Endpoint' className='checkbox'/>
                                 </div>
+                                {(!this.state.apiEndpointIndex || this.state.apiEndpointIndex !== '11') &&
                                 <div>
                                     <FormControlLabel control={<Checkbox defaultChecked onChange={this.applyDefaultChangeHandler} value='open' color='primary'/>} label='Import sample patients and practitioners'
                                                       className='checkbox'/>
-                                </div>
+                                </div>}
+                                {(!this.state.apiEndpointIndex || this.state.apiEndpointIndex !== '11') &&
                                 <div>
                                     <FormControlLabel control={<Checkbox defaultChecked onChange={this.applyDefaultAppsChangeHandler} value='open' color='primary'/>} label='Import sample applications'
                                                       className='checkbox'/>
-                                </div>
+                                </div>}
                             </div>
                             <TextField id='description' label='Description' onChange={this.sandboxDescriptionChange} data-qa='sandbox-create-description' onKeyPress={this.submitMaybe}/><br/>
                             <div className='subscript'>e.g., This sandbox is the QA environment for NewCo.</div>

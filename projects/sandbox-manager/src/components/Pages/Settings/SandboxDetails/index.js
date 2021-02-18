@@ -213,7 +213,7 @@ const mapStateToProps = state => {
     let sandboxId = sandbox ? sandbox.sandboxId : '';
     let sandboxDescription = sandbox ? sandbox.description : '';
     let sandboxAllowOpenAccess = sandbox ? !!sandbox.allowOpenAccess : false;
-    let metadata = state.fhir.metadata || {software: {}};
+    let metadata = state.fhir.meta || {software: {}};
     let sandboxVersion = state.sandbox.sandboxApiEndpointIndex
         ? state.sandbox.sandboxApiEndpointIndexes.find(i => i.index === state.sandbox.sandboxApiEndpointIndex)
         : {name: 'unknown'};

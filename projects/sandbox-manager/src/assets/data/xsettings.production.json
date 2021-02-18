@@ -20,6 +20,7 @@
     "baseServiceUrl_8": "https://api.logicahealth.org",
     "baseServiceUrl_9": "https://api.logicahealth.org",
     "baseServiceUrl_10": "https://api.logicahealth.org",
+    "baseServiceUrl_11": "https://api.logicahealth.org",
     "oauthLogoutUrl": "https://auth.logicahealth.org/logout",
     "oauthUserInfoUrl": "https://auth.logicahealth.org/userinfo",
     "sbmUrlHasContextPath": "false",

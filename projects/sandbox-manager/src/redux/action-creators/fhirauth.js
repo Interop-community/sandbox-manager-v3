@@ -46,6 +46,8 @@ export function setServerUrl() {
             server.serviceUrl = config.baseServiceUrl_9 + "/" + sandboxId + "/data";
         } else if (fhirVersion !== undefined && fhirVersion !== "" && fhirVersion === "4.0.0") {
             server.serviceUrl = config.baseServiceUrl_10 + "/" + sandboxId + "/data";
+        } else if (fhirVersion !== undefined && fhirVersion !== "" && fhirVersion === "4.2.0") {
+            server.serviceUrl = config.baseServiceUrl_11 + "/" + sandboxId + "/data";
         }
     }
     server.serviceUrl = "http://localhost:8075/" + action.sandboxId + "/data";
@@ -177,6 +179,8 @@ export function authorize(url, state, sandboxId) {
             serviceUrl = config.baseServiceUrl_9 + "/" + sandboxId + "/data";
         } else if (state.sandbox.sandboxApiEndpointIndex !== undefined && state.sandbox.sandboxApiEndpointIndex !== "" && state.sandbox.sandboxApiEndpointIndex === "10") {
             serviceUrl = config.baseServiceUrl_10 + "/" + sandboxId + "/data";
+        } else if (state.sandbox.sandboxApiEndpointIndex !== undefined && state.sandbox.sandboxApiEndpointIndex !== "" && state.sandbox.sandboxApiEndpointIndex === "11") {
+            serviceUrl = config.baseServiceUrl_11 + "/" + sandboxId + "/data";
         }
     }
 

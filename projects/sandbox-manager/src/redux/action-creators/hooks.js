@@ -248,12 +248,12 @@ export function loadServices() {
 }
 
 export const launchHook = (hook, launchContext) => {
-    return (dispatch, getState) => {
+    return async (dispatch, getState) => {
         dispatch(hookExecuting(true));
         let hookInstance = random(64);
 
         let state = getState();
-        let context = buildContext(hook.hook, launchContext, state, dispatch);
+        let context = await buildContext(hook.hook, launchContext, state, dispatch);
         // Authorize the hook
         let userData = {username: state.sandbox.defaultUser.personaUserId, password: state.sandbox.defaultUser.password};
         let configuration = state.config.xsettings.data.sandboxManager;
@@ -310,6 +310,9 @@ export const launchHook = (hook, launchContext) => {
                                     dispatch(hookExecuting(false));
                                 });
                         })
+                        .catch(e => {
+                            console.log(e);
+                        })
                 } else {
                     let start = performance.now();
                     // Trigger the hook
@@ -348,15 +351,29 @@ export const executeAction = (action) => {
     }
 };
 
-function buildContext(hook, launchContext, state, dispatch) {
+async function buildContext(hook, launchContext, state, dispatch) {
     let params = state.hooks.hookContexts[hook];
     let context = {};
     let hasMissingContext = false;
     if (params) {
-        Object.keys(params).map(key => {
+        Object.keys(params).map(async key => {
             let required = params[key].required;
+            let type = params[key].type;
             let val;
-            if (launchContext instanceof Array) {
+            if (type === 'object') {
+                let localContext = launchContext.find(x => x.name === key);
+                let resources = localContext.value.split(',');
+                let promises = [];
+                resources.forEach(res => {
+                    promises.push(API.get(`${window.fhirClient.server.serviceUrl}/${encodeURI(res)}`));
+                });
+                let data = await Promise.all(promises);
+                val = {
+                    resourceType : "Bundle",
+                    total: data.length,
+                    entry: data
+                }
+            } else if (launchContext instanceof Array) {
                 val = launchContext.find(x => x.name === key);
             } else {
                 val = launchContext[key] ? launchContext[key] : GETTERS[key] ? GETTERS[key](state) : undefined;

@@ -32,31 +32,6 @@ class Index extends Component {
         sessionStorage.clear();
     }
 
-    componentDidUpdate(prevProps) {
-        (this.props.creatingSandboxInfo || []).map((si, i) => {
-            let prev = prevProps.creatingSandboxInfo ? prevProps.creatingSandboxInfo.find(a => a.sandboxId === si.sandboxId) : undefined;
-            if (!prev || prev.queuePosition !== si.queuePosition) {
-                if (!mainTimers[si.sandboxId]) {
-                    let timers = Object.assign({}, this.state.timers);
-                    timers[si.sandboxId] = (si.queuePosition || 0) * 15 + 15;
-                    this.setState({timers});
-
-                    mainTimers[si.sandboxId] = setInterval(() => {
-                        let timers = Object.assign({}, this.state.timers);
-                        timers[si.sandboxId] = timers[si.sandboxId] - 1;
-                        timers[si.sandboxId] >= 0
-                            ? this.setState({timers})
-                            : clearInterval(mainTimers[si.sandboxId]) && delete mainTimers[si.sandboxId];
-                    }, 1000);
-                } else {
-                    let timers = Object.assign({}, this.state.timers);
-                    timers[si.sandboxId] = (si.queuePosition || 0) * 15 + 15;
-                    this.setState({timers});
-                }
-            }
-        });
-    }
-
     render() {
         let sandboxes = [];
         if (!this.props.loading) {
@@ -64,7 +39,6 @@ class Index extends Component {
             let loadingSandboxes = this.props.isSandboxCreating && this.props.creatingSandboxInfo
                 ? this.props.creatingSandboxInfo
                 : [];
-            // console.log(loadingSandboxes);
 
             sandboxes = list.map((sandbox, index) => {
                 if (sandbox.creationStatus === 'CREATED') {
@@ -97,7 +71,7 @@ class Index extends Component {
                 let info = sandboxInfo.queuePosition
                     ? `Your sandbox is number ${sandboxInfo.queuePosition} in the creation que...`
                     : 'Your new sandbox is being created...';
-                let time = `${this.state.timers[sandboxInfo.sandboxId]} sec.`;
+                let time = `${sandboxInfo.queuePosition * 15 + 15} sec.`;
 
                 sandboxes.unshift(<a key={`new-${i}`} style={{textDecoration: 'none'}}>
                     <ListItem button disabled>
@@ -156,12 +130,16 @@ class Index extends Component {
     getAvatarInfo = (apiEndpointIndex) => {
         let isThree = ['5', '8'].indexOf(apiEndpointIndex) === -1;
         let isFour = apiEndpointIndex === '7' || apiEndpointIndex === '10';
+        let isFive = apiEndpointIndex === '11';
         let avatarClasses = 'sandbox-avatar';
         let avatarText = 'STU3';
         let backgroundColor = this.props.theme.a1;
         if (isFour) {
             backgroundColor = this.props.theme.p1;
             avatarText = 'R4';
+        } else if (isFive) {
+            backgroundColor = this.props.theme.p4;
+            avatarText = 'R5';
         } else if (!isThree) {
             backgroundColor = this.props.theme.p3;
             avatarText = 'DSTU2';

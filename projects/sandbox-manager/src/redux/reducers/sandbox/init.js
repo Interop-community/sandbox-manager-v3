@@ -60,11 +60,12 @@ export default {
     lookupSandbox: '',
     sandboxApiEndpointIndexes : [
         {index: "5", name: "FHIR DSTU 2 (v1.0.2)", fhirVersion: "1.0.2", fhirTag: "1_0_2", altName: "FHIR v1.0.2", canCreate: true, supportsDataSets: true},
-        {index: "6", name: "FHIR STU 3 (v3.0.1)", fhirVersion: "3.0.1", fhirTag: "3_0_1", altName: "FHIR v3.0.1", canCreate: true, supportsDataSets: true},
+        {index: "6", name: "FHIR STU 3 (v3.0.2)", fhirVersion: "3.0.2", fhirTag: "3_0_2", altName: "FHIR v3.0.2", canCreate: true, supportsDataSets: true},
         {index: "7", name: "FHIR R4 (v3.4.0)", fhirVersion: "3.4.0", fhirTag: "3_4_0", altName: "FHIR v3.4.0", canCreate: false, supportsDataSets: true},
         {index: "8", name: "FHIR DSTU 2 (v1.0.2)", fhirVersion: "1.0.2", fhirTag: "1_0_2", altName: "FHIR v1.0.2", canCreate: true, supportsDataSets: true},
-        {index: "9", name: "FHIR STU 3 (v3.0.1)", fhirVersion: "3.0.1", fhirTag: "3_0_1", altName: "FHIR v3.0.1", canCreate: true, supportsDataSets: true},
-        {index: "10", name: "FHIR R4 (v4.0.1)", fhirVersion: "4.0.1", fhirTag: "4_0_1", altName: "FHIR v4.0.1", canCreate: false, supportsDataSets: true}
+        {index: "9", name: "FHIR STU 3 (v3.0.2)", fhirVersion: "3.0.2", fhirTag: "3_0_2", altName: "FHIR v3.0.2", canCreate: true, supportsDataSets: true},
+        {index: "10", name: "FHIR R4 (v4.0.1)", fhirVersion: "4.0.1", fhirTag: "4_0_1", altName: "FHIR v4.0.1", canCreate: false, supportsDataSets: true},
+        {index: "11", name: "FHIR R5 (v4.5.0)", fhirVersion: "4.5.0", fhirTag: "4_5_0", altName: "FHIR v4.5.0", canCreate: false, supportsDataSets: true}
     ],
     sandboxApiEndpointIndex: null
 }

@@ -85,6 +85,11 @@ export default class Help extends Component {
                         Developer Forum
                     </MenuItem>
                 </a>
+                <a href='https://help.logicahealth.org' onClick={e => e.preventDefault()} style={{textDecoration: 'none', color: 'inherit'}}>
+                    <MenuItem className='help-menu-item' onClick={() => this.openLink('https://help.logicahealth.org')}>
+                        Help desk
+                    </MenuItem>
+                </a>
                 <a href='https://healthservices.atlassian.net/wiki/spaces/HSM/overview' onClick={e => e.preventDefault()} style={{textDecoration: 'none', color: 'inherit'}}>
                     <MenuItem className='help-menu-item' onClick={() => this.openLink('https://healthservices.atlassian.net/wiki/spaces/HSM/overview')}>
                         Maintenance Info

@@ -12,10 +12,14 @@
     text-align: right;
   }
 
+  .subscript {
+    position: absolute;
+  }
+
   .subscript.right {
     position: absolute;
     right: 35px;
-    bottom: -5px;
+    bottom: -18px;
 
     //svg {
     //  position: initial !important;
@@ -189,6 +193,12 @@
           left: -20px;
           top: 0;
         }
+
+        .custom-context-button {
+          input {
+            width: 90%;
+          }
+        }
       }
 
       .column-item-wrapper:not(.big-and-centered) {
@@ -275,6 +285,16 @@
       .summary-item {
         .summary-item-text > span {
           font-weight: bold;
+        }
+
+        .summary-item-text span:last-of-type {
+          font-weight: normal !important;
+          display: inline-block;
+          width: 60%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          vertical-align: bottom;
         }
 
         span.section-title {

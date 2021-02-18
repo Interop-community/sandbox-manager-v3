@@ -80,8 +80,6 @@ export default class QueryBrowser extends Component {
             </Dialog>
             <div className='fhir-query-wrapper'>
                 <div className='input-wrapper'>
-                    {/*<TextField onKeyPress={this.submitMaybe} id='query' value={this.state.query} fullWidth label='' />*/}
-                    {/*dataSource={SUGGESTIONS} />*/}
                     <Autocomplete options={SUGGESTIONS} onChange={this.search} getOptionLabel={option => option.title} freeSolo onKeyUp={this.updateQuery}
                                   renderInput={params => {
                                       return <TextField className='query' {...params} label='FHIR Query' fullWidth/>;
@@ -201,8 +199,9 @@ export default class QueryBrowser extends Component {
     search = (a, b) => {
         let query = (b && b.title) || a.target.value || this.state.query;
         if (!!query) {
-            if (query.indexOf('_count=') === -1) {
-                query += (query.indexOf('?') >= 0 ? '&' : '?');
+            let hasSearch = query.indexOf('?') >= 0;
+            if (query.indexOf('_count=') === -1 && (hasSearch || query.indexOf('/') === -1)) {
+                query += (hasSearch ? '&' : '?');
                 query += `_count=${this.state.canFit}`;
             }
             this.setState({query});
