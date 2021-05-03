@@ -14,10 +14,10 @@
     "authClient": {
       "clientName": "Patient Data Manager",
       "clientId": "patient_data_manager",
-      "redirectUri": "https://patient-data-manager-test.logicahealth.org/index.html"
+      "redirectUri": "https://patient-data-manager-test.interop.community/index.html"
     },
-    "appUri": "https://patient-data-manager-test.logicahealth.org/",
-    "launchUri": "https://patient-data-manager-test.logicahealth.org/launch.html",
+    "appUri": "https://patient-data-manager-test.interop.community/",
+    "launchUri": "https://patient-data-manager-test.interop.community/launch.html",
     "logoUri": "https://content.logicahealth.org/images/hspc-patient-data-manager/logo/pdm.png"
   },
   {
