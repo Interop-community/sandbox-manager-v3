@@ -51,7 +51,7 @@ class Dashboard extends Component {
                             </h3>
                             <div className='paper-body-invitation'>
                                 <div>
-                                    <span className='bold'>{invite.invitedBy.name} / {invite.invitedBy.email}</span> has invited you to join <span className='bold'>{invite.sandbox.name}</span> Logica Sandbox.
+                                    <span className='bold'>{invite.invitedBy.name} / {invite.invitedBy.email}</span> has invited you to join <span className='bold'>{invite.sandbox.name}</span> Sandbox.
                                 </div>
                             </div>
                         </Paper>
@@ -73,7 +73,7 @@ class Dashboard extends Component {
             <div className='sandboxes-min-height' data-qa='dashboard-page'>
                 <AvailableSandboxes onToggleModal={this.toggle}/>
             </div>
-            <Footer loadTerms={this.props.loadTerms} terms={this.props.terms} user={this.props.user}/>
+            {/*<Footer loadTerms={this.props.loadTerms} terms={this.props.terms} user={this.props.user}/>*/}
         </Page>;
     }
 
@@ -100,9 +100,9 @@ class Dashboard extends Component {
     handleCancel = () => {
         let isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
         if (isIE11) {
-            document.cookie = "hspc-invitation-id=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.logicahealth.org; path=/";
+            document.cookie = "hspc-invitation-id=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.interop.community; path=/";
         } else {
-            document.cookie = "hspc-invitation-id=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.logicahealth.org; path=/";
+            document.cookie = "hspc-invitation-id=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.interop.community; path=/";
         }
         this.setState({showAccept: false, invitationToAccept: undefined});
     };

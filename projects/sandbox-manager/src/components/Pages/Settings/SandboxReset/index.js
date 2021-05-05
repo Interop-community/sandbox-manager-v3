@@ -22,7 +22,7 @@ class SandboxReset extends Component {
                 <h1 style={titleStyle}>RESET SANDBOX</h1>
             </div>
             <div className='reset-content'>
-                <p>Sorry, but the reset function is temporarily unavailable. Please see <a href="https://groups.google.com/a/logicahealth.org/forum/#!topic/developer/9ogbORZLCn4" target="_blank">this announcement</a> for more information.</p>
+                <p>Sorry, but the reset function is temporarily unavailable. Please see <a href="https://groups.google.com/a/interop.community/forum/#!topic/developer/9ogbORZLCn4" target="_blank">this announcement</a> for more information.</p>
                 {/*<p>Resetting the sandbox will delete:</p>*/}
                 {/*<ul>*/}
                     {/*<li>All FHIR data</li>*/}

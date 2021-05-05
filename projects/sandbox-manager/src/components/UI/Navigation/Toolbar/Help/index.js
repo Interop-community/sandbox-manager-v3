@@ -33,8 +33,8 @@ export default class Help extends Component {
             </div>
             {this.state.showHelpDropdown && !!this.state.anchorEl &&
             <Menu className='help-menu' width='200px' open={true} anchorEl={this.state.anchorEl} onClose={this.handleUserDropdown}>
-                <a href='https://www.developers.logicahealth.org/' onClick={e => e.preventDefault()} style={{textDecoration: 'none', color: 'inherit'}}>
-                    <MenuItem className='help-menu-item' onClick={() => this.openLink('https://www.developers.logicahealth.org/')}>
+                <a href='https://www.developers.interop.community/' onClick={e => e.preventDefault()} style={{textDecoration: 'none', color: 'inherit'}}>
+                    <MenuItem className='help-menu-item' onClick={() => this.openLink('https://www.developers.interop.community/')}>
                         Developers Portal
                     </MenuItem>
                 </a>
@@ -80,13 +80,13 @@ export default class Help extends Component {
                         FAQ
                     </MenuItem>
                 </a>
-                <a href='https://groups.google.com/a/logicahealth.org/forum/#!forum/developer' onClick={e => e.preventDefault()} style={{textDecoration: 'none', color: 'inherit'}}>
-                    <MenuItem className='help-menu-item' onClick={() => this.openLink('https://groups.google.com/a/logicahealth.org/forum/#!forum/developer')}>
+                <a href='https://groups.google.com/a/interop.community/forum/#!forum/developer' onClick={e => e.preventDefault()} style={{textDecoration: 'none', color: 'inherit'}}>
+                    <MenuItem className='help-menu-item' onClick={() => this.openLink('https://groups.google.com/a/interop.community/forum/#!forum/developer')}>
                         Developer Forum
                     </MenuItem>
                 </a>
-                <a href='https://help.logicahealth.org' onClick={e => e.preventDefault()} style={{textDecoration: 'none', color: 'inherit'}}>
-                    <MenuItem className='help-menu-item' onClick={() => this.openLink('https://help.logicahealth.org')}>
+                <a href='https://help.interop.community' onClick={e => e.preventDefault()} style={{textDecoration: 'none', color: 'inherit'}}>
+                    <MenuItem className='help-menu-item' onClick={() => this.openLink('https://help.interop.community')}>
                         Help desk
                     </MenuItem>
                 </a>
