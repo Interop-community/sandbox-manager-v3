@@ -314,8 +314,8 @@ class Apps extends Component {
                                             <Button variant='contained' color='primary' onClick={this.loadFromUrl} disabled={!isUrlValid(this.state.manifestURL) || this.state.loadingManifest}>
                                                 Load
                                             </Button>
-                                            {!this.props.hooks && <span className='sub'>Example: https://bilirubin-risk-chart.interop.community(/.well-known/smart/manifest.json)</span>}
-                                            {this.props.hooks && <span className='sub'>Example: https://bilirubin-cdshooks.interop.community(/cds-services)</span>}
+                                            {/*{!this.props.hooks && <span className='sub'>Example: https://bilirubin-risk-chart.interop.community(/.well-known/smart/manifest.json)</span>}*/}
+                                            {/*{this.props.hooks && <span className='sub'>Example: https://bilirubin-cdshooks.interop.community(/cds-services)</span>}*/}
                                         </div>
                                         {!this.props.hooks && <Fragment>
                                             <div className='separator'>
