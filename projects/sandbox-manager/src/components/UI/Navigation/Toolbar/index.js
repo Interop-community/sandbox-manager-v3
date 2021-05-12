@@ -22,7 +22,7 @@ class Toolbar extends Component {
                 {this.props.isDashboard && <SandboxTitle sandbox={this.props.sandbox}/>}
                 <User {...this.props} />
                 <Notification {...this.props} />
-                <Help {...this.props} />
+                {/*<Help {...this.props} />*/}
             </header>
         </div>
     };

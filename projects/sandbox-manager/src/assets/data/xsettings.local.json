@@ -7,7 +7,7 @@
       "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc",
       "scope": "patient/*.* launch openid profile online_access"
     },
-    "https://api.logicahealth.org/maecloud/data": {
+    "https://api.interop.community/maecloud/data": {
       "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc",
       "scope": "patient/*.* launch/patient openid profile online_access"
     }
@@ -26,7 +26,7 @@
     "oauthLogoutUrl": "http://localhost:8060/logout",
     "oauthUserInfoUrl": "http://localhost:8060/userinfo",
     "sbmUrlHasContextPath": "false",
-    "userManagementUrl": "https://id-test.logicahealth.org/auth/realms/Development/account/",
+    "userManagementUrl": "https://id-test.interop.community/auth/realms/Development/account/",
     "reservedEndpoints": [
       "this",
       "hspc",
@@ -72,7 +72,7 @@
     "personaCookieName": "hspc-persona-token",
     "personaCookieTimeout": 180000,
     "personaCookieDomain": "localhost",
-    "sandboxManagerUrl": "https://sandbox.logicahealth.org",
+    "sandboxManagerUrl": "https://sandbox.interop.community",
     "sandboxManagerApiUrl": "http://localhost:12000"
   }
 }

@@ -26,14 +26,14 @@ export default class Footer extends Component {
                 <div className='links-wrapper'>
                     <div>
                         <div>
-                            <a href="http://logicahealth.org" target="_blank">
+                            <a href="http://interop.community" target="_blank">
                             <span>
                                 <span>Logica Official Site</span>
                             </span>
                             </a>
                         </div>
                         <div>
-                            <a href="http://sandbox.logicahealth.org/" target="_blank">
+                            <a href="http://sandbox.interop.community/" target="_blank">
                             <span>
                                 <span>Logica Developer's Sandbox</span>
                             </span>
@@ -90,7 +90,7 @@ export default class Footer extends Component {
                         </span>
                         </div>
                         <div>
-                            <a href="https://groups.google.com/a/logicahealth.org/forum/#!forum/developer" target="_blank">
+                            <a href="https://groups.google.com/a/interop.community/forum/#!forum/developer" target="_blank">
                             <span>
                                 <span>Logica Developers Forum</span>
                             </span>
@@ -127,6 +127,6 @@ export default class Footer extends Component {
     };
 
     openPDF = () => {
-        window.open('https://content.logicahealth.org/docs/hspc/privacyterms.pdf', '_blank');
+        window.open('https://content.interop.community/docs/hspc/privacyterms.pdf', '_blank');
     };
 }

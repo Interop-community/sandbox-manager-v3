@@ -55,7 +55,7 @@ export default class Notification extends Component {
                             <MenuItem className='notification-menu-item' key={key}>
                                 <div>
                                     <div>
-                                        <span className='bold'>{p.invitedBy.name} / {p.invitedBy.email}</span><br/>has invited you to join <span className='bold'>{p.sandbox.name}</span> Logica Sandbox.
+                                        <span className='bold'>{p.invitedBy.name} / {p.invitedBy.email}</span><br/>has invited you to join <span className='bold'>{p.sandbox.name}</span> Sandbox.
                                     </div>
                                     <div className='actions'>
                                         <Button variant='contained' style={{marginRight: '10px'}} color='primary' onClick={() => this.props.updateSandboxInvite(p, 'ACCEPTED')}>

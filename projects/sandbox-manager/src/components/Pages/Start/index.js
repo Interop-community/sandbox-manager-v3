@@ -15,11 +15,11 @@ class Start extends Component {
 
     render () {
         return <div className='start-page-wrapper no-padding'>
-            <img src='./img/hspc-sndbx-logo.png'/>
+            <img style={{width: '65vw'}} src='./img/hspc-sndbx-logo.png'/>
             <CircularProgress/>
             <div>
                 <span className='message'>
-                    Welcome to the Logica Sandbox, <a href=''>click here</a> if you're not redirected to the login screen.
+                    Welcome to the Sandbox, <a href=''>click here</a> if you're not redirected to the login screen.
                 </span>
             </div>
         </div>;
