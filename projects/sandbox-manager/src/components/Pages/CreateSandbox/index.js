@@ -87,14 +87,16 @@ class Index extends Component {
                                 <div>
                                     <FormControlLabel control={<Checkbox onChange={this.allowOpenChangeHandler} value='open' color='primary'/>} label='Allow Open FHIR Endpoint' className='checkbox'/>
                                 </div>
+                                {(!this.state.apiEndpointIndex || this.state.apiEndpointIndex !== '11') &&
                                 <div>
                                     <FormControlLabel control={<Checkbox defaultChecked onChange={this.applyDefaultChangeHandler} value='open' color='primary'/>} label='Import sample patients and practitioners'
                                                       className='checkbox'/>
-                                </div>
+                                </div>}
+                                {(!this.state.apiEndpointIndex || this.state.apiEndpointIndex !== '11') &&
                                 <div>
                                     <FormControlLabel control={<Checkbox defaultChecked onChange={this.applyDefaultAppsChangeHandler} value='open' color='primary'/>} label='Import sample applications'
                                                       className='checkbox'/>
-                                </div>
+                                </div>}
                             </div>
                             <TextField id='description' label='Description' onChange={this.sandboxDescriptionChange} data-qa='sandbox-create-description' onKeyPress={this.submitMaybe}/><br/>
                             <div className='subscript'>e.g., This sandbox is the QA environment for NewCo.</div>
