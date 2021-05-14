@@ -97,7 +97,7 @@ class Apps extends Component {
             })
             : () => this.setState({selectCreationType: true});
         let url = this.props.hooks
-            ? 'https://cds-hooks.org/specification/1.0/'
+            ? 'https://cds-hooks.hl7.org/1.0/'
             : 'https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/60915727/Sandbox+Registered+Apps';
 
         return <Page noTitle={this.props.modal} title={this.props.title ? this.props.title : 'Registered Apps'} helpIcon={<HelpButton style={{marginLeft: '10px'}} url={url}/>}>
