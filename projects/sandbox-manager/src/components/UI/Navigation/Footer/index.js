@@ -28,21 +28,21 @@ export default class Footer extends Component {
                         <div>
                             <a href="http://interop.community" target="_blank">
                             <span>
-                                <span>Logica Official Site</span>
+                                <span>Interop Community Official Site</span>
                             </span>
                             </a>
                         </div>
                         <div>
                             <a href="http://sandbox.interop.community/" target="_blank">
                             <span>
-                                <span>Logica Developer's Sandbox</span>
+                                <span>Interop Community Developer's Sandbox</span>
                             </span>
                             </a>
                         </div>
                         <div>
                             <a href="https://healthservices.atlassian.net/wiki/" target="_blank">
                             <span>
-                                <span>Logica Confluence</span>
+                                <span>Interop Community Confluence</span>
                             </span>
                             </a>
                         </div>
@@ -56,7 +56,7 @@ export default class Footer extends Component {
                         <div>
                             <a href="https://healthservices.atlassian.net/wiki/display/HSPC/For+Developers" target="_blank">
                             <span>
-                                <span>Logica Developer Resources</span>
+                                <span>Interop Community Developer Resources</span>
                             </span>
                             </a>
                         </div>
@@ -71,7 +71,7 @@ export default class Footer extends Component {
 
                             <a href="https://bitbucket.org/hspconsortium/" target="_blank">
                             <span>
-                                <span>Logica BitBucket</span>
+                                <span>Interop Community BitBucket</span>
                             </span>
                             </a>
                         </div>
@@ -92,14 +92,14 @@ export default class Footer extends Component {
                         <div>
                             <a href="https://groups.google.com/a/interop.community/forum/#!forum/developer" target="_blank">
                             <span>
-                                <span>Logica Developers Forum</span>
+                                <span>Interop Community Developers Forum</span>
                             </span>
                             </a>
                         </div>
                         <div>
                             <a href="https://healthservices.atlassian.net/secure/RapidBoard.jspa?rapidView=3&amp;view=planning" target="_blank">
                             <span>
-                                <span>Logica JIRA</span>
+                                <span>Interop Community JIRA</span>
                             </span>
                             </a>
                         </div>
@@ -107,7 +107,7 @@ export default class Footer extends Component {
                 </div>
                 <div>
                     <span>
-                        <span>Logica Developers: Powering the Healthcare Innovation Ecosystem</span>
+                        <span>Interop Community Developers: Powering the Healthcare Innovation Ecosystem</span>
                     </span>
                 </div>
             </div>}

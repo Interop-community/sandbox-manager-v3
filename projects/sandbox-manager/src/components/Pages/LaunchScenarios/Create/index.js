@@ -163,7 +163,7 @@ class Create extends Component {
                     <span className='modal-screen-title' style={titleStyle}>Select a launch scenario type</span>
                     <Card title='App launch' className={`app-card small`} onClick={() => this.setState({scenarioType: 'app'})}>
                         <CardMedia className='media-wrapper'>
-                            <img style={{height: '100%', width: '100%'}} src='https://content.interop.community/images/hspc/icon/HSPCSandboxNoIconApp-512.png' alt='Logo'/>
+                            <img style={{height: '100%', width: '100%'}} src='https://content.interop.community/app.png' alt='Logo'/>
                         </CardMedia>
                         <div className='card-title' style={cardTitleStyle}>
                             <h3 className='app-name'>SMART App</h3>

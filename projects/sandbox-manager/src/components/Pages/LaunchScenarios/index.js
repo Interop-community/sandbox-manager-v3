@@ -338,7 +338,7 @@ class LaunchScenarios extends Component {
                     <span className='section-title' style={darkColor}><WebIcon style={iconStyle}/>{selectedScenario.app ? 'App' : 'CDS Service'}</span>
                     <Card className='app-card small'>
                         <CardMedia className='media-wrapper'>
-                            {selectedScenario.app && <img style={{height: '100%', width: '100%'}} src={selectedScenario.app.logoUri || 'https://content.interop.community/images/hspc/icon/HSPCSandboxNoIconApp-512.png'}
+                            {selectedScenario.app && <img style={{height: '100%', width: '100%'}} src={selectedScenario.app.logoUri || 'https://content.interop.community/app.png'}
                                                           alt='Logo'/>}
                             {selectedScenario.cdsHook && selectedScenario.cdsHook.logoUri && <img style={{height: '100%', width: '100%'}} src={selectedScenario.cdsHook.logoUri} alt='Logo'/>}
                             {selectedScenario.cdsHook && !selectedScenario.cdsHook.logoUri && <HooksIcon className='default-hook-icon'/>}

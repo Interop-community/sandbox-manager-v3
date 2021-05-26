@@ -1,12 +1,12 @@
-# Logica Sandbox Manager
+# Interop Community Sandbox Manager
 
-Welcome to the Logica Sandbox Manager!  
+Welcome to the Interop Community Sandbox Manager!  
 
-# Logica Sandbox
+# Interop Community Sandbox
 
 *Note:* If you are wanting to build and test SMART on FHIR Apps, it is recommended that you use the free cloud-hosted version of the HSPC Sandbox.
 
-[Logica Sandbox](https://sandbox.interop.community)
+[Interop Community Sandbox](https://sandbox.interop.community)
 
 ### How do I get set up? ###
 
@@ -29,12 +29,12 @@ Various property files configure the sandbox manager:
 #### System Dependencies ####
 When run locally, the sandbox manager has dependencies on the following systems/projects.  Each of these projects contains a "run-local" script in the root folder.
 
- * [Logica Reference Auth](https://bitbucket.org/hspconsortium/reference-auth)
- * [Logica Reference API](https://bitbucket.org/hspconsortium/reference-api) in DSTU2 or STU3 mode
- * [Logica Reference Messaging](https://bitbucket.org/hspconsortium/reference-messaging)
- * [Logica Account](https://bitbucket.org/hspconsortium/account)
- * [Logica Patient Data Manager](https://bitbucket.org/hspconsortium/patient-data-manager)
- * [Logica Sandbox Manager API](https://bitbucket.org/hspconsortium/sandbox-manager-api)
+ * [Interop Community Reference Auth](https://bitbucket.org/hspconsortium/reference-auth)
+ * [Interop Community Reference API](https://bitbucket.org/hspconsortium/reference-api) in DSTU2 or STU3 mode
+ * [Interop Community Reference Messaging](https://bitbucket.org/hspconsortium/reference-messaging)
+ * [Interop Community Account](https://bitbucket.org/hspconsortium/account)
+ * [Interop Community Patient Data Manager](https://bitbucket.org/hspconsortium/patient-data-manager)
+ * [Interop Community Sandbox Manager API](https://bitbucket.org/hspconsortium/sandbox-manager-api)
 
 ### Where to go from here ###
 https://healthservices.atlassian.net/wiki/display/HSPC/Healthcare+Services+Platform+Consortium

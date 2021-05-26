@@ -44,7 +44,7 @@ export default class Help extends Component {
                 </MenuItem>
                 <a href='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/64585866/HSPC+Sandbox' onClick={e => e.preventDefault()} style={{textDecoration: 'none', color: 'inherit'}}>
                     <MenuItem className='help-menu-item' onClick={() => this.openLink('https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/64585866/HSPC+Sandbox')}>
-                        Logica Sandbox Docs
+                        Interop Community Sandbox Docs
                     </MenuItem>
                 </a>
                 <a href='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/60555273/Samples' onClick={e => e.preventDefault()} style={{textDecoration: 'none', color: 'inherit'}}>
