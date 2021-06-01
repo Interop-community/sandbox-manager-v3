@@ -14,7 +14,6 @@ const SORT_VALUES = [
     {val: 'last_used', label: 'Last Used'},
     {val: 'alphabetical', label: 'Alphabetical'}
 ];
-const EMAILS = ['dimitar@interopion.com', 'gopal@interopion.com', 'nikolai@interopion.com']
 let mainTimers = {};
 
 class Index extends Component {
@@ -58,23 +57,22 @@ class Index extends Component {
                                     <Lock style={{fill: this.props.theme.p3}}/>
                                 </IconButton>
                             </Tooltip>}
-                        {EMAILS.indexOf(this.props.user.email) >= 0
-                            ? !isExtracting
-                                ? <Tooltip title='Export Sandbox'>
-                                    <IconButton onClick={e => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        this.props.exportSandbox(sandbox.sandboxId);
-                                    }} style={{zIndex: 1000}}>
-                                        <CloudDownload style={{fill: this.props.theme.p3}}/>
-                                    </IconButton>
-                                </Tooltip>
-                                : <Tooltip title='Extracting Sandbox'>
-                                    <IconButton style={{zIndex: 1000}}>
-                                        <CircularProgress size={24}/>
-                                    </IconButton>
-                                </Tooltip>
-                            : undefined}
+                        {!isExtracting
+                            ? <Tooltip title='Export Sandbox'>
+                                <IconButton onClick={e => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    this.props.exportSandbox(sandbox.sandboxId);
+                                }} style={{zIndex: 1000}}>
+                                    <CloudDownload style={{fill: this.props.theme.p3}}/>
+                                </IconButton>
+                            </Tooltip>
+                            : <Tooltip title='Extracting Sandbox'>
+                                <IconButton style={{zIndex: 1000}}>
+                                    <CircularProgress size={24}/>
+                                </IconButton>
+                            </Tooltip>
+                        }
                     </>;
                     return <a key={index} href={`${window.location.origin}/${sandbox.sandboxId}/apps`} onClick={e => e.preventDefault()} style={{textDecoration: 'none'}}>
                         <ListItem data-qa={`sandbox-${sandbox.sandboxId}`} onClick={() => this.selectSandbox(index)} id={sandbox.name} button>
@@ -224,8 +222,7 @@ const mapStateToProps = state => {
         loginInfo: state.sandbox.loginInfo,
         isSandboxCreating: state.sandbox.creatingSandbox,
         creatingSandboxInfo: state.sandbox.creatingSandboxInfo,
-        extractingSandboxes: state.sandbox.extractingSandboxes,
-        user: state.users.oauthUser
+        extractingSandboxes: state.sandbox.extractingSandboxes
     };
 };
 
