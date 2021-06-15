@@ -44,6 +44,7 @@ class Index extends Component {
                 if (sandbox.creationStatus === 'CREATED') {
                     let {avatarClasses, backgroundColor, avatarText} = this.getAvatarInfo(sandbox.apiEndpointIndex);
                     let leftAvatar = <Avatar className={avatarClasses} style={{backgroundColor}}>{avatarText}</Avatar>;
+                    let canExtract = this.checkSandboxAdmin(sandbox);
                     let isExtracting = this.props.extractingSandboxes.indexOf(sandbox.sandboxId) >= 0;
                     let rightIcon = <>
                         {sandbox.allowOpenAccess
@@ -57,7 +58,7 @@ class Index extends Component {
                                     <Lock style={{fill: this.props.theme.p3}}/>
                                 </IconButton>
                             </Tooltip>}
-                        {!isExtracting
+                        {canExtract && (!isExtracting
                             ? <Tooltip title='Export Sandbox'>
                                 <IconButton onClick={e => {
                                     e.preventDefault();
@@ -72,7 +73,7 @@ class Index extends Component {
                                     <CircularProgress size={24}/>
                                 </IconButton>
                             </Tooltip>
-                        }
+                        )}
                     </>;
                     return <a key={index} href={`${window.location.origin}/${sandbox.sandboxId}/apps`} onClick={e => e.preventDefault()} style={{textDecoration: 'none'}}>
                         <ListItem data-qa={`sandbox-${sandbox.sandboxId}`} onClick={() => this.selectSandbox(index)} id={sandbox.name} button>
@@ -170,6 +171,19 @@ class Index extends Component {
         return {avatarClasses, backgroundColor, avatarText};
     };
 
+    checkSandboxAdmin = (sandbox) => {
+        let isAdmin = false;
+        if (Array.isArray(sandbox.userRoles)) {
+            sandbox.userRoles.forEach((userRole) => {
+                if (userRole.role === "ADMIN" && userRole.user && userRole.user.email === this.props.currentUser.email) {
+                    isAdmin = true;
+                }
+            });
+        }
+
+        return isAdmin;
+    };
+
     sortSandboxes = () => {
         if (this.state.sort === SORT_VALUES[1].val) {
             return this.props.sandboxes.sort((a, b) => {
@@ -222,7 +236,8 @@ const mapStateToProps = state => {
         loginInfo: state.sandbox.loginInfo,
         isSandboxCreating: state.sandbox.creatingSandbox,
         creatingSandboxInfo: state.sandbox.creatingSandboxInfo,
-        extractingSandboxes: state.sandbox.extractingSandboxes
+        extractingSandboxes: state.sandbox.extractingSandboxes,
+        currentUser: state.users.user
     };
 };
 

@@ -823,7 +823,7 @@ export const exportSandbox = sandboxId => {
         let configuration = state.config.xsettings.data.sandboxManager;
         dispatch(setSandboxExtracting(sandboxId));
 
-        API.download(configuration.sandboxManagerApiUrl + '/sandbox/download/' + sandboxId, dispatch, `${sandboxId}_export.zip`)
+        API.get(configuration.sandboxManagerApiUrl + '/sandbox/download/' + sandboxId, dispatch)
             .then(() => {
                 dispatch(setSandboxExtracting(sandboxId));
             })
