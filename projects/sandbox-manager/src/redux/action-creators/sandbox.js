@@ -831,8 +831,7 @@ export const exportSandbox = sandboxId => {
         dispatch(setSandboxExportSuccess(false));
         dispatch(setSandboxExtracting(sandboxId));
 
-        // API.get(configuration.sandboxManagerApiUrl + '/sandbox/download/' + sandboxId, dispatch)
-        API.get('http://localhost:12000/sandbox?userId=c90cd3cd-55ee-47cd-ae61-ff5cd8ff27cb&_sort:asc=name', dispatch)
+        API.get(configuration.sandboxManagerApiUrl + '/sandbox/download/' + sandboxId, dispatch)
             .then(() => {
                 dispatch(setSandboxExportSuccess(true));
                 dispatch(setSandboxExtracting(sandboxId));
