@@ -3,6 +3,7 @@ export default {
     selectedSandbox : '',
     sandboxes : [],
     extractingSandboxes : [],
+    sandboxExportSuccess: false,
     invitations : [],
     resourceList : {},
     resourceListFetching : {},

@@ -229,6 +229,9 @@ export default function (state = initialState, action) {
         case actionTypes.SET_SANDBOX_EXPORT_STATUS:
             state.exportStatus = action.payload.status;
             break;
+        case actionTypes.SET_SANDBOX_EXPORT_SUCCESS:
+            state.sandboxExportSuccess = action.payload.sandboxExportSuccess;
+            break;
         case "persist/REHYDRATE":
             state = action.payload ? action.payload.sandbox : state;
             state.defaultUser = undefined;

@@ -394,6 +394,13 @@ export const setDeletingCurrentSandbox = (deleting) => {
     }
 };
 
+export const setSandboxExportSuccess = (sandboxExportSuccess) => {
+    return {
+        type: actionTypes.SET_SANDBOX_EXPORT_SUCCESS,
+        payload: {sandboxExportSuccess}
+    }
+};
+
 export function createResource(data) {
     return dispatch => {
         let url = `${window.fhirClient.server.serviceUrl}/${data.resourceType}`;
@@ -821,11 +828,17 @@ export const exportSandbox = sandboxId => {
     return (dispatch, getState) => {
         const state = getState();
         let configuration = state.config.xsettings.data.sandboxManager;
+        dispatch(setSandboxExportSuccess(false));
         dispatch(setSandboxExtracting(sandboxId));
 
-        API.get(configuration.sandboxManagerApiUrl + '/sandbox/download/' + sandboxId, dispatch)
+        // API.get(configuration.sandboxManagerApiUrl + '/sandbox/download/' + sandboxId, dispatch)
+        API.get('http://localhost:12000/sandbox?userId=c90cd3cd-55ee-47cd-ae61-ff5cd8ff27cb&_sort:asc=name', dispatch)
             .then(() => {
+                dispatch(setSandboxExportSuccess(true));
                 dispatch(setSandboxExtracting(sandboxId));
+                setTimeout(function () {
+                    dispatch(setSandboxExportSuccess(false));
+                }, 15000);
             })
             .catch(() => {
                 dispatch(setSandboxExtracting(sandboxId));

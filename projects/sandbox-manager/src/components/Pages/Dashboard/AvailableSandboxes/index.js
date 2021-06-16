@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Paper, Button, List, ListItem, Avatar, IconButton, CircularProgress, Select, MenuItem, ListItemIcon, ListItemText, Tooltip} from '@material-ui/core';
+import {Paper, Button, List, ListItem, Avatar, IconButton, CircularProgress, Select, MenuItem, ListItemIcon, ListItemText, Snackbar, Tooltip} from '@material-ui/core';
 import {withTheme} from '@material-ui/styles';
 import {fetchSandboxes, selectSandbox, getLoginInfo, getCurrentState, exportSandbox} from '../../../../redux/action-creators';
 import {connect} from 'react-redux';
@@ -58,14 +58,14 @@ class Index extends Component {
                                     <Lock style={{fill: this.props.theme.p3}}/>
                                 </IconButton>
                             </Tooltip>}
-                        {canExtract && (!isExtracting
+                        {!isExtracting
                             ? <Tooltip title='Export Sandbox'>
                                 <IconButton onClick={e => {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     this.props.exportSandbox(sandbox.sandboxId);
-                                }} style={{zIndex: 1000}}>
-                                    <CloudDownload style={{fill: this.props.theme.p3}}/>
+                                }} style={{zIndex: 1000}} disabled={!canExtract}>
+                                    <CloudDownload style={{fill: canExtract ? this.props.theme.p3 : this.props.theme.p7}}/>
                                 </IconButton>
                             </Tooltip>
                             : <Tooltip title='Extracting Sandbox'>
@@ -73,7 +73,7 @@ class Index extends Component {
                                     <CircularProgress size={24}/>
                                 </IconButton>
                             </Tooltip>
-                        )}
+                        }
                     </>;
                     return <a key={index} href={`${window.location.origin}/${sandbox.sandboxId}/apps`} onClick={e => e.preventDefault()} style={{textDecoration: 'none'}}>
                         <ListItem data-qa={`sandbox-${sandbox.sandboxId}`} onClick={() => this.selectSandbox(index)} id={sandbox.name} button>
@@ -148,6 +148,8 @@ class Index extends Component {
                     <CircularProgress size={80} thickness={5}/>
                 </div>}
             </div>
+            <Snackbar open={this.props.extractingSandboxes.length > 0} message={'Exporting sandbox...'} autoHideDuration={30000}/>
+            <Snackbar open={this.props.sandboxExportSuccess} message={'Check your email for a downloadable link'} autoHideDuration={30000}/>
         </Paper>;
     }
 
@@ -237,7 +239,8 @@ const mapStateToProps = state => {
         isSandboxCreating: state.sandbox.creatingSandbox,
         creatingSandboxInfo: state.sandbox.creatingSandboxInfo,
         extractingSandboxes: state.sandbox.extractingSandboxes,
-        currentUser: state.users.user
+        currentUser: state.users.user,
+        sandboxExportSuccess: state.sandbox.sandboxExportSuccess
     };
 };
 
