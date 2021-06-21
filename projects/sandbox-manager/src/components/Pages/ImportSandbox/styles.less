@@ -1,0 +1,96 @@
+.import-sandbox-wrapper {
+  height: 100%;
+  overflow: hidden;
+  border-radius: 0 !important;
+
+  .paper-card {
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0 !important;
+
+    h3 {
+      padding: 0 0 0 24px;
+      height: 68px;
+      line-height: 68px;
+      font-size: 20px;
+    }
+
+    .close-button {
+      width: 68px !important;
+      height: 68px !important;
+    }
+
+    .paper-body {
+      height: ~'calc(100% - 68px)';
+      min-width: 600px;
+      overflow: auto;
+      box-sizing: border-box;
+      padding: 20px;
+      text-align: center;
+
+      .MuiTextField-root, .MuiFormControl-root {
+        min-width: 300px;
+      }
+
+      .margin-top {
+        margin-top: 20px;
+      }
+
+      form {
+        padding-bottom: 10px;
+      }
+
+      button {
+        margin-top: 16px;
+      }
+
+      .checkboxes {
+        & > * {
+          margin: 0;
+        }
+        & > div > label > span:first-child {
+          padding: 2px !important;
+        }
+      }
+    }
+  }
+
+  .checkbox {
+    user-select: none;
+  }
+
+  .button {
+    margin: 16px 12px 0px 0px;
+  }
+
+  .fhirVersion div div {
+    padding-left: 0 !important;
+    margin: -1px 24px -1px 0 !important;
+  }
+}
+
+.import-sandbox-dialog {
+  width: 45vw;
+  min-width: 600px;
+  max-width: initial !important;
+  border-radius: 0 !important;
+  // height: 63vh;
+  overflow: hidden;
+
+  & > div:first-of-type {
+    height: ~'calc(100% - 52px)';
+    padding: 0 !important;
+    margin: 0 !important;
+    border-bottom: 1px solid whitesmoke !important;
+  }
+
+  & > div:not(:first-of-type) {
+    & > * {
+      margin-right: 10px;
+    }
+  }
+
+  .paper-card {
+    border-radius: 0 !important;
+  }
+}

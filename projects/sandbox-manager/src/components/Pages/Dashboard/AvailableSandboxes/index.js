@@ -60,13 +60,15 @@ class Index extends Component {
                             </Tooltip>}
                         {!isExtracting
                             ? <Tooltip title='Export Sandbox'>
-                                <IconButton onClick={e => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    this.props.exportSandbox(sandbox.sandboxId);
-                                }} style={{zIndex: 1000}} disabled={!canExtract}>
-                                    <CloudDownload style={{fill: canExtract ? this.props.theme.p3 : this.props.theme.p7}}/>
-                                </IconButton>
+                                <span>
+                                    <IconButton onClick={e => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        this.props.exportSandbox(sandbox.sandboxId);
+                                    }} style={{zIndex: 1000}} disabled={!canExtract}>
+                                        <CloudDownload style={{fill: canExtract ? this.props.theme.p3 : this.props.theme.p7}}/>
+                                    </IconButton>
+                                </span>
                             </Tooltip>
                             : <Tooltip title='Extracting Sandbox'>
                                 <IconButton style={{zIndex: 1000}}>
@@ -130,6 +132,9 @@ class Index extends Component {
                         </MenuItem>
                     </Select>
                 </div>
+                <Button variant='contained' id='import_sandbox_button' color='primary' className='import-sandbox-button' onClick={this.handleImport} data-qa='import-sandbox'>
+                    Import Sandbox
+                </Button>
                 <Button variant='contained' id='create_sandbox_button' color='primary' className='create-sandbox-button' onClick={this.handleCreate} data-qa='create-sandbox'>
                     New Sandbox
                 </Button>
@@ -150,6 +155,7 @@ class Index extends Component {
             </div>
             <Snackbar open={this.props.extractingSandboxes.length > 0} message={'Exporting sandbox...'} autoHideDuration={30000}/>
             <Snackbar open={this.props.sandboxExportSuccess} message={'Check your email for a downloadable link'} autoHideDuration={30000}/>
+            <Snackbar open={this.props.sandboxImportSuccess} message={'Sandbox import started'} autoHideDuration={30000}/>
         </Paper>;
     }
 
@@ -219,6 +225,10 @@ class Index extends Component {
         this.props.onToggleModal && this.props.onToggleModal();
     };
 
+    handleImport = () => {
+        this.props.onToggleImport && this.props.onToggleImport();
+    };
+
     selectSandbox = (row) => {
         let sandbox = this.props.sandboxes[row];
         localStorage.setItem('sandboxId', sandbox.sandboxId);
@@ -240,7 +250,8 @@ const mapStateToProps = state => {
         creatingSandboxInfo: state.sandbox.creatingSandboxInfo,
         extractingSandboxes: state.sandbox.extractingSandboxes,
         currentUser: state.users.user,
-        sandboxExportSuccess: state.sandbox.sandboxExportSuccess
+        sandboxExportSuccess: state.sandbox.sandboxExportSuccess,
+        sandboxImportSuccess: state.sandbox.sandboxImportSuccess
     };
 };
 

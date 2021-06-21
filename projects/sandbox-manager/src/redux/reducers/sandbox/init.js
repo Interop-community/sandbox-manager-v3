@@ -4,6 +4,7 @@ export default {
     sandboxes : [],
     extractingSandboxes : [],
     sandboxExportSuccess: false,
+    sandboxImportSuccess: false,
     invitations : [],
     resourceList : {},
     resourceListFetching : {},
