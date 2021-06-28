@@ -235,6 +235,9 @@ export default function (state = initialState, action) {
         case actionTypes.SET_SANDBOX_IMPORT_SUCCESS:
             state.sandboxImportSuccess = action.payload.sandboxImportSuccess;
             break;
+        case actionTypes.SET_SANDBOX_IMPORT_START:
+            state.sandboxImportStart = action.payload.sandboxImportStart;
+            break;
         case "persist/REHYDRATE":
             state = action.payload ? action.payload.sandbox : state;
             state.defaultUser = undefined;

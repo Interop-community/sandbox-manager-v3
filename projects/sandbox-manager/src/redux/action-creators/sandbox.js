@@ -408,6 +408,13 @@ export const setSandboxImportSuccess = (sandboxImportSuccess) => {
     }
 };
 
+export const setSandboxImportStart = (sandboxImportStart) => {
+    return {
+        type: actionTypes.SET_SANDBOX_IMPORT_START,
+        payload: {sandboxImportStart}
+    }
+};
+
 export function createResource(data) {
     return dispatch => {
         let url = `${window.fhirClient.server.serviceUrl}/${data.resourceType}`;
@@ -859,6 +866,10 @@ export const importSandbox = file => {
         const state = getState();
         let configuration = state.config.xsettings.data.sandboxManager;
         dispatch(setSandboxImportSuccess(false));
+        dispatch(setSandboxImportStart(true));
+        setTimeout(function () {
+            dispatch(setSandboxImportStart(false));
+        }, 10000);
 
         API.post(`${configuration.sandboxManagerApiUrl}/sandbox/import`, formData, dispatch, true)
             .then(() => {
@@ -869,6 +880,7 @@ export const importSandbox = file => {
             })
             .catch(() => {
                 dispatch(setSandboxImportSuccess(false));
+                dispatch(setSandboxImportStart(false));
             });
     };
 }

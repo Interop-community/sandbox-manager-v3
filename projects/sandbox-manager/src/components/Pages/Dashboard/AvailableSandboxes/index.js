@@ -155,7 +155,7 @@ class Index extends Component {
             </div>
             <Snackbar open={this.props.extractingSandboxes.length > 0} message={'Exporting sandbox...'} autoHideDuration={30000}/>
             <Snackbar open={this.props.sandboxExportSuccess} message={'Check your email for a downloadable link'} autoHideDuration={30000}/>
-            <Snackbar open={this.props.sandboxImportSuccess} message={'Sandbox import started'} autoHideDuration={30000}/>
+            <Snackbar open={this.props.sandboxImportStart} message={'Sandbox import started'} autoHideDuration={30000}/>
         </Paper>;
     }
 
@@ -251,12 +251,12 @@ const mapStateToProps = state => {
         extractingSandboxes: state.sandbox.extractingSandboxes,
         currentUser: state.users.user,
         sandboxExportSuccess: state.sandbox.sandboxExportSuccess,
-        sandboxImportSuccess: state.sandbox.sandboxImportSuccess
+        sandboxImportStart: state.sandbox.sandboxImportStart
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({fetchSandboxes, selectSandbox, getLoginInfo, getCurrentState, exportSandbox}, dispatch);
+    return bindActionCreators({fetchSandboxes, selectSandbox, getLoginInfo, getCurrentState, exportSandbox, setSandboxImportStart}, dispatch);
 };
 
 export default withTheme(withRouter(connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Index))));
