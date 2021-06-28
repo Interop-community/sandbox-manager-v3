@@ -256,7 +256,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({fetchSandboxes, selectSandbox, getLoginInfo, getCurrentState, exportSandbox, setSandboxImportStart}, dispatch);
+    return bindActionCreators({fetchSandboxes, selectSandbox, getLoginInfo, getCurrentState, exportSandbox}, dispatch);
 };
 
 export default withTheme(withRouter(connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Index))));
