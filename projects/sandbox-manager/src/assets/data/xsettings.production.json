@@ -7,26 +7,26 @@
       "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc",
       "scope": "patient/*.* launch openid profile online_access"
     },
-    "https://api.logicahealth.org/maecloud/data": {
+    "https://api.interop.community/maecloud/data": {
       "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc",
       "scope": "patient/*.* launch/patient openid profile online_access"
     }
   },
   "sandboxManager": {
-    "defaultServiceUrl": "https://api.logicahealth.org/hspc8/data",
-    "baseServiceUrl_5": "https://api.logicahealth.org",
-    "baseServiceUrl_6": "https://api.logicahealth.org",
-    "baseServiceUrl_7": "https://api.logicahealth.org",
-    "baseServiceUrl_8": "https://api.logicahealth.org",
-    "baseServiceUrl_9": "https://api.logicahealth.org",
-    "baseServiceUrl_10": "https://api.logicahealth.org",
-    "baseServiceUrl_11": "https://api.logicahealth.org",
-    "oauthLogoutUrl": "https://auth.logicahealth.org/logout",
-    "oauthUserInfoUrl": "https://auth.logicahealth.org/userinfo",
+    "defaultServiceUrl": "https://api.interop.community/hspc8/data",
+    "baseServiceUrl_5": "https://api.interop.community",
+    "baseServiceUrl_6": "https://api.interop.community",
+    "baseServiceUrl_7": "https://api.interop.community",
+    "baseServiceUrl_8": "https://api.interop.community",
+    "baseServiceUrl_9": "https://api.interop.community",
+    "baseServiceUrl_10": "https://api.interop.community",
+    "baseServiceUrl_11": "https://api.interop.community",
+    "oauthLogoutUrl": "https://auth.interop.community/logout",
+    "oauthUserInfoUrl": "https://auth.interop.community/userinfo",
     "sbmUrlHasContextPath": "false",
-    "ehrSimulator": "https://ehr-app.logicahealth.org",
-    "patientDataManager": "https://patient-data-manager.logicahealth.org",
-    "userManagementUrl": "https://id.logicahealth.org/auth/realms/master/account/",
+    "ehrSimulator": "https://ehr-app.interop.community",
+    "patientDataManager": "https://patient-data-manager.interop.community",
+    "userManagementUrl": "https://id.interop.community/auth/realms/master/account/",
     "reservedEndpoints": [
       "this",
       "hspc",
@@ -71,8 +71,8 @@
     "hspcAccountCookieName": "hspc-token",
     "personaCookieName": "hspc-persona-token",
     "personaCookieTimeout": 180000,
-    "personaCookieDomain": "logicahealth.org",
-    "sandboxManagerUrl": "https://sandbox.logicahealth.org",
-    "sandboxManagerApiUrl": "https://sandbox-api.logicahealth.org"
+    "personaCookieDomain": "interop.community",
+    "sandboxManagerUrl": "https://sandbox.interop.community",
+    "sandboxManagerApiUrl": "https://sandbox-api.interop.community"
   }
 }

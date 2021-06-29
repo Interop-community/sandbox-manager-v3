@@ -173,7 +173,7 @@ class AppDialog extends Component {
                             <input ref='image' type='file' style={{'display': 'none'}} onChange={this.onFileInput}/>
                             {this.state.app.logoUri
                                 ? <img src={this.state.app.logoUri}/>
-                                : <img style={{height: '100%', width: '100%'}} src={app.logoUri || 'https://content.logicahealth.org/images/hspc/icon/HSPCSandboxNoIconApp-512.png'} alt='Logica Logo'/>
+                                : <img style={{height: '100%', width: '100%'}} src={app.logoUri || 'https://content.interop.community/app.png'} alt='App Logo'/>
                             }
                         </div>
                         {this.state.app.logoUri &&

@@ -394,6 +394,27 @@ export const setDeletingCurrentSandbox = (deleting) => {
     }
 };
 
+export const setSandboxExportSuccess = (sandboxExportSuccess) => {
+    return {
+        type: actionTypes.SET_SANDBOX_EXPORT_SUCCESS,
+        payload: {sandboxExportSuccess}
+    }
+};
+
+export const setSandboxImportSuccess = (sandboxImportSuccess) => {
+    return {
+        type: actionTypes.SET_SANDBOX_IMPORT_SUCCESS,
+        payload: {sandboxImportSuccess}
+    }
+};
+
+export const setSandboxImportStart = (sandboxImportStart) => {
+    return {
+        type: actionTypes.SET_SANDBOX_IMPORT_START,
+        payload: {sandboxImportStart}
+    }
+};
+
 export function createResource(data) {
     return dispatch => {
         let url = `${window.fhirClient.server.serviceUrl}/${data.resourceType}`;
@@ -821,17 +842,48 @@ export const exportSandbox = sandboxId => {
     return (dispatch, getState) => {
         const state = getState();
         let configuration = state.config.xsettings.data.sandboxManager;
+        dispatch(setSandboxExportSuccess(false));
         dispatch(setSandboxExtracting(sandboxId));
 
-        API.download(configuration.sandboxManagerApiUrl + '/sandbox/download/' + sandboxId, dispatch, `${sandboxId}_export.zip`)
+        API.get(configuration.sandboxManagerApiUrl + '/sandbox/download/' + sandboxId, dispatch)
             .then(() => {
+                dispatch(setSandboxExportSuccess(true));
                 dispatch(setSandboxExtracting(sandboxId));
+                setTimeout(function () {
+                    dispatch(setSandboxExportSuccess(false));
+                }, 10000);
             })
             .catch(() => {
                 dispatch(setSandboxExtracting(sandboxId));
             })
     };
 };
+
+export const importSandbox = file => {
+    return (dispatch, getState) => {
+        let formData = new FormData();
+        formData.append("zipFile", file);
+        const state = getState();
+        let configuration = state.config.xsettings.data.sandboxManager;
+        dispatch(setSandboxImportSuccess(false));
+        dispatch(setSandboxImportStart(true));
+        setTimeout(function () {
+            dispatch(setSandboxImportStart(false));
+        }, 10000);
+
+        API.post(`${configuration.sandboxManagerApiUrl}/sandbox/import`, formData, dispatch, true)
+            .then(() => {
+                dispatch(setSandboxImportSuccess(true));
+                setTimeout(function () {
+                    dispatch(setSandboxImportSuccess(false));
+                }, 10000);
+            })
+            .catch(() => {
+                dispatch(setSandboxImportSuccess(false));
+                dispatch(setSandboxImportStart(false));
+            });
+    };
+}
 
 export const fetchUserNotifications = () => {
     return (dispatch, getState) => {

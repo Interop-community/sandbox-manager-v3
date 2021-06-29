@@ -4,6 +4,7 @@ import {withTheme} from '@material-ui/styles';
 import {app_setScreen, fetchSandboxes, loadTerms, loadInvites, fetchUserNotifications, updateSandboxInvite} from '../../../redux/action-creators';
 import AvailableSandboxes from './AvailableSandboxes';
 import CreateSandbox from '../CreateSandbox';
+import ImportSandbox from '../ImportSandbox';
 import withErrorHandler from '../../UI/hoc/withErrorHandler';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -19,6 +20,7 @@ class Dashboard extends Component {
         this.state = {
             invitationToAccept: undefined,
             open: false,
+            openImport: false,
             showAccept: false
         }
     }
@@ -33,12 +35,16 @@ class Dashboard extends Component {
         if (this.props.loading && !nextProps.loading && invitationToAccept) {
             this.setState({showAccept: true, invitationToAccept});
         }
+        if (!this.props.sandboxImportSuccess && nextProps.sandboxImportSuccess) {
+            this.props.fetchSandboxes();
+        }
     }
 
     render() {
         let invite = this.state.showAccept && this.props.userInvites.find(i => i.id == this.state.invitationToAccept);
         let dialog = this.state.open
             ? <CreateSandbox onCancel={this.toggle} open={this.state.open}/>
+            : this.state.openImport ? <ImportSandbox onCancel={this.toggleImport} open={this.state.openImport}/>
             : this.state.showAccept && invite
                 ? <Dialog open={this.state.showAccept}>
                     <div className='sandbox-invitation-wrapper'>
@@ -51,7 +57,7 @@ class Dashboard extends Component {
                             </h3>
                             <div className='paper-body-invitation'>
                                 <div>
-                                    <span className='bold'>{invite.invitedBy.name} / {invite.invitedBy.email}</span> has invited you to join <span className='bold'>{invite.sandbox.name}</span> Logica Sandbox.
+                                    <span className='bold'>{invite.invitedBy.name} / {invite.invitedBy.email}</span> has invited you to join <span className='bold'>{invite.sandbox.name}</span> Sandbox.
                                 </div>
                             </div>
                         </Paper>
@@ -71,14 +77,18 @@ class Dashboard extends Component {
         return <Page title='My Sandboxes' className='dashboard-wrapper'>
             {dialog}
             <div className='sandboxes-min-height' data-qa='dashboard-page'>
-                <AvailableSandboxes onToggleModal={this.toggle}/>
+                <AvailableSandboxes onToggleModal={this.toggle} onToggleImport={this.toggleImport}/>
             </div>
-            <Footer loadTerms={this.props.loadTerms} terms={this.props.terms} user={this.props.user}/>
+            {/*<Footer loadTerms={this.props.loadTerms} terms={this.props.terms} user={this.props.user}/>*/}
         </Page>;
     }
 
     toggle = () => {
         this.setState({open: !this.state.open});
+    };
+
+    toggleImport = () => {
+        this.setState({openImport: !this.state.openImport});
     };
 
     getInvitationToAccept = () => {
@@ -100,9 +110,9 @@ class Dashboard extends Component {
     handleCancel = () => {
         let isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
         if (isIE11) {
-            document.cookie = "hspc-invitation-id=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.logicahealth.org; path=/";
+            document.cookie = "hspc-invitation-id=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.interop.community; path=/";
         } else {
-            document.cookie = "hspc-invitation-id=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.logicahealth.org; path=/";
+            document.cookie = "hspc-invitation-id=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.interop.community; path=/";
         }
         this.setState({showAccept: false, invitationToAccept: undefined});
     };
@@ -113,7 +123,8 @@ const mapStateToProps = state => {
         terms: state.app.terms,
         loading: state.sandbox.loading || state.sandbox.fetchingLoginInfo,
         userInvites: state.sandbox.userInvites,
-        user: state.users.user
+        user: state.users.user,
+        sandboxImportSuccess: state.sandbox.sandboxImportSuccess
     }
 };
 const mapDispatchToProps = dispatch => bindActionCreators({app_setScreen, fetchSandboxes, loadTerms, loadInvites, fetchUserNotifications, updateSandboxInvite}, dispatch);
