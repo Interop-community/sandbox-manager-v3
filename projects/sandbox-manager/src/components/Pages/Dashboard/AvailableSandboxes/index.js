@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Paper, Button, List, ListItem, Avatar, IconButton, CircularProgress, Select, MenuItem, ListItemIcon, ListItemText, Tooltip} from '@material-ui/core';
+import {Paper, Button, List, ListItem, Avatar, IconButton, CircularProgress, Select, MenuItem, ListItemIcon, ListItemText, Snackbar, Tooltip} from '@material-ui/core';
 import {withTheme} from '@material-ui/styles';
 import {fetchSandboxes, selectSandbox, getLoginInfo, getCurrentState, exportSandbox} from '../../../../redux/action-creators';
 import {connect} from 'react-redux';
@@ -44,6 +44,7 @@ class Index extends Component {
                 if (sandbox.creationStatus === 'CREATED') {
                     let {avatarClasses, backgroundColor, avatarText} = this.getAvatarInfo(sandbox.apiEndpointIndex);
                     let leftAvatar = <Avatar className={avatarClasses} style={{backgroundColor}}>{avatarText}</Avatar>;
+                    let canExtract = this.checkSandboxAdmin(sandbox);
                     let isExtracting = this.props.extractingSandboxes.indexOf(sandbox.sandboxId) >= 0;
                     let rightIcon = <>
                         {sandbox.allowOpenAccess
@@ -59,13 +60,15 @@ class Index extends Component {
                             </Tooltip>}
                         {!isExtracting
                             ? <Tooltip title='Export Sandbox'>
-                                <IconButton onClick={e => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    this.props.exportSandbox(sandbox.sandboxId);
-                                }} style={{zIndex: 1000}}>
-                                    <CloudDownload style={{fill: this.props.theme.p3}}/>
-                                </IconButton>
+                                <span>
+                                    <IconButton onClick={e => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        this.props.exportSandbox(sandbox.sandboxId);
+                                    }} style={{zIndex: 1000}} disabled={!canExtract}>
+                                        <CloudDownload style={{fill: canExtract ? this.props.theme.p3 : this.props.theme.p7}}/>
+                                    </IconButton>
+                                </span>
                             </Tooltip>
                             : <Tooltip title='Extracting Sandbox'>
                                 <IconButton style={{zIndex: 1000}}>
@@ -129,6 +132,9 @@ class Index extends Component {
                         </MenuItem>
                     </Select>
                 </div>
+                <Button variant='contained' id='import_sandbox_button' color='primary' className='import-sandbox-button' onClick={this.handleImport} data-qa='import-sandbox'>
+                    Import Sandbox
+                </Button>
                 <Button variant='contained' id='create_sandbox_button' color='primary' className='create-sandbox-button' onClick={this.handleCreate} data-qa='create-sandbox'>
                     New Sandbox
                 </Button>
@@ -147,6 +153,9 @@ class Index extends Component {
                     <CircularProgress size={80} thickness={5}/>
                 </div>}
             </div>
+            <Snackbar open={this.props.extractingSandboxes.length > 0} message={'Exporting sandbox...'} autoHideDuration={30000}/>
+            <Snackbar open={this.props.sandboxExportSuccess} message={'Check your email for a downloadable link'} autoHideDuration={30000}/>
+            <Snackbar open={this.props.sandboxImportStart} message={'Sandbox import started'} autoHideDuration={30000}/>
         </Paper>;
     }
 
@@ -168,6 +177,19 @@ class Index extends Component {
             avatarText = 'DSTU2';
         }
         return {avatarClasses, backgroundColor, avatarText};
+    };
+
+    checkSandboxAdmin = (sandbox) => {
+        let isAdmin = false;
+        if (Array.isArray(sandbox.userRoles)) {
+            sandbox.userRoles.forEach((userRole) => {
+                if (userRole.role === "ADMIN" && userRole.user && userRole.user.email === this.props.currentUser.email) {
+                    isAdmin = true;
+                }
+            });
+        }
+
+        return isAdmin;
     };
 
     sortSandboxes = () => {
@@ -203,6 +225,10 @@ class Index extends Component {
         this.props.onToggleModal && this.props.onToggleModal();
     };
 
+    handleImport = () => {
+        this.props.onToggleImport && this.props.onToggleImport();
+    };
+
     selectSandbox = (row) => {
         let sandbox = this.props.sandboxes[row];
         localStorage.setItem('sandboxId', sandbox.sandboxId);
@@ -222,7 +248,10 @@ const mapStateToProps = state => {
         loginInfo: state.sandbox.loginInfo,
         isSandboxCreating: state.sandbox.creatingSandbox,
         creatingSandboxInfo: state.sandbox.creatingSandboxInfo,
-        extractingSandboxes: state.sandbox.extractingSandboxes
+        extractingSandboxes: state.sandbox.extractingSandboxes,
+        currentUser: state.users.user,
+        sandboxExportSuccess: state.sandbox.sandboxExportSuccess,
+        sandboxImportStart: state.sandbox.sandboxImportStart
     };
 };
 
