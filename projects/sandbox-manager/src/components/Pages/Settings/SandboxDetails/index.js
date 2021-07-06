@@ -178,7 +178,7 @@ class SandboxDetails extends Component {
     };
 
     toggleModal = (type) => {
-        this.setState({modalToShow: type, addSampleData: false, toggleReset: false, toggleDelete: false, sandboxDescription: this.props.sandboxDescription});
+        this.setState({modalToShow: type, addSampleData: false, toggleReset: false, toggleDelete: false, description: this.props.sandboxDescription});
     };
 
     updateSandboxHandler = (event) => {
