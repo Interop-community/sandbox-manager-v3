@@ -133,7 +133,7 @@ class SandboxDetails extends Component {
                     <h1 style={titleStyle}>EDIT SANDBOX</h1>
                 </div>
                 <TextField value={this.state.name || this.props.sandboxName} label='Sandbox Name' fullWidth onChange={this.handleSandboxNameChange} onKeyPress={this.submitMaybe}/>
-                <TextField value={this.state.description || this.props.sandboxDescription} label='Sandbox Description' onChange={this.handleSandboxDescriptionChange} fullWidth onKeyPress={this.submitMaybe}/>
+                <TextField value={this.state.description} label='Sandbox Description' onChange={this.handleSandboxDescriptionChange} fullWidth onKeyPress={this.submitMaybe}/>
                 <FormControlLabel label='Allow Open FHIR Endpoint'
                                   control={<Checkbox defaultChecked={this.props.sandboxAllowOpenAccess} onChange={this.handleOpenFhirCheckboxChange}/>}/>
             </div>
@@ -178,7 +178,7 @@ class SandboxDetails extends Component {
     };
 
     toggleModal = (type) => {
-        this.setState({modalToShow: type, addSampleData: false, toggleReset: false, toggleDelete: false});
+        this.setState({modalToShow: type, addSampleData: false, toggleReset: false, toggleDelete: false, sandboxDescription: this.props.sandboxDescription});
     };
 
     updateSandboxHandler = (event) => {
