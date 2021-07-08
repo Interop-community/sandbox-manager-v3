@@ -183,7 +183,7 @@ class Index extends Component {
         let isAdmin = false;
         if (Array.isArray(sandbox.userRoles)) {
             sandbox.userRoles.forEach((userRole) => {
-                if (userRole.role === "ADMIN" && userRole.user && userRole.user.email === this.props.currentUser.email) {
+                if (userRole.role === "ADMIN" && userRole.user && this.props.currentUser && userRole.user.email === this.props.currentUser.email) {
                     isAdmin = true;
                 }
             });
