@@ -3,7 +3,7 @@ import {teal, pink, lightBlue, deepOrange} from "@material-ui/core/colors";
 export function customizeTheme() {
     return {
         p1: '#1B9F7D',
-        p2: '#0E5676',
+        p2: '#325C41',
         p3: '#757575',
         p4: '#9C0227',
         p5: '#F5F5F5',
@@ -17,7 +17,12 @@ export function customizeTheme() {
         a5: lightBlue,
         st: '#00577',
         palette: {
-            primary: teal,
+            primary: {
+                light: 'rgb(64, 128, 122)',
+                main: 'rgb(64, 128, 122)',
+                dark: 'rgb(64, 128, 122)',
+                contrastText: '#FFF'
+            },
             secondary: {
                 light: 'rgb(14, 86, 118)',
                 main: 'rgb(14, 86, 118)',
