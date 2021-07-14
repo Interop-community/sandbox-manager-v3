@@ -149,7 +149,7 @@ class Create extends Component {
     getContent = () => {
         let theme = this.props.theme;
         let titleStyle = {color: theme.p3};
-        let cardTitleStyle = {backgroundColor: 'rgba(0,87,120, 0.75)'};
+        let cardTitleStyle = {backgroundColor: 'rgba(41,68,137, 0.75)'};
         let underlineFocusStyle = {borderColor: theme.p2};
         let floatingLabelFocusStyle = {color: theme.p2};
         let iconStyle = {color: theme.p3, fill: theme.p3, width: '24px', height: '24px'};
