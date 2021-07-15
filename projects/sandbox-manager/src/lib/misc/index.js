@@ -10,6 +10,7 @@ export function customizeTheme() {
         p6: '#3D3D3D',
         p7: '#D7D7D7',
         p8: 'whitesmoke',
+        p9: '#4D8C57',
         a1: '#9D0072',
         a2: '#9E7B20',
         a3: '#759F27',
@@ -24,9 +25,9 @@ export function customizeTheme() {
                 contrastText: '#FFF'
             },
             secondary: {
-                light: 'rgb(14, 86, 118)',
-                main: 'rgb(14, 86, 118)',
-                dark: 'rgb(14, 86, 118)',
+                light: 'rgb(191, 120, 86)',
+                main: 'rgb(191, 120, 86)',
+                dark: 'rgb(191, 120, 86)',
                 contrastText: '#FFF'
             },
             error: deepOrange
