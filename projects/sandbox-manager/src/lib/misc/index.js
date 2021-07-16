@@ -11,6 +11,7 @@ export function customizeTheme() {
         p7: '#D7D7D7',
         p8: 'whitesmoke',
         p9: '#4D8C57',
+        p10: '#325C41',
         a1: '#9D0072',
         a2: '#9E7B20',
         a3: '#759F27',
