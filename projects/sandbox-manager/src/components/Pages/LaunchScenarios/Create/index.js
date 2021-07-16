@@ -85,7 +85,7 @@ class Create extends Component {
 
     render() {
         let theme = this.props.theme;
-        let titleStyle = {backgroundColor: theme.p2, color: theme.p5};
+        let titleStyle = {backgroundColor: theme.p10, color: theme.p5};
         let actions = this.getActions();
 
         return <Dialog open={this.props.open} onClose={this.props.close} classes={{paper: 'launch-scenario-dialog'}}>
