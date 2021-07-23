@@ -19,7 +19,7 @@ export default class Notification extends Component {
         let pendingInvitations = this.props.invitations.filter(i => i.status === "PENDING");
         let unseenNotifications = notifications.filter(i => !i.seen);
         let icon = <a className={this.state.showDropdown ? 'active' : ''} onClick={this.showDropdown} data-qa='header-notifications-button'>
-            <Notifications style={{fill: this.props.theme.p8}}/>
+            <Notifications style={{fill: this.props.theme.p9}}/>
         </a>;
 
         let badge = pendingInvitations.length || unseenNotifications.length

@@ -15,7 +15,7 @@ class Start extends Component {
 
     render () {
         return <div className='start-page-wrapper no-padding'>
-            <img style={{width: '65vw'}} src='./img/hspc-sndbx-logo.png'/>
+            <img style={{width: '50vw'}} src='./img/Meld Logo.FINAL-14.png'/>
             <CircularProgress/>
             <div>
                 <span className='message'>

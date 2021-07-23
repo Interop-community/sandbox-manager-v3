@@ -32,7 +32,7 @@ export default class User extends Component {
         return <div className='user-wrapper'>
             <div className='right'>
                 <span className='anchor' ref='anchor'/>
-                <a data-qa='header-user-button' className={this.state.showUserDropdown ? 'active' : ''} onClick={onClick}><AccountIcon style={{fill: this.props.theme.p8}}/></a>
+                <a data-qa='header-user-button' className={this.state.showUserDropdown ? 'active' : ''} onClick={onClick}><AccountIcon style={{fill: this.props.theme.p9}}/></a>
             </div>
             {this.state.showUserDropdown &&
             <div className='sandbox-menu-item left-margin'>

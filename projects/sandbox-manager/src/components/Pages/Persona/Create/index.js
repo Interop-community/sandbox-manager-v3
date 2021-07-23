@@ -88,8 +88,8 @@ export default class CreatePersona extends Component {
                         <FormControl component="fieldset">
                             <FormLabel component="legend">Gender*</FormLabel>
                             <RadioGroup aria-label="Gender" name="gender" value={this.state.gender} onChange={e => this.setState({gender: e.target.value})}>
-                                <FormControlLabel value="female" control={<Radio/>} label="Female"/>
-                                <FormControlLabel value="male" control={<Radio/>} label="Male"/>
+                                <FormControlLabel value="female" control={<Radio color='primary'/>} label="Female"/>
+                                <FormControlLabel value="male" control={<Radio color='primary'/>} label="Male"/>
                             </RadioGroup>
                         </FormControl>
                     </div>

@@ -95,7 +95,7 @@ class AppDialog extends Component {
         this.props.app && !this.state.clone && actions.push(<Button key={2} variant='contained' style={{backgroundColor: theme.p4, color: theme.p5}} onClick={this.delete}>
             Delete
         </Button>);
-        this.props.app && !this.state.clone && actions.unshift(<Button key={3} variant='contained' color='secondary' onClick={this.clone}>
+        this.props.app && !this.state.clone && actions.unshift(<Button key={3} variant='contained' color='primary' onClick={this.clone}>
             Clone
         </Button>);
         this.props.app && actions.unshift(<Button key={4} variant='contained' onClick={this.createManifest}>

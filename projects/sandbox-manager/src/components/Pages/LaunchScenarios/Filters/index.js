@@ -25,7 +25,7 @@ export default class Filters extends Component {
             <div>
                 <span ref='app-filter'/>
                 <Chip className='chip' onClick={() => this.showFilter('app-filter')} onDelete={deleteCallbackIdFilter} clickable
-                      color={deleteCallbackIdFilter ? 'secondary' : undefined} deleteIcon={!deleteCallbackIdFilter ? <DownIcon style={{fill: theme.p6}}/> : undefined}
+                      color={deleteCallbackIdFilter ? 'primary' : undefined} deleteIcon={!deleteCallbackIdFilter ? <DownIcon style={{fill: theme.p6}}/> : undefined}
                       label={<span>{title}<span className='icon-wrapper'>{!deleteCallbackIdFilter && <DownIcon style={{fill: theme.p3}}/>}</span></span>}/>
                 {this.state.visibleFilter === 'app-filter' &&
                 <Menu className='app-filter-menu margin-left' open={true} anchorEl={this.refs['app-filter']} onClose={() => this.showFilter()}>
@@ -40,7 +40,7 @@ export default class Filters extends Component {
             <div>
                 <span ref='type-filter'/>
                 <Chip className='chip' onClick={() => this.showFilter('type-filter')} onDelete={deleteCallbackTypeFilter} clickable
-                      color={deleteCallbackTypeFilter ? 'secondary' : undefined} deleteIcon={!deleteCallbackTypeFilter ? <DownIcon color={theme.p3}/> : undefined}
+                      color={deleteCallbackTypeFilter ? 'primary' : undefined} deleteIcon={!deleteCallbackTypeFilter ? <DownIcon color={theme.p3}/> : undefined}
                       label={<span>{typeFilterTitle}<span className='icon-wrapper'>{!deleteCallbackTypeFilter && <DownIcon style={{fill: theme.p3}}/>}</span></span>}/>
                 {this.state.visibleFilter === 'type-filter' &&
                 <Menu className='left-margin type-filter-menu' width='200px' open={true} anchorEl={this.refs['type-filter']} onClose={() => this.showFilter()}>

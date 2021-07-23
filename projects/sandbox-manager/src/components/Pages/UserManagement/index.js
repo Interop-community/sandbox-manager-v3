@@ -34,7 +34,7 @@ class Users extends Component {
     render() {
         let palette = this.props.theme;
         let titleStyle = {
-            backgroundColor: palette.p2,
+            backgroundColor: palette.p10,
             color: palette.p7
         };
         let sending = this.state.action === 'sending';

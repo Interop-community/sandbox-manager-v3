@@ -166,7 +166,7 @@ class Apps extends Component {
             service.cdsHooks.map((hook, index) => {
                 hook.title = hook.title ? hook.title : '';
                 hook.url = service.url;
-                let titleStyle = {backgroundColor: 'rgba(0,87,120, 0.75)'};
+                let titleStyle = {backgroundColor: 'rgba(41,68,137, 0.75)'};
                 cards.push(<Card title={hook.title} className={`app-card${this.props.modal ? ' small' : ''}${this.state.toggledHook === hook.id ? ' active' : ''}`} key={service.url + index}
                                  onTouchStart={() => this.hookCardClick(index)} onClick={() => this.props.onCardClick && this.props.onCardClick(hook, service)}>
                     <div className={`hook-icon-wrapper ${hook.hook}`}>
@@ -350,7 +350,7 @@ class Apps extends Component {
                                                     <CardMedia className='media-wrapper'>
                                                         <img style={{height: '156px', width: '235px'}} src='/img/HSPCSandboxNoIconApp.png' alt='Logo'/>
                                                     </CardMedia>
-                                                    <div className='card-title' style={{backgroundColor: 'rgba(0,87,120, 0.75)'}}>
+                                                    <div className='card-title' style={{backgroundColor: 'rgba(41,68,137, 0.75)'}}>
                                                         <h3 className='app-name'>Manually</h3>
                                                     </div>
                                                 </Card>
@@ -363,7 +363,7 @@ class Apps extends Component {
                                                     <CardMedia className='media-wrapper'>
                                                         <Publish className='default-hook-icon'/>
                                                     </CardMedia>
-                                                    <div className='card-title' style={{backgroundColor: 'rgba(0,87,120, 0.75)'}}>
+                                                    <div className='card-title' style={{backgroundColor: 'rgba(41,68,137, 0.75)'}}>
                                                         <h3 className='app-name'>Through a manifest</h3>
                                                     </div>
                                                 </Card>
@@ -378,7 +378,7 @@ class Apps extends Component {
         appsList.sort((a, b) => a.clientName.localeCompare(b.clientName));
 
         return appsList.map((app, index) => {
-            let titleStyle = {backgroundColor: 'rgba(0,87,120, 0.75)'};
+            let titleStyle = {backgroundColor: 'rgba(41,68,137, 0.75)'};
             return <Card title={app.clientName} className={`app-card${this.props.modal ? ' small' : ''}${this.state.toggledApp === app.id ? ' active' : ''}`} key={app.id} id={app.id}
                          onTouchStart={() => this.appCardClick(app)} onClick={() => this.props.onCardClick && this.props.onCardClick(app)} data-qa={`app-${app.clientId}`}>
                 <CardMedia className='media-wrapper'>
