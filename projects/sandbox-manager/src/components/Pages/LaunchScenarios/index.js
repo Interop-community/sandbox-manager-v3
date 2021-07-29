@@ -343,7 +343,7 @@ class LaunchScenarios extends Component {
                             {selectedScenario.cdsHook && selectedScenario.cdsHook.logoUri && <img style={{height: '100%', width: '100%'}} src={selectedScenario.cdsHook.logoUri} alt='Logo'/>}
                             {selectedScenario.cdsHook && !selectedScenario.cdsHook.logoUri && <HooksIcon className='default-hook-icon'/>}
                         </CardMedia>
-                        <div className='card-title' style={{backgroundColor: 'rgba(41,68,137, 0.75)'}}>
+                        <div className='card-title' style={{backgroundColor: 'rgba(71, 132, 84, 0.75)'}}>
                             <span className='app-name'>{selectedScenario.app && selectedScenario.app.clientName}</span>
                             <span className='app-name'>{selectedScenario.cdsHook && selectedScenario.cdsHook.title}</span>
                         </div>
