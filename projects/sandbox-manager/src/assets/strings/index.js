@@ -25,7 +25,7 @@ export default {
         mainLabel: 'Sandboxes',
         createLabel: '+ Create Sandbox'
     },
-    defaultSandboxTitle: 'The Healthcare Innovation Ecosystem',
+    defaultSandboxTitle: '',
     dashboard: 'Dashboard',
     signInLabel: 'Sign In'
 }
