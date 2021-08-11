@@ -89,7 +89,8 @@ class LaunchScenarios extends Component {
     render() {
         let theme = this.props.theme;
 
-        return <Page title='Launch Scenarios' helpIcon={<HelpButton style={{marginLeft: '10px'}} url='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/65011892/Sandbox+Launch+Scenarios'/>}>
+        return <Page title='Launch Scenarios' //helpIcon={<HelpButton style={{marginLeft: '10px'}} url='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/65011892/Sandbox+Launch+Scenarios'/>}
+        >
             {this.state.scenarioToEdit && <Create key={this.createKey} open={!!this.state.scenarioToEdit} close={() => this.selectScenarioForEditing()} create={this.createScenario} {...this.props}
                                                   {...this.state.scenarioToEdit}/>}
             <ConfirmModal open={this.state.showConfirmModal} red confirmLabel='Delete' onConfirm={() => {

@@ -100,7 +100,8 @@ class Apps extends Component {
             ? 'https://cds-hooks.hl7.org/1.0/'
             : 'https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/60915727/Sandbox+Registered+Apps';
 
-        return <Page noTitle={this.props.modal} title={this.props.title ? this.props.title : 'Registered Apps'} helpIcon={<HelpButton style={{marginLeft: '10px'}} url={url}/>}>
+        return <Page noTitle={this.props.modal} title={this.props.title ? this.props.title : 'Registered Apps'} //helpIcon={<HelpButton style={{marginLeft: '10px'}} url={url}/>}
+        >
             <div className='apps-page-wrapper' data-qa='app-page-wrapper'>
                 {!this.props.modal && <div className='filter-wrapper'>
                     <div className='actions'>
