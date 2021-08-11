@@ -99,7 +99,7 @@ class PersonaList extends Component {
         let pageProps = {
             noTitle: this.props.noTitle, title, titleLeft: this.props.titleLeft, close: this.props.close, scrollContent: this.props.scrollContent, darkCloseIcon: true
         };
-        !isPatient && !isPractitioner && (pageProps.helpIcon = helpIcon);
+        !isPatient && !isPractitioner;// && (pageProps.helpIcon = helpIcon);
 
         return <Page {...pageProps}>
             <ConfirmModal red open={this.state.showConfirmModal} confirmLabel='Delete' onConfirm={this.deletePersona} title='Confirm'
