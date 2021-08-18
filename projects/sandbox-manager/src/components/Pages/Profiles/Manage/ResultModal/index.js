@@ -12,7 +12,7 @@ class ResultModal extends Component {
     }
     render() {
         let titleStyle = {
-            backgroundColor: this.props.theme.p2,
+            backgroundColor: this.props.theme.p10,
             color: this.props.theme.p7,
             paddingLeft: '10px',
             marginLeft: '0'

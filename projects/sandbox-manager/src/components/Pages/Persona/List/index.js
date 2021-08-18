@@ -191,7 +191,7 @@ class PersonaList extends Component {
                             <i className="fa fa-user-md fa-2x"/>
                         </Badge>
                         : <Badge style={{padding: '0', width: '28px', height: '28px', position: 'relative', left: '-2px'}}>
-                            <Patient style={{fill: this.props.theme.p2, width: '28px', height: '28px'}}/>
+                            <Patient style={{fill: this.props.theme.p10, width: '28px', height: '28px'}}/>
                         </Badge>;
             let age = getAge(persona.birthDate);
             let isSelected = i === this.state.selected || (this.props.selected && this.props.selected.id === persona.id);
