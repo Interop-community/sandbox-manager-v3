@@ -34,7 +34,7 @@ export default class NavigationItems extends Component {
                 </a>
             </li>}
             <NavigationItem theme={this.props.theme} link={'/' + this.props.sandbox.sandboxId + '/apps'} icon={AppsIcon} text={<span>{strings.navigation.apps}</span>}/>
-            <NavigationItem theme={this.props.theme} link={'/' + this.props.sandbox.sandboxId + '/hooks'} icon={HooksIcon} text={<span>{strings.navigation.hooks}</span>}/>
+            <NavigationItem theme={this.props.theme} link={'/' + this.props.sandbox.sandboxId + '/cds-services'} icon={HooksIcon} text={<span>{strings.navigation.hooks}</span>}/>
             <NavigationItem theme={this.props.theme} link={'/' + this.props.sandbox.sandboxId + '/launch'} icon={LaunchIcon} text={<span>{strings.navigation.launchScenarios}</span>}/>
             <NavigationItem theme={this.props.theme} link={'/' + this.props.sandbox.sandboxId + '/patients'} icon={Patient} text={<span>{strings.navigation.patients}</span>}/>
             <NavigationItem theme={this.props.theme} link={'/' + this.props.sandbox.sandboxId + '/personas'} icon={ContactsIcon} text={<span>{strings.navigation.personas}</span>}/>
