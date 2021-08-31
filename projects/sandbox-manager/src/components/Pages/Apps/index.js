@@ -18,7 +18,7 @@ import ConfirmModal from '../../UI/ConfirmModal';
 import API from '../../../lib/api';
 import {
     lookupPersonasStart, app_setScreen, doLaunch, fetchPersonas, loadSandboxApps, createApp, updateApp, deleteApp, loadApp, getDefaultUserForSandbox, getPersonasPage, resetPersonas, copyToClipboard, launchHook,
-    createService, updateHook, updateService, deleteService
+    createService, updateHook, updateService, deleteService, loadServices
 } from '../../../redux/action-creators';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -68,6 +68,7 @@ class Apps extends Component {
             this.props.app_setScreen('apps');
         } else {
             this.props.app_setScreen('hooks');
+            this.props.loadServices();
         }
 
         this.props.loadSandboxApps();
@@ -567,7 +568,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         fetchPersonas, doLaunch, app_setScreen, loadSandboxApps, createApp, updateApp, deleteApp, loadApp, getDefaultUserForSandbox, lookupPersonasStart, resetPersonas, copyToClipboard, launchHook,
-        createService, updateHook, updateService, deleteService,
+        createService, updateHook, updateService, deleteService, loadServices,
         getNextPersonasPage: (type, pagination) => getPersonasPage(type, pagination, 'next'),
         getPrevPersonasPage: (type, pagination) => getPersonasPage(type, pagination, 'previous')
     }, dispatch);
