@@ -37,7 +37,6 @@ class Users extends Component {
             backgroundColor: palette.p10,
             color: palette.p7
         };
-        let sending = this.state.action === 'sending';
         let {currentIsAdmin, rows} = this.props.sandbox && this.getRows();
 
         return <div className='users-wrapper'>
@@ -156,7 +155,7 @@ class Users extends Component {
                     <CircularProgress size={80} thickness={5}/>
                 </div>}
             </div>
-            <Snackbar open={this.props.inviting} message={sending ? 'Sending invitation to user...' : 'Deleting user invitation...'} autoHideDuration={30000}/>
+            <Snackbar open={this.props.inviting} message={this.state.action === 'sending' ? 'Sending invitation to user...' : 'Deleting user invitation...'} autoHideDuration={30000}/>
         </div>;
     }
 
