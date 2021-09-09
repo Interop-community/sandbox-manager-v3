@@ -124,7 +124,7 @@ export default class Filters extends Component {
                 {this.state.visibleFilter === 'age' &&
                 <Popover open={true} anchorEl={this.refs['age-filter']} onClose={this.closeAgeFilter} className='left-margin'>
                     <div className='age-filter-wrapper'>
-                        <div className='filter-title' style={{backgroundColor: palette.p2, color: palette.p5}}>
+                        <div className='filter-title' style={{backgroundColor: palette.p10, color: palette.p5}}>
                             <h3>Age</h3>
                             <IconButton style={{color: palette.p5, width: '42px', height: '40px', position: 'absolute', right: '10px', top: '-3px'}} onClick={this.closeAgeFilter}>
                                 <i className="material-icons" data-qa="modal-close-button">close</i>
