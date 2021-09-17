@@ -95,8 +95,8 @@ class Index extends Component {
                 let {avatarClasses, backgroundColor, avatarText} = this.getAvatarInfo(sandboxInfo.apiEndpointIndex);
                 let leftAvatar = <Avatar className={avatarClasses} style={{backgroundColor}}>{avatarText}</Avatar>;
                 let info = sandboxInfo.queuePosition
-                    ? `Your sandbox is number ${sandboxInfo.queuePosition} in the creation que...`
-                    : 'Your new sandbox is being created...';
+                    ? `Your sandbox is number ${sandboxInfo.queuePosition} in the creation Queue`
+                    : 'Your new sandbox is being created';
                 let time = `${sandboxInfo.queuePosition * 15 + 15} sec.`;
 
                 sandboxes.unshift(<a key={`new-${i}`} style={{textDecoration: 'none'}}>
