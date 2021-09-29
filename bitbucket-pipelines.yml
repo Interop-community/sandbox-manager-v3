@@ -1,8 +1,10 @@
 # This project uses the GitFlow Workflow as defined here:
 #   https://www.atlassian.com/git/tutorials/comparing-workflows#GitFlow-workflow
-image: hspconsortium/hspc-node-base-image:0.0.1-SNAPSHOT
-clone:           # the 'clone' section
-  depth: 1       # the depth, in this case the clone will contain last one commits
+image:
+  name: 745222113226.dkr.ecr.us-east-1.amazonaws.com/interop/node-base:latest
+  aws:
+    access-key: $AWS_ACCESS_KEY_ID
+    secret-key: $AWS_SECRET_ACCESS_KEY
 
 pipelines:
   default:
