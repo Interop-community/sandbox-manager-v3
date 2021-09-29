@@ -363,7 +363,7 @@ class Apps extends Component {
                                                     }, 200);
                                                 })}>
                                                     <CardMedia className='media-wrapper'>
-                                                        <Publish className='default-hook-icon'/>
+                                                        <img style={{height: '156px', width: '235px'}} src='/img/manifest.png' alt='Logo'/>
                                                     </CardMedia>
                                                     <div className='card-title' style={{backgroundColor: 'rgba(71, 132, 84, 0.75)'}}>
                                                         <h3 className='app-name'>Through a manifest</h3>
