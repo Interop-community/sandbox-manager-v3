@@ -260,7 +260,7 @@ class Apps extends Component {
                     {this.props.defaultUser &&
                     <PersonaList {...props} idRestrictions={!this.state.hookToLaunch ? this.state.appToLaunch.samplePatients : undefined} scrollContent type='Persona'
                                  click={this.showSelectPersona} personaList={this.props.personas}/>}
-                    {!this.props.defaultUser && <DohMessage message='Please create at least one pratitioner persona.'/>}
+                    {!this.props.defaultUser && <DohMessage message='Please create at least one practitioner persona.'/>}
                 </Dialog>
                 : this.state.appToLaunch || this.state.hookToLaunch
                     ? <Dialog open onClose={() => this.closeAll()} className='launch-app-dialog'>
