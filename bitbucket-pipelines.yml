@@ -111,27 +111,28 @@ pipelines:
           script:
             - echo "success"
     discovery/*:
-      - step:
-          name: build nodejs project
-          caches:
-            - node
-          script:
-            - export TARGET_ENV=prod
-            - export CREDENTIALS=${ENC_PW_TEST}
-            - cd ci
-            - . ci-0-set-properties.sh
-            - . ci-1-prepare-sources.sh
-            - . ci-2-build-project.sh
-            - cd ..
-            - ls -l projects/
-          artifacts:
-            - projects/**
+      # - step:
+      #     name: build nodejs project
+      #     caches:
+      #       - node
+      #     script:
+      #       - export TARGET_ENV=prod
+      #       - export CREDENTIALS=${ENC_PW_TEST}
+      #       - cd ci
+      #       - . ci-0-set-properties.sh
+      #       - . ci-1-prepare-sources.sh
+      #       - . ci-2-build-project.sh
+      #     artifacts:
+      #       - projects/**
       - step:
           name: build image and push
           caches:
             - node
           script:
             - cd ci
+            - env
+            - ls ~/.aws
+            - cat ~/.aws/credentials
             - . ci-3-docker-build-push.sh
       # - step:
       #     name: update the aws service
