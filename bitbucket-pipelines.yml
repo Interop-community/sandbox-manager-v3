@@ -1,7 +1,7 @@
 # This project uses the GitFlow Workflow as defined here:
 #   https://www.atlassian.com/git/tutorials/comparing-workflows#GitFlow-workflow
 image:
-  name: 745222113226.dkr.ecr.us-east-1.amazonaws.com/interop/node-base:latest
+  name: 745222113226.dkr.ecr.us-east-1.amazonaws.com/interop/node-base@sha256:cf75b8391b51de056a4230c609cc5377614465849e20ff139fd781bc6c0fc3f7
   aws:
     access-key: $AWS_ACCESS_KEY_ID
     secret-key: $AWS_SECRET_ACCESS_KEY
