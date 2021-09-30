@@ -25,7 +25,7 @@ export default {
         mainLabel: 'Sandboxes',
         createLabel: '+ Create Sandbox'
     },
-    defaultSandboxTitle: 'Testing CI/CD',
+    defaultSandboxTitle: '',
     dashboard: 'Dashboard',
     signInLabel: 'Sign In'
 }

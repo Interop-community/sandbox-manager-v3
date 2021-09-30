@@ -137,7 +137,8 @@ pipelines:
             - cd ci
             - source assume_role.sh
             - aws eks --region us-east-2 update-kubeconfig --name dev-cN1fWKZK
-            - kubectl apply -f ../deployment.yaml
+            - deploy=$(kubectl apply -f ../deployment.yaml)
+            - [[ $deploy =~ "unchanged" ]] && kubectl rollout restart deployment iol2-sandbox-manager-prototype
 
 options:
   docker: true
