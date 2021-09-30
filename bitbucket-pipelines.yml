@@ -130,6 +130,7 @@ pipelines:
             - node
           script:
             - cd ci
+            - . assume_role.sh
             - env
             - ls ~/.aws
             - cat ~/.aws/credentials
