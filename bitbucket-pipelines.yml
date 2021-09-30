@@ -122,6 +122,7 @@ pipelines:
             - . ci-0-set-properties.sh
             - . ci-1-prepare-sources.sh
             - . ci-2-build-project.sh
+            - cd ..
             - ls -l projects/
           artifacts:
             - projects/**
