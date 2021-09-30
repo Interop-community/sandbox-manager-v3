@@ -138,16 +138,6 @@ pipelines:
             - source assume_role.sh
             - aws eks --region us-east-2 update-kubeconfig --name dev-cN1fWKZK
             - kubectl apply -f ../deployment.yaml
-      # - step:
-      #     name: update the aws service
-      #     deployment: test
-      #     caches:
-      #       - node
-      #     script:
-      #       - export TARGET_ENV=test
-      #       - cd ci
-      #       - . ci-0-set-properties.sh
-      #       - . ci-5-aws-service-update.s
 
 options:
   docker: true
