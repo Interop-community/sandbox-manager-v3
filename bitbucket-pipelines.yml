@@ -137,7 +137,7 @@ pipelines:
             - cd ci
             - source assume_role.sh
             - aws eks --region us-east-2 update-kubeconfig --name dev-cN1fWKZK
-            - kubect apply -f ../deployment
+            - kubectl apply -f ../deployment.yaml
       # - step:
       #     name: update the aws service
       #     deployment: test
