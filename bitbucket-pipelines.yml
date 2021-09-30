@@ -122,6 +122,8 @@ pipelines:
             - . ci-0-set-properties.sh
             - . ci-1-prepare-sources.sh
             - . ci-2-build-project.sh
+          artifacts:
+            - projects/*
       - step:
           name: build image and push
           caches:
