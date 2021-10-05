@@ -3,6 +3,7 @@ FROM sameersbn/nginx:1.10.3
 
 COPY ./docker/includes/nginx/config /etc/nginx
 COPY ./projects/sandbox-manager/build/www /usr/share/nginx/html/
+RUN apt-get update && apt-get install -y apt-transport-https
 RUN apt-get update && apt-get install -y jq
 COPY ./xsettings/* /usr/share/nginx/html/data/
 WORKDIR /usr/share/nginx/html/data
