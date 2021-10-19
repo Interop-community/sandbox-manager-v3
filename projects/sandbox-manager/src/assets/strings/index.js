@@ -25,7 +25,7 @@ export default {
         mainLabel: 'Sandboxes',
         createLabel: '+ Create Sandbox'
     },
-    defaultSandboxTitle: '',
+    defaultSandboxTitle: 'Deployed with Tekton',
     dashboard: 'Dashboard',
     signInLabel: 'Sign In'
 }
