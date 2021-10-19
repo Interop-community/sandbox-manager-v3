@@ -25,7 +25,7 @@ export default {
         mainLabel: 'Sandboxes',
         createLabel: '+ Create Sandbox'
     },
-    defaultSandboxTitle: '',
+    defaultSandboxTitle: 'Testng webhook',
     dashboard: 'Dashboard',
     signInLabel: 'Sign In'
 }
