@@ -260,7 +260,7 @@ class Apps extends Component {
                     {this.props.defaultUser &&
                     <PersonaList {...props} idRestrictions={!this.state.hookToLaunch ? this.state.appToLaunch.samplePatients : undefined} scrollContent type='Persona'
                                  click={this.showSelectPersona} personaList={this.props.personas}/>}
-                    {!this.props.defaultUser && <DohMessage message='Please create at least one pratitioner persona.'/>}
+                    {!this.props.defaultUser && <DohMessage message='Please create at least one practitioner persona.'/>}
                 </Dialog>
                 : this.state.appToLaunch || this.state.hookToLaunch
                     ? <Dialog open onClose={() => this.closeAll()} className='launch-app-dialog'>
@@ -363,7 +363,7 @@ class Apps extends Component {
                                                     }, 200);
                                                 })}>
                                                     <CardMedia className='media-wrapper'>
-                                                        <Publish className='default-hook-icon'/>
+                                                        <img style={{height: '156px', width: '235px'}} src='/img/manifest.png' alt='Logo'/>
                                                     </CardMedia>
                                                     <div className='card-title' style={{backgroundColor: 'rgba(71, 132, 84, 0.75)'}}>
                                                         <h3 className='app-name'>Through a manifest</h3>

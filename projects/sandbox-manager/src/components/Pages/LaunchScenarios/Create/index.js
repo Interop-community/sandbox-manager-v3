@@ -124,7 +124,7 @@ class Create extends Component {
 
     getActions = () => {
         let nextEnabled = this.checkNext();
-        let nextColor = nextEnabled ? this.props.theme.p2 : this.props.theme.p3;
+        let nextColor = nextEnabled ? this.props.theme.p3 : this.props.theme.p2;
         let prevColor = this.props.theme.p2;
 
         let actions = this.state.currentStep !== 3
@@ -136,6 +136,7 @@ class Create extends Component {
             </Button>];
 
         if (this.state.currentStep > -1) {
+            prevColor = this.props.theme.p3;
             actions.unshift(
                 <Button variant='outlined' style={{color: prevColor}} onClick={this.prev} key={3}>
                     <LeftIcon style={{color: prevColor}}/> BACK
