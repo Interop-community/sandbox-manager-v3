@@ -80,6 +80,11 @@ export default class Help extends Component {
                             FAQ
                         </MenuItem>
                     </a>
+                    <a href='https://interopcommunity.slack.com/join/shared_invite/zt-xru6oe6d-6EZmaSylTokCwmpBJLpY~Q#/shared-invite/email' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <MenuItem className='help-menu-item' onClick={() => this.openLink('https://interopcommunity.slack.com/join/shared_invite/zt-xru6oe6d-6EZmaSylTokCwmpBJLpY~Q#/shared-invite/email')}>
+                            Slack
+                        </MenuItem>
+                    </a>
                     {/* <a href='https://groups.google.com/a/interop.community/forum/#!forum/developer' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <MenuItem className='help-menu-item' onClick={() => this.openLink('https://groups.google.com/a/interop.community/forum/#!forum/developer')}>
                             Developer Forum
@@ -94,12 +99,12 @@ export default class Help extends Component {
                         <MenuItem className='help-menu-item' onClick={() => this.openLink('https://healthservices.atlassian.net/wiki/spaces/HSM/overview')}>
                             Maintenance Info
                         </MenuItem>
-                    </a>
+                    </a> */}
                     <a href='#' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <MenuItem className='help-menu-item' onClick={this.toggleTerms}>
                             Terms of Use & Privacy Statement
                         </MenuItem>
-                    </a> */}
+                    </a>
                 </Menu>}
         </div>;
     };
