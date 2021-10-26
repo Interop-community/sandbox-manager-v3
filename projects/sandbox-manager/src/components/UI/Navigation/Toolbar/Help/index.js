@@ -27,27 +27,27 @@ export default class Help extends Component {
             </Dialog>
             <div className='right'>
                 <a className={this.state.showHelpDropdown ? 'active' : ''} onClick={this.handleUserDropdown} data-qa='header-help-button'>
-                    <ActionHelp style={{ fill: this.props.theme.p8 }} />
+                    <ActionHelp style={{ fill: this.props.theme.p9 }} />
                 </a>
                 <div className='anchor' ref='anchor' />
             </div>
             {this.state.showHelpDropdown && !!this.state.anchorEl &&
                 <Menu className='help-menu' width='200px' open={true} anchorEl={this.state.anchorEl} onClose={this.handleUserDropdown}>
-                    <a href='https://www.developers.interop.community/' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    {/* <a href='https://www.developers.interop.community/' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <MenuItem className='help-menu-item' onClick={() => this.openLink('https://www.developers.interop.community/')}>
                             Developers Portal
                         </MenuItem>
-                    </a>
+                    </a> */}
                     <Divider />
                     <MenuItem className='help-menu-item disabled' disabled>
                         Documentation
                     </MenuItem>
-                    <a href='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/64585866/HSPC+Sandbox' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
-                        <MenuItem className='help-menu-item' onClick={() => this.openLink('https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/64585866/HSPC+Sandbox')}>
-                            Logica Sandbox Docs
+                    <a href='https://github.com/Interop-community/meld-documentation' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <MenuItem className='help-menu-item' onClick={() => this.openLink('https://github.com/Interop-community/meld-documentation')}>
+                            Meld Sandbox Docs
                         </MenuItem>
                     </a>
-                    <a href='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/60555273/Samples' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    {/* <a href='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/60555273/Samples' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <MenuItem className='help-menu-item' onClick={() => this.openLink('https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/60555273/Samples')}>
                             Code Samples
                         </MenuItem>
@@ -70,27 +70,27 @@ export default class Help extends Component {
                             }}>
                             EHR Integration Guide
                         </MenuItem>
-                    </a>
+                    </a> */}
                     <Divider />
                     <MenuItem className='help-menu-item disabled' disabled>
                         Support
                     </MenuItem>
-                    <a href='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/61767707/FAQs' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
-                        <MenuItem className='help-menu-item' onClick={() => this.openLink('https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/61767707/FAQs')}>
+                    <a href='https://github.com/Interop-community/meld-documentation/wiki/Frequently-Asked-Questions' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <MenuItem className='help-menu-item' onClick={() => this.openLink('https://github.com/Interop-community/meld-documentation/wiki/Frequently-Asked-Questions')}>
                             FAQ
                         </MenuItem>
                     </a>
-                    <a href='https://groups.google.com/a/interop.community/forum/#!forum/developer' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    {/* <a href='https://groups.google.com/a/interop.community/forum/#!forum/developer' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <MenuItem className='help-menu-item' onClick={() => this.openLink('https://groups.google.com/a/interop.community/forum/#!forum/developer')}>
                             Developer Forum
                         </MenuItem>
-                    </a>
-                    <a href='https://help.interop.community' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
-                        <MenuItem className='help-menu-item' onClick={() => this.openLink('https://help.interop.community')}>
-                            Help desk
+                    </a> */}
+                    <a href='https://github.com/Interop-community/meld-documentation/wiki/Help-Desk-Information' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <MenuItem className='help-menu-item' onClick={() => this.openLink('https://github.com/Interop-community/meld-documentation/wiki/Help-Desk-Information')}>
+                            Help Desk
                         </MenuItem>
                     </a>
-                    <a href='https://healthservices.atlassian.net/wiki/spaces/HSM/overview' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    {/* <a href='https://healthservices.atlassian.net/wiki/spaces/HSM/overview' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <MenuItem className='help-menu-item' onClick={() => this.openLink('https://healthservices.atlassian.net/wiki/spaces/HSM/overview')}>
                             Maintenance Info
                         </MenuItem>
@@ -99,7 +99,7 @@ export default class Help extends Component {
                         <MenuItem className='help-menu-item' onClick={this.toggleTerms}>
                             Terms of Use & Privacy Statement
                         </MenuItem>
-                    </a>
+                    </a> */}
                 </Menu>}
         </div>;
     };
