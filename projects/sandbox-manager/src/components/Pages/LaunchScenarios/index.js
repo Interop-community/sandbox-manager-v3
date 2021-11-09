@@ -89,7 +89,8 @@ class LaunchScenarios extends Component {
     render() {
         let theme = this.props.theme;
 
-        return <Page title='Launch Scenarios' helpIcon={<HelpButton style={{marginLeft: '10px'}} url='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/65011892/Sandbox+Launch+Scenarios'/>}>
+        return <Page title='Launch Scenarios' //helpIcon={<HelpButton style={{marginLeft: '10px'}} url='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/65011892/Sandbox+Launch+Scenarios'/>}
+        >
             {this.state.scenarioToEdit && <Create key={this.createKey} open={!!this.state.scenarioToEdit} close={() => this.selectScenarioForEditing()} create={this.createScenario} {...this.props}
                                                   {...this.state.scenarioToEdit}/>}
             <ConfirmModal open={this.state.showConfirmModal} red confirmLabel='Delete' onConfirm={() => {
@@ -343,7 +344,7 @@ class LaunchScenarios extends Component {
                             {selectedScenario.cdsHook && selectedScenario.cdsHook.logoUri && <img style={{height: '100%', width: '100%'}} src={selectedScenario.cdsHook.logoUri} alt='Logo'/>}
                             {selectedScenario.cdsHook && !selectedScenario.cdsHook.logoUri && <HooksIcon className='default-hook-icon'/>}
                         </CardMedia>
-                        <div className='card-title' style={{backgroundColor: 'rgba(0,87,120, 0.75)'}}>
+                        <div className='card-title' style={{backgroundColor: 'rgba(71, 132, 84, 0.75)'}}>
                             <span className='app-name'>{selectedScenario.app && selectedScenario.app.clientName}</span>
                             <span className='app-name'>{selectedScenario.cdsHook && selectedScenario.cdsHook.title}</span>
                         </div>

@@ -7,7 +7,7 @@ class ConfirmModal extends React.Component {
 
     render() {
         let titleStyle = {
-            backgroundColor: this.props.theme.p2,
+            backgroundColor: this.props.theme.p10,
             color: this.props.theme.p8,
             paddingLeft: '10px',
             marginLeft: '0'

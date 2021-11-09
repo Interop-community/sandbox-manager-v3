@@ -18,7 +18,7 @@ import ConfirmModal from '../../UI/ConfirmModal';
 import API from '../../../lib/api';
 import {
     lookupPersonasStart, app_setScreen, doLaunch, fetchPersonas, loadSandboxApps, createApp, updateApp, deleteApp, loadApp, getDefaultUserForSandbox, getPersonasPage, resetPersonas, copyToClipboard, launchHook,
-    createService, updateHook, updateService, deleteService
+    createService, updateHook, updateService, deleteService, loadServices
 } from '../../../redux/action-creators';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -68,6 +68,7 @@ class Apps extends Component {
             this.props.app_setScreen('apps');
         } else {
             this.props.app_setScreen('hooks');
+            this.props.loadServices();
         }
 
         this.props.loadSandboxApps();
@@ -100,7 +101,8 @@ class Apps extends Component {
             ? 'https://cds-hooks.hl7.org/1.0/'
             : 'https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/60915727/Sandbox+Registered+Apps';
 
-        return <Page noTitle={this.props.modal} title={this.props.title ? this.props.title : 'Registered Apps'} helpIcon={<HelpButton style={{marginLeft: '10px'}} url={url}/>}>
+        return <Page noTitle={this.props.modal} title={this.props.title ? this.props.title : 'Registered Apps'} //helpIcon={<HelpButton style={{marginLeft: '10px'}} url={url}/>}
+        >
             <div className='apps-page-wrapper' data-qa='app-page-wrapper'>
                 {!this.props.modal && <div className='filter-wrapper'>
                     <div className='actions'>
@@ -166,7 +168,7 @@ class Apps extends Component {
             service.cdsHooks.map((hook, index) => {
                 hook.title = hook.title ? hook.title : '';
                 hook.url = service.url;
-                let titleStyle = {backgroundColor: 'rgba(0,87,120, 0.75)'};
+                let titleStyle = {backgroundColor: 'rgba(71, 132, 84, 0.75)'};
                 cards.push(<Card title={hook.title} className={`app-card${this.props.modal ? ' small' : ''}${this.state.toggledHook === hook.id ? ' active' : ''}`} key={service.url + index}
                                  onTouchStart={() => this.hookCardClick(index)} onClick={() => this.props.onCardClick && this.props.onCardClick(hook, service)}>
                     <div className={`hook-icon-wrapper ${hook.hook}`}>
@@ -258,7 +260,7 @@ class Apps extends Component {
                     {this.props.defaultUser &&
                     <PersonaList {...props} idRestrictions={!this.state.hookToLaunch ? this.state.appToLaunch.samplePatients : undefined} scrollContent type='Persona'
                                  click={this.showSelectPersona} personaList={this.props.personas}/>}
-                    {!this.props.defaultUser && <DohMessage message='Please create at least one pratitioner persona.'/>}
+                    {!this.props.defaultUser && <DohMessage message='Please create at least one practitioner persona.'/>}
                 </Dialog>
                 : this.state.appToLaunch || this.state.hookToLaunch
                     ? <Dialog open onClose={() => this.closeAll()} className='launch-app-dialog'>
@@ -350,7 +352,7 @@ class Apps extends Component {
                                                     <CardMedia className='media-wrapper'>
                                                         <img style={{height: '156px', width: '235px'}} src='/img/HSPCSandboxNoIconApp.png' alt='Logo'/>
                                                     </CardMedia>
-                                                    <div className='card-title' style={{backgroundColor: 'rgba(0,87,120, 0.75)'}}>
+                                                    <div className='card-title' style={{backgroundColor: 'rgba(71, 132, 84, 0.75)'}}>
                                                         <h3 className='app-name'>Manually</h3>
                                                     </div>
                                                 </Card>
@@ -361,9 +363,9 @@ class Apps extends Component {
                                                     }, 200);
                                                 })}>
                                                     <CardMedia className='media-wrapper'>
-                                                        <Publish className='default-hook-icon'/>
+                                                        <img style={{height: '156px', width: '235px'}} src='/img/manifest.png' alt='Logo'/>
                                                     </CardMedia>
-                                                    <div className='card-title' style={{backgroundColor: 'rgba(0,87,120, 0.75)'}}>
+                                                    <div className='card-title' style={{backgroundColor: 'rgba(71, 132, 84, 0.75)'}}>
                                                         <h3 className='app-name'>Through a manifest</h3>
                                                     </div>
                                                 </Card>
@@ -378,7 +380,7 @@ class Apps extends Component {
         appsList.sort((a, b) => a.clientName.localeCompare(b.clientName));
 
         return appsList.map((app, index) => {
-            let titleStyle = {backgroundColor: 'rgba(0,87,120, 0.75)'};
+            let titleStyle = {backgroundColor: 'rgba(71, 132, 84, 0.75)'};
             return <Card title={app.clientName} className={`app-card${this.props.modal ? ' small' : ''}${this.state.toggledApp === app.id ? ' active' : ''}`} key={app.id} id={app.id}
                          onTouchStart={() => this.appCardClick(app)} onClick={() => this.props.onCardClick && this.props.onCardClick(app)} data-qa={`app-${app.clientId}`}>
                 <CardMedia className='media-wrapper'>
@@ -566,7 +568,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         fetchPersonas, doLaunch, app_setScreen, loadSandboxApps, createApp, updateApp, deleteApp, loadApp, getDefaultUserForSandbox, lookupPersonasStart, resetPersonas, copyToClipboard, launchHook,
-        createService, updateHook, updateService, deleteService,
+        createService, updateHook, updateService, deleteService, loadServices,
         getNextPersonasPage: (type, pagination) => getPersonasPage(type, pagination, 'next'),
         getPrevPersonasPage: (type, pagination) => getPersonasPage(type, pagination, 'previous')
     }, dispatch);

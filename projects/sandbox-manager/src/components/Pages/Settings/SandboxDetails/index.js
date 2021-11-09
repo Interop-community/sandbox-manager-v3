@@ -57,9 +57,9 @@ class SandboxDetails extends Component {
                 <IconButton tooltip='Edit' onClick={() => this.toggleModal(MODALS.edit)} disabled={!this.state.currentUserIsAdmin}>
                     <Edit style={{color: this.props.theme.p3, width: '24px', height: '24px'}}/>
                 </IconButton>
-                <IconButton tooltip='Reset' onClick={() => this.toggleModal(MODALS.reset)} disabled={!this.state.currentUserIsAdmin}>
-                    <Redo style={{color: this.props.theme.p3, width: '24px', height: '24px'}}/>
-                </IconButton>
+                {/*<IconButton tooltip='Reset' onClick={() => this.toggleModal(MODALS.reset)} disabled={!this.state.currentUserIsAdmin}>*/}
+                {/*    <Redo style={{color: this.props.theme.p3, width: '24px', height: '24px'}}/>*/}
+                {/*</IconButton>*/}
                 <IconButton tooltip='Delete' onClick={() => this.toggleModal(MODALS.delete)} disabled={!this.state.currentUserIsAdmin} data-qa='delete-sandbox-button'>
                     <Delete style={{color: this.props.theme.p3, width: '24px', height: '24px'}}/>
                 </IconButton>
@@ -99,7 +99,7 @@ class SandboxDetails extends Component {
 
     getModalContent = () => {
         let titleStyle = {
-            backgroundColor: this.props.theme.p2,
+            backgroundColor: this.props.theme.p10,
             color: this.props.theme.p7,
             paddingLeft: '10px',
             marginLeft: '0'
@@ -135,7 +135,7 @@ class SandboxDetails extends Component {
                 <TextField value={this.state.name || this.props.sandboxName} label='Sandbox Name' fullWidth onChange={this.handleSandboxNameChange} onKeyPress={this.submitMaybe}/>
                 <TextField value={this.state.description} label='Sandbox Description' onChange={this.handleSandboxDescriptionChange} fullWidth onKeyPress={this.submitMaybe}/>
                 <FormControlLabel label='Allow Open FHIR Endpoint'
-                                  control={<Checkbox defaultChecked={this.props.sandboxAllowOpenAccess} onChange={this.handleOpenFhirCheckboxChange}/>}/>
+                                  control={<Checkbox color='primary' defaultChecked={this.props.sandboxAllowOpenAccess} onChange={this.handleOpenFhirCheckboxChange}/>}/>
             </div>
             : this.state.modalToShow === MODALS.reset
                 ? <div>

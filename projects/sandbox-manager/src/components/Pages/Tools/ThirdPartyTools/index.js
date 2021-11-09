@@ -41,7 +41,7 @@ class ThirdPartyTools extends Component {
     }
 
     render() {
-        let titleStyle = {backgroundColor: 'rgba(0,87,120, 0.75)'};
+        let titleStyle = {backgroundColor: 'rgba(71, 132, 84, 0.75)'};
 
         return <div>
             <Dialog open={!!this.state.showModal} onClose={() => this.setState({showModal: false})} classes={{paper: 'settings-dialog'}}>

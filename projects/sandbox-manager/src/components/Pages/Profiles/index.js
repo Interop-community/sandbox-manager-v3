@@ -56,7 +56,8 @@ class Profiles extends Component {
         let helpIcon = <HelpButton style={{marginLeft: '10px'}} url='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/431685680/Sandbox+Profiles'/>;
 
         return <div className='profiles-wrapper page-content-wrapper'>
-            <Page title='Profiles' helpIcon={helpIcon}>
+            <Page title='Profiles' //helpIcon={helpIcon}
+            >
                 <Manage {...this.props} />
                 <ResultModal open={!!this.props.profileLoadingStatus} theme={this.props.theme} onClose={() => this.props.fhir_setProfileLoadingStatus()}
                              data={this.props.profileLoadingStatus}/>

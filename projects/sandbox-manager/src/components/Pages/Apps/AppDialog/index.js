@@ -4,6 +4,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import InfoIcon from "svg-react-loader?name=Patient!../../../../assets/icons/baseline-info.svg";
 import ContentCopy from '@material-ui/icons/FileCopy';
 import './styles.less';
+import Snackbar from '../../../UI/Snackbar'
 
 class AppDialog extends Component {
     constructor(props) {
@@ -95,7 +96,7 @@ class AppDialog extends Component {
         this.props.app && !this.state.clone && actions.push(<Button key={2} variant='contained' style={{backgroundColor: theme.p4, color: theme.p5}} onClick={this.delete}>
             Delete
         </Button>);
-        this.props.app && !this.state.clone && actions.unshift(<Button key={3} variant='contained' color='secondary' onClick={this.clone}>
+        this.props.app && !this.state.clone && actions.unshift(<Button key={3} variant='contained' color='primary' onClick={this.clone}>
             Clone
         </Button>);
         this.props.app && actions.unshift(<Button key={4} variant='contained' onClick={this.createManifest}>
@@ -186,6 +187,7 @@ class AppDialog extends Component {
             <DialogActions className='app-dialog-actions-wrapper'>
                 {actions}
             </DialogActions>
+            {this.state.popupMessage && <Snackbar open={this.state.popupMessage} message={this.state.errorToShow} theme={theme} onClose={() => this.setState({popupMessage : false})}/>}
         </Dialog>
     }
 
@@ -275,9 +277,14 @@ class AppDialog extends Component {
         this.props.onDelete && this.props.onDelete();
     };
 
-    onFileInput = () => {
+    onFileInput = (event) => {
         let input = this.refs.image;
         if (input.files && input.files[0]) {
+            if (input.files[0].size > 2 * 1024 * 1024) {
+                this.setState({errorToShow: 'Max image size is 2MB, please upload a smaller image.', popupMessage: true});
+                event.target.value = null;
+                return;
+            }
             let reader = new FileReader();
 
             reader.onload = (e) => {

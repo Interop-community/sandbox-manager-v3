@@ -85,7 +85,7 @@ class Create extends Component {
 
     render() {
         let theme = this.props.theme;
-        let titleStyle = {backgroundColor: theme.p2, color: theme.p5};
+        let titleStyle = {backgroundColor: theme.p10, color: theme.p5};
         let actions = this.getActions();
 
         return <Dialog open={this.props.open} onClose={this.props.close} classes={{paper: 'launch-scenario-dialog'}}>
@@ -124,7 +124,7 @@ class Create extends Component {
 
     getActions = () => {
         let nextEnabled = this.checkNext();
-        let nextColor = nextEnabled ? this.props.theme.p2 : this.props.theme.p3;
+        let nextColor = nextEnabled ? this.props.theme.p3 : this.props.theme.p2;
         let prevColor = this.props.theme.p2;
 
         let actions = this.state.currentStep !== 3
@@ -136,6 +136,7 @@ class Create extends Component {
             </Button>];
 
         if (this.state.currentStep > -1) {
+            prevColor = this.props.theme.p3;
             actions.unshift(
                 <Button variant='outlined' style={{color: prevColor}} onClick={this.prev} key={3}>
                     <LeftIcon style={{color: prevColor}}/> BACK
@@ -149,7 +150,7 @@ class Create extends Component {
     getContent = () => {
         let theme = this.props.theme;
         let titleStyle = {color: theme.p3};
-        let cardTitleStyle = {backgroundColor: 'rgba(0,87,120, 0.75)'};
+        let cardTitleStyle = {backgroundColor: 'rgba(71, 132, 84, 0.75)'};
         let underlineFocusStyle = {borderColor: theme.p2};
         let floatingLabelFocusStyle = {color: theme.p2};
         let iconStyle = {color: theme.p3, fill: theme.p3, width: '24px', height: '24px'};
