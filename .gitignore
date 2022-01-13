@@ -45,6 +45,7 @@ build
 docs
 .idea/
 projects/sandbox-manager-lib/.idea/
+projects/sandbox-manager/build.old/*
 
 # Container definitions
 container-definitions.json
