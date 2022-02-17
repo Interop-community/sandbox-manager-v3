@@ -767,7 +767,26 @@ export default {
                     ]
                 }
             }
+        },
+        'patient-consent-consult': {
+
+            patientId: {
+                required: true,
+                prefetch: false,
+                type: 'array',
+                resourceType: 'Patient',
+                title: 'Patient id'
+            },
+            actor: {
+                required: true,
+                prefetch: false,
+                type: 'array',
+                resourceType: 'Organization,Practitioner',
+                title: 'Actor'
+            }
         }
+
+        
     },
     changed: []
 }
