@@ -781,7 +781,7 @@ export default {
                 required: true,
                 prefetch: false,
                 type: 'array',
-                resourceType: 'Organization,Practitioner',
+                resourceType: 'Practitioner',
                 title: 'Actor'
             }
         }

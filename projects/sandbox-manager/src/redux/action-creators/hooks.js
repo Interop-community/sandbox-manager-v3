@@ -3,6 +3,7 @@ import * as types from './types';
 import {random} from './sandbox';
 import {setGlobalError} from './app';
 import {appCreating} from './apps';
+import { every } from 'lodash';
 var _ = require('lodash');
 
 const POSTFIX_SERVICE = '/cds-services';
@@ -359,14 +360,17 @@ async function buildContext(hook, launchContext, state, dispatch) {
     let params = state.hooks.hookContexts[hook];
     let context = {};
     let hasMissingContext = false;
-    let nonPatienttypes = `_type=${Object.values(params).map(
-                            v => v.resourceType != 'Patient' ? v.resourceType : null
-                            ).filter(x => !!x).join(',')}`
-
-    let [user, everything] = await Promise.all([API.get(`${window.fhirClient.server.serviceUrl}/${GETTERS['userId'](state)}`),
-                                                 API.get(`${window.fhirClient.server.serviceUrl}/Patient/${launchContext.patientId}/$everything?${nonPatienttypes}`)
-    ])
-    user && everything.entry.push({resource: user})
+    // let nonPatienttypes = `_type=${Object.values(params).map(
+    //                         v => v.resourceType != 'Patient' ? v.resourceType : null
+    //                         ).filter(x => !!x).join(',')}`
+    
+    let everything = [];
+    await Promise.all([API.get(`${window.fhirClient.server.serviceUrl}/Patient/${launchContext.patientId}`), API.get(`${window.fhirClient.server.serviceUrl}/${GETTERS['userId'](state)}`)]).then(
+        (responses)=> everything.push(...responses)
+    )
+    
+    window.leap = everything
+    // user && everything.entry.push({resource: user})
     if (params) {
         Object.keys(params).map(async key => {
             let required = params[key].required;
@@ -388,8 +392,8 @@ async function buildContext(hook, launchContext, state, dispatch) {
             } else if (launchContext instanceof Array) {
                 val = launchContext.find(x => x.name === key);
             }  else if (type === 'array'){
-                let entry = everything.entry.filter(i => params[key].resourceType.includes(i.resource.resourceType))
-                entry = entry.map(x => x.resource.identifier.map(y=> _.pick(y, ['system', 'value'])).filter(x=> !_.isEmpty(x))).flat()
+                let entry = everything.filter(i => params[key].resourceType.includes(i.resourceType))
+                entry = entry.map(x => x.identifier.map(y=> _.pick(y, ['system', 'value'])).filter(x=> !_.isEmpty(x))).flat()
                 val = entry;
 
             }else {
