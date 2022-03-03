@@ -3,6 +3,8 @@ import * as types from './types';
 import {random} from './sandbox';
 import {setGlobalError} from './app';
 import {appCreating} from './apps';
+import { every } from 'lodash';
+var _ = require('lodash');
 
 const POSTFIX_SERVICE = '/cds-services';
 
@@ -253,6 +255,8 @@ export const launchHook = (hook, launchContext) => {
         let hookInstance = random(64);
 
         let state = getState();
+        // console.log(hook.hook, launchContext, state, dispatch);
+
         let context = await buildContext(hook.hook, launchContext, state, dispatch);
         // Authorize the hook
         let userData = {username: state.sandbox.defaultUser.personaUserId, password: state.sandbox.defaultUser.password};
@@ -280,7 +284,8 @@ export const launchHook = (hook, launchContext) => {
                     Object.keys(hook.prefetch).map(key => {
                         let url = hook.prefetch[key];
                         let regex = new RegExp(/\{\{context\.(.*?)\}\}/gi);
-                        url = url.replace(regex, (a, b) => context[b]);
+                        url = ('patient' === key) ? url.replace(regex, (a, b) => launchContext[b]) : url.replace(regex, (a, b) => context[b]);
+
                         promises.push(new Promise((resolve, reject) => {
                             API.get(`${window.fhirClient.server.serviceUrl}/${encodeURI(url)}`, dispatch)
                                 .then(result => {
@@ -355,6 +360,17 @@ async function buildContext(hook, launchContext, state, dispatch) {
     let params = state.hooks.hookContexts[hook];
     let context = {};
     let hasMissingContext = false;
+    // let nonPatienttypes = `_type=${Object.values(params).map(
+    //                         v => v.resourceType != 'Patient' ? v.resourceType : null
+    //                         ).filter(x => !!x).join(',')}`
+    
+    let everything = [];
+    await Promise.all([API.get(`${window.fhirClient.server.serviceUrl}/Patient/${launchContext.patientId}`), API.get(`${window.fhirClient.server.serviceUrl}/${GETTERS['userId'](state)}`)]).then(
+        (responses)=> everything.push(...responses)
+    )
+    
+    window.leap = everything
+    // user && everything.entry.push({resource: user})
     if (params) {
         Object.keys(params).map(async key => {
             let required = params[key].required;
@@ -375,8 +391,14 @@ async function buildContext(hook, launchContext, state, dispatch) {
                 }
             } else if (launchContext instanceof Array) {
                 val = launchContext.find(x => x.name === key);
-            } else {
-                val = launchContext[key] ? launchContext[key] : GETTERS[key] ? GETTERS[key](state) : undefined;
+            }  else if (type === 'array'){
+                let entry = everything.filter(i => params[key].resourceType.includes(i.resourceType))
+                entry = entry.map(x => x.identifier.map(y=> _.pick(y, ['system', 'value'])).filter(x=> !_.isEmpty(x))).flat()
+                val = entry;
+
+            }else {
+                    val = launchContext[key] ? launchContext[key] : GETTERS[key] ? GETTERS[key](state) : undefined;
+                
             }
             if ((!val || val.length === 0) && required) {
                 dispatch(setGlobalError(`Hook can not be launched! Missing required context "${key}".`));
