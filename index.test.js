@@ -81,6 +81,7 @@ TEST_SUITE.map(testCase => {
 
 describe('Finish the testing', function () {
     it('should close the browser and finish the tests', async () => {
-        // await UTILS.closeTab();
+        await UTILS.closeTab();
+        // await UTILS.driver.quit();
     });
 });

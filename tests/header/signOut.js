@@ -21,4 +21,6 @@ exports.signOut = () => describe('Testing if the user sign out process works', f
         // let menu = await UTILS.getElementByCss('[data-qa="user-menu-popover"]');
         // expect(menu).toBeNull();
     });
+
+    
 });

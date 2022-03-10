@@ -6,12 +6,29 @@ exports.login = describe('Login into the system', function () {
         await UTILS.wait(3000);
         let username = await UTILS.getElementById('username');
         let password = await UTILS.getElementById('password');
-        await username.sendKeys('cwin', Key.TAB);
-        await password.sendKeys('142338', Key.ENTER);
+        // await username.sendKeys('testuser90', Key.TAB);
+        await username.sendKeys(process.env.USERNAME, Key.TAB);
+
+        // await password.sendKeys('test', Key.ENTER);
+        await password.sendKeys(process.env.PASSWORD, Key.ENTER);
+
     });
+    
+    it('should agree Terms of Use & Privacy Statement', async ()=> {
+        await UTILS.wait(5000);
+
+        let accept = await UTILS.getElementByCss('div.MuiDialogActions-root.MuiDialogActions-spacing > button', 1000)
+        if (accept !== null) {
+            accept.click()
+        }
+        let dashboard = UTILS.getElementByCss('[data-qa="dashboard-page"]');
+        expect(dashboard).not.toBeNull();
+ 
+ 
+     });
 
     it('should redirect to the dashboard after login', async () => {
-        await UTILS.wait(5000);
+        await UTILS.wait(2500);
 
         let handles = await UTILS.driver.getAllWindowHandles();
         await UTILS.driver.switchTo().window(handles[0]);
@@ -20,6 +37,9 @@ exports.login = describe('Login into the system', function () {
         let dashboard = UTILS.getElementByCss('[data-qa="dashboard-page"]');
         expect(dashboard).not.toBeNull();
     });
+
+
+
 });
 
 // exports.login = describe('Login into the system', function () {
