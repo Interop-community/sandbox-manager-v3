@@ -74,6 +74,9 @@
     "personaCookieDomain": "interop.community",
     "sandboxManagerUrl": $sandbox_endpoint,   
     "sandboxManagerApiUrl": $sandbox_api
+  },
+  "tools":{
+    "inferno_community": $inferno_community
   }
 }
 

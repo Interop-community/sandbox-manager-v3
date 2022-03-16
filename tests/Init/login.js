@@ -17,7 +17,7 @@ exports.login = describe('Login into the system', function () {
     it('should agree Terms of Use & Privacy Statement', async ()=> {
         await UTILS.wait(5000);
 
-        let accept = await UTILS.getElementByCss('div.MuiDialogActions-root.MuiDialogActions-spacing > button', 1000)
+        let accept = await UTILS.getElementByCss('div.MuiDialogActions-root.MuiDialogActions-spacing > button', 5000)
         if (accept !== null) {
             accept.click()
         }
