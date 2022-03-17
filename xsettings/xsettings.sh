@@ -8,5 +8,6 @@ jq -n --arg gateway_endpoint "$GATEWAY_HOST" \
 --arg kc_realm "$KEYCLOAK_REALM" \
 --arg sandbox_endpoint "$SANDBOX_HOST" \
 --arg sandbox_api "$SANDBOX_API" \
+--arg inferno_community "$INFERNO_COMMUNITY" \
 -f ./xsettings_template.json > xsettings.json
 

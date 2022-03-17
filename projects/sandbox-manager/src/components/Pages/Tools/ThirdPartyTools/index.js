@@ -16,6 +16,13 @@ const TOOLS = [
         larger: true
     },
     {
+        title: 'Inferno (Community Edition)',
+        description: 'Testing suite for FHIR to help developers implement the FHIR standard.',
+        image: '/img/inferno_community.png',
+        link: 'https://inferno.healthit.gov/community',
+        larger: true
+    },
+    {
         title: 'Crucible',
         description: 'Testing suite to test for conformance to the FHIR standard.',
         image: '/img/crucible_logo.png',
@@ -77,6 +84,7 @@ class ThirdPartyTools extends Component {
         let link = tool.link;
         let isHooks = link === 'https://sandbox.cds-hooks.org/';
         let hooks = (this.props.apps || []).find(app => app.clientId === "48163c5e-88b5-4cb3-92d3-23b800caa927");
+
         if (isHooks && hooks) {
             this.props.launch(hooks, this.props.patient.id, this.props.user);
         } else {
@@ -86,6 +94,11 @@ class ThirdPartyTools extends Component {
             if (tool.title === 'clinFHIR' && this.props.isOpen) {
                 link = `${tool.link}/?data=${url}&conf=${url}&term=${url}&dataname=${name}&confname=${name}&termname=${name}`;
             }
+
+            if (tool.title === 'Inferno (Community Edition)' && this.props.tools.inferno_community != '' ) {
+                link = this.props.tools.inferno_community
+            }
+
             let openLink = this.refs.openLink;
             openLink.href = link;
             openLink.click();

@@ -33,7 +33,7 @@ class Tools extends Component {
                 <Tab label='Other tools' id='tools' value='tools'/>
             </Tabs>
             {this.state.activeTab === 'tools' && <ThirdPartyTools serviceUrl={this.props.serviceUrl} isOpen={this.props.isOpen} name={this.props.sandboxName} apps={this.props.apps}
-                                                                  launch={this.props.doLaunch} user={this.props.defaultUser} patient={this.props.patient}/>}
+                                                                  launch={this.props.doLaunch} user={this.props.defaultUser} patient={this.props.patient} tools={this.props.tools}/>}
             {this.state.activeTab === 'validation' && <Validation {...this.props}/>}
         </div>
     }
@@ -55,7 +55,8 @@ const mapStateToProps = state => {
         loadProfilesBySD: state.fhir.loadProfilesBySD,
         queryObject: state.fhir.queryObject,
         fetchingProfilesByDefinition: state.fhir.fetchingProfilesByDefinition,
-        serviceUrl: state.fhir.smart.data.server && state.fhir.smart.data.server.serviceUrl
+        serviceUrl: state.fhir.smart.data.server && state.fhir.smart.data.server.serviceUrl,
+        tools: state.config.xsettings.data.tools
     }
 };
 
