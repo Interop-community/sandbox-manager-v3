@@ -47,6 +47,11 @@ export default class Help extends Component {
                             Meld Sandbox Docs
                         </MenuItem>
                     </a>
+                    <a onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <MenuItem className='help-menu-item' onClick={() => this.openLink('https://github.com/Interop-community/meld/blob/main/eConsenst/eConsent%20(LEAP%20CDS)%20Functionality.md')}>
+                            eCMS
+                        </MenuItem>
+                    </a>
                     {/* <a href='https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/60555273/Samples' onClick={e => e.preventDefault()} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <MenuItem className='help-menu-item' onClick={() => this.openLink('https://healthservices.atlassian.net/wiki/spaces/HSPC/pages/60555273/Samples')}>
                             Code Samples

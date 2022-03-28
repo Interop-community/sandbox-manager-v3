@@ -4,11 +4,11 @@
   "outPort": 11000,
   "smartLaunch": {
     "default": {
-      "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc",
+      "client_id": "e41aeaf2-b6e1-4631-9897-6d91bba507b9",
       "scope": "patient/*.* launch openid profile online_access"
     },
     "\($gateway_endpoint)/maecloud/data": {
-      "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc",
+      "client_id": "e41aeaf2-b6e1-4631-9897-6d91bba507b9",
       "scope": "patient/*.* launch/patient openid profile online_access"
     }
   },
@@ -74,6 +74,9 @@
     "personaCookieDomain": "interop.community",
     "sandboxManagerUrl": $sandbox_endpoint,   
     "sandboxManagerApiUrl": $sandbox_api
+  },
+  "tools":{
+    "inferno_community": $inferno_community
   }
 }
 
