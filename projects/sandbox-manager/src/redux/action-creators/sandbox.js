@@ -710,8 +710,13 @@ export const createSandbox = (sandboxDetails) => {
             if (sandboxDetails.dataSet === "NONE") {
                 clonedSandbox.sandboxId = "MasterStu3Empty";
             }
-        } else if (sandboxDetails.apiEndpointIndex === "10") {
+        } else if (sandboxDetails.apiEndpointIndex === "10" && sandboxDetails.apiEndpointName === 'fhir-r4') {
             clonedSandbox.sandboxId = "MasterR4Smart";
+            if (sandboxDetails.dataSet === "NONE") {
+                clonedSandbox.sandboxId = "MasterR4Empty";
+            }
+        } else if (sandboxDetails.apiEndpointIndex === "10" && sandboxDetails.apiEndpointName === 'fhir-r4Intro') {
+            clonedSandbox.sandboxId = "MasterR4Intro";
             if (sandboxDetails.dataSet === "NONE") {
                 clonedSandbox.sandboxId = "MasterR4Empty";
             }

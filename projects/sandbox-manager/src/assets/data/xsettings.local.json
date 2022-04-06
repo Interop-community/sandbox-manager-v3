@@ -1,32 +1,25 @@
 {
-  "env": "local",
-  "port": 80,
-  "outPort": 11000,
-  "smartLaunch": {
-    "default": {
-      "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc",
-      "scope": "patient/*.* launch openid profile online_access"
-    },
-    "https://api.interop.community/maecloud/data": {
-      "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc",
-      "scope": "patient/*.* launch/patient openid profile online_access"
-    }
-  },
   "sandboxManager": {
-    "defaultServiceUrl": "http://localhost:8079/hspc9/data",
-    "baseServiceUrl_5": "http://localhost:8075",
-    "baseServiceUrl_6": "http://localhost:8076",
-    "baseServiceUrl_7": "http://localhost:8077",
-    "baseServiceUrl_8": "http://localhost:8078",
-    "baseServiceUrl_9": "http://localhost:8079",
-    "baseServiceUrl_10": "http://localhost:8070",
-    "baseServiceUrl_11": "http://localhost:8071",
-    "ehrSimulator": "http://localhost:3000",
-    "patientDataManager": "http://localhost:8096",
-    "oauthLogoutUrl": "http://localhost:8060/logout",
-    "oauthUserInfoUrl": "http://localhost:8060/userinfo",
+    "sandboxManagerApiUrl": "https://dev-iol2sandboxapi.interop.community",
+    "sandboxManagerUrl": "https://dev-meld.interop.community",
+    "personaCookieDomain": "interop.community",
+    "personaCookieTimeout": 180000,
+    "personaCookieName": "hspc-persona-token",
+    "hspcAccountCookieName": "hspc-token",
+    "baseServiceUrl_11": "https://dev-gw.interop.community",
+    "baseServiceUrl_10": "https://dev-gw.interop.community",
+    "baseServiceUrl_9": "https://dev-gw.interop.community",
+    "baseServiceUrl_8": "https://dev-gw.interop.community",
+    "baseServiceUrl_7": "https://dev-gw.interop.community",
+    "baseServiceUrl_6": "https://dev-gw.interop.community",
+    "baseServiceUrl_5": "https://dev-gw.interop.community",
+    "defaultServiceUrl": "https://dev-gw.interop.community/hspc8/data",
+    "oauthLogoutUrl": "https://dev-iol2auth.interop.community/logout",
+    "oauthUserInfoUrl": "https://dev-iol2auth.interop.community/userinfo",
     "sbmUrlHasContextPath": "false",
-    "userManagementUrl": "https://id-test.interop.community/auth/realms/Development/account/",
+    "ehrSimulator": "https://dev-iol2ehr-app.interop.community",
+    "patientDataManager": "https://dev-iol2patient-data-manager.interop.community",
+    "userManagementUrl": "https://dev-kc.interop.community/auth/realms/iol/account/",
     "reservedEndpoints": [
       "this",
       "hspc",
@@ -67,12 +60,19 @@
       "9",
       "10"
     ],
-    "hostOrg": "hspc",
-    "hspcAccountCookieName": "hspc-token",
-    "personaCookieName": "hspc-persona-token",
-    "personaCookieTimeout": 180000,
-    "personaCookieDomain": "localhost",
-    "sandboxManagerUrl": "https://sandbox.interop.community",
-    "sandboxManagerApiUrl": "http://localhost:12000"
-  }
+    "hostOrg": "hspc"
+  },
+  "smartLaunch": {
+    "https://dev-gw.interop.community/maecloud/data": {
+      "scope": "patient/*.* launch/patient openid profile online_access",
+      "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc"
+    },
+    "default": {
+      "scope": "patient/*.* launch openid profile online_access",
+      "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc"
+    }
+  },
+  "outPort": 11000,
+  "port": 80,
+  "env": "local"
 }
