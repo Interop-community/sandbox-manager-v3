@@ -80,7 +80,7 @@ class Index extends Component {
                                     <MenuItem value='10' data-qa='fhir-r4'>
                                         FHIR R4 (v4.0.1)
                                     </MenuItem>
-                                    <MenuItem value='10' data-qa='fhir-r4Intro'>
+                                    <MenuItem value='101' data-qa='fhir-r4Intro'>
                                         Intro to FHIR (v4.0.1)
                                     </MenuItem>
                                     <MenuItem value='11' data-qa='fhir-r5'>

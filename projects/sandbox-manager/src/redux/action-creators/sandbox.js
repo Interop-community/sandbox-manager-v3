@@ -715,7 +715,8 @@ export const createSandbox = (sandboxDetails) => {
             if (sandboxDetails.dataSet === "NONE") {
                 clonedSandbox.sandboxId = "MasterR4Empty";
             }
-        } else if (sandboxDetails.apiEndpointIndex === "10" && sandboxDetails.apiEndpointName === 'fhir-r4Intro') {
+        } else if (sandboxDetails.apiEndpointIndex === "101" && sandboxDetails.apiEndpointName === 'fhir-r4Intro') {
+            sandboxDetails.apiEndpointIndex = "10";  //overwrite with valid apiEndpointIndex in apiendpoint
             clonedSandbox.sandboxId = "MasterR4Intro";
             if (sandboxDetails.dataSet === "NONE") {
                 clonedSandbox.sandboxId = "MasterR4Empty";
