@@ -76,7 +76,8 @@
     "sandboxManagerApiUrl": $sandbox_api
   },
   "tools":{
-    "inferno_community": $inferno_community
+    "inferno_community": $inferno_community,
+    "leap_cms_ui": $leap_cms_ui
   }
 }
 

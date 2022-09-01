@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Button, Card, CardMedia, Dialog, DialogActions} from '@material-ui/core';
+import { Button, Card, CardMedia, Dialog, DialogActions } from '@material-ui/core';
+import React, { Component } from 'react';
 
 const TOOLS = [
     {
@@ -33,7 +33,14 @@ const TOOLS = [
         description: 'Test harness for CDS Hook-based services',
         image: '/img/cds_hooks_logo.png',
         link: 'https://sandbox.cds-hooks.org/'
+    },
+    {
+        title: 'LEAP CMS and UI',
+        description: 'Demo app to experience the leap LEAP Consent Management Service and UI',
+        image: '/img/healthit-logo.png',
+        link: 'https://leap-gui-yop7t2tkfq-uc.a.run.app/login'
     }
+
 ];
 
 import './styles.less';
@@ -97,6 +104,10 @@ class ThirdPartyTools extends Component {
 
             if (tool.title === 'Inferno (Community Edition)' && this.props.tools.inferno_community != '' ) {
                 link = this.props.tools.inferno_community
+            }
+
+            if (tool.title === 'LEAP CMS and UI' && this.props.tools.leap_cms_ui != '' ) {
+                link = this.props.tools.leap_cms_ui
             }
 
             let openLink = this.refs.openLink;

@@ -9,5 +9,6 @@ jq -n --arg gateway_endpoint "$GATEWAY_HOST" \
 --arg sandbox_endpoint "$SANDBOX_HOST" \
 --arg sandbox_api "$SANDBOX_API" \
 --arg inferno_community "$INFERNO_COMMUNITY" \
+--arg leap_cms_ui "$LEAP_CMS_UI" \
 -f ./xsettings_template.json > xsettings.json
 
