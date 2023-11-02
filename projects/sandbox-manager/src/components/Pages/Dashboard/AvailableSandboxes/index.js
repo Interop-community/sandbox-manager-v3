@@ -97,7 +97,7 @@ class Index extends Component {
                 let info = sandboxInfo.queuePosition
                     ? `Your sandbox is number ${sandboxInfo.queuePosition} in the creation Queue`
                     : 'Your new sandbox is being created';
-                let time = `${sandboxInfo.queuePosition * 15 + 15} sec.`;
+                let time = `${sandboxInfo.queuePosition * 2 + 2} min.`;
 
                 sandboxes.unshift(<a key={`new-${i}`} style={{textDecoration: 'none'}}>
                     <ListItem button disabled>
