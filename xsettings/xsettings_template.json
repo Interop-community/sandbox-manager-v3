@@ -78,6 +78,12 @@
   "tools":{
     "inferno_community": $inferno_community,
     "leap_cms_ui": $leap_cms_ui
+  },
+  "announcement" :{
+    "message": $announcement_message,
+    "startDate": $announcement_start_date,
+    "endDate":  $announcement_end_date
   }
+  
 }
 

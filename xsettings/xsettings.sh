@@ -10,5 +10,8 @@ jq -n --arg gateway_endpoint "$GATEWAY_HOST" \
 --arg sandbox_api "$SANDBOX_API" \
 --arg inferno_community "$INFERNO_COMMUNITY" \
 --arg leap_cms_ui "$LEAP_CMS_UI" \
+--arg announcement_message "$ANNOUNCEMENT_MESSAGE" \
+--arg announcement_start_date "$ANNOUNCEMENT_START_DATE" \
+--arg announcement_end_date "$ANNOUNCEMENT_END_DATE" \
 -f ./xsettings_template.json > xsettings.json
 
