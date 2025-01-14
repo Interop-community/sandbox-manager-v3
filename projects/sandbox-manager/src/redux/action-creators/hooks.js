@@ -255,7 +255,7 @@ export const launchHook = (hook, launchContext) => {
         let hookInstance = random(64);
 
         let state = getState();
-        // console.log(hook.hook, launchContext, state, dispatch);
+        // console.log(hook, launchContext, state, dispatch);
 
         let context = await buildContext(hook.hook, launchContext, state, dispatch);
         // Authorize the hook
@@ -284,8 +284,8 @@ export const launchHook = (hook, launchContext) => {
                     Object.keys(hook.prefetch).map(key => {
                         let url = hook.prefetch[key];
                         let regex = new RegExp(/\{\{context\.(.*?)\}\}/gi);
-                        url = ('patient' === key) ? url.replace(regex, (a, b) => launchContext[b]) : url.replace(regex, (a, b) => context[b]);
-
+                        url = url.replace(regex, (a, b) => context[b]);
+                        // url = ('patient' === key) ? url.replace(regex, (a, b) => launchContext[b]) : url.replace(regex, (a, b) => context[b]);
                         promises.push(new Promise((resolve, reject) => {
                             API.get(`${window.fhirClient.server.serviceUrl}/${encodeURI(url)}`, dispatch)
                                 .then(result => {
@@ -364,12 +364,12 @@ async function buildContext(hook, launchContext, state, dispatch) {
     //                         v => v.resourceType != 'Patient' ? v.resourceType : null
     //                         ).filter(x => !!x).join(',')}`
     
-    let everything = [];
-    await Promise.all([API.get(`${window.fhirClient.server.serviceUrl}/Patient/${launchContext.patientId}`), API.get(`${window.fhirClient.server.serviceUrl}/${GETTERS['userId'](state)}`)]).then(
-        (responses)=> everything.push(...responses)
-    )
+    // let everything = [];
+    // await Promise.all([API.get(`${window.fhirClient.server.serviceUrl}/Patient/${launchContext.patientId}`), API.get(`${window.fhirClient.server.serviceUrl}/${GETTERS['userId'](state)}`)]).then(
+    //     (responses)=> everything.push(...responses)
+    // )
     
-    window.leap = everything
+    // window.leap = everything
     // user && everything.entry.push({resource: user})
     if (params) {
         Object.keys(params).map(async key => {
@@ -391,12 +391,14 @@ async function buildContext(hook, launchContext, state, dispatch) {
                 }
             } else if (launchContext instanceof Array) {
                 val = launchContext.find(x => x.name === key);
-            }  else if (type === 'array'){
-                let entry = everything.filter(i => params[key].resourceType.includes(i.resourceType))
-                entry = entry.map(x => x.identifier.map(y=> _.pick(y, ['system', 'value'])).filter(x=> !_.isEmpty(x))).flat()
-                val = entry;
+            }  
+            // else if (type === 'array'){
+            //     let entry = everything.filter(i => params[key].resourceType.includes(i.resourceType))
+            //     entry = entry.map(x => x.identifier.map(y=> _.pick(y, ['system', 'value'])).filter(x=> !_.isEmpty(x))).flat()
+            //     val = entry;
 
-            }else {
+            // }
+            else {
                     val = launchContext[key] ? launchContext[key] : GETTERS[key] ? GETTERS[key](state) : undefined;
                 
             }

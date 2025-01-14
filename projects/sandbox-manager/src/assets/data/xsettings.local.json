@@ -72,6 +72,11 @@
       "client_id": "37a97381-5e00-4f95-bb4e-10b24b77aedc"
     }
   },
+  "announcement" :{
+    "message": "Hello Everybody",
+    "startDate": "08-01-2024",
+    "endDate":  "09-01-2024"
+  },
   "outPort": 11000,
   "port": 80,
   "env": "local"
